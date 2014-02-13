@@ -28,3 +28,6 @@ C:\Users\Michi\Desktop\PixIt\PixIt 2.0\PixIt 2.0\obj\Debug\PixIt_2._0.Main.resou
 C:\Users\Michi\Desktop\PixIt\PixIt 2.0\PixIt 2.0\obj\Debug\PixIt_2._0.Properties.Resources.resources
 C:\Users\Michi\Desktop\PixIt\PixIt 2.0\PixIt 2.0\obj\Debug\PixIt_2._0.Settings.resources
 C:\Users\Michi\Desktop\PixIt\PixIt 2.0\PixIt 2.0\obj\Debug\PixIt 2.0.csproj.GenerateResource.Cache
+C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 2.0\bin\Debug\PixIt 2.0.exe.config
+C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 2.0\obj\Debug\PixIt 2.0.exe
+C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 2.0\obj\Debug\PixIt 2.0.pdb

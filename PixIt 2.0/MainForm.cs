@@ -17,7 +17,7 @@ namespace PixIt_2._0
         Bitmap LoadedImage;
         Bitmap ShowVectors;
         Settings settingsForm;
-
+        //HeBa
         int x = 0;
         int y = 0;
         int vectorI = 0;
