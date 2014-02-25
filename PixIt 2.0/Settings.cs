@@ -27,6 +27,7 @@ namespace PixIt_2._0
             pictureBox_PathColor.BackColor = Main.colorPath;
             pictureBox_DrillColor.BackColor = Main.colorDrill;
             pictureBox_TranslationColor.BackColor = Main.colorTranslation;
+            numericPort.Value = Main.numericPort;
         }
 
         private void button_SetColorPath_Click(object sender, EventArgs e)
@@ -42,6 +43,11 @@ namespace PixIt_2._0
         private void button_SetColorTranslation_Click(object sender, EventArgs e)
         {
             Main.settingColor = "translation";
+        }
+
+        private void numericPort_Click(object sender, EventArgs e)
+        {
+            Main.numericPort = Convert.ToInt32(numericPort.Value);
         }
     }
 }

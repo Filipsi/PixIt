@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.IO;
+using System.IO.Ports;
 
 namespace PixIt_2._0
 {
@@ -17,7 +18,13 @@ namespace PixIt_2._0
         Bitmap LoadedImage;
         Bitmap ShowVectors;
         Settings settingsForm;
-        //HeBa
+
+        //Delegát pro práci s DataReceived_Event
+        delegate void SetTextCallback(string text);
+
+        //Vytvoření handleru pro sériový port
+        SerialPort mainSerialPort = new SerialPort();
+
         int x = 0;
         int y = 0;
         int vectorI = 0;
@@ -41,6 +48,7 @@ namespace PixIt_2._0
         public static Color colorPath = Color.White;
         public static Color colorDrill = Color.White;
         public static Color colorTranslation = Color.White;
+        public static int numericPort = 3;
 
 
         [DllImport("kernel32")]
@@ -67,6 +75,19 @@ namespace PixIt_2._0
             pictureBox_Bitmap_Original.Image = (Image)LoadedImage;
         }
 
+        //Funkce pro převod do binární soustavy
+        private string toBinary(int data)
+        {
+            string bufferData = "";
+            while (data > 0)
+            {
+                bufferData += data % 2;
+                data = data / 2;
+            }
+
+            return bufferData;
+        }
+
         public Main()
         {
             InitializeComponent();
@@ -77,12 +98,53 @@ namespace PixIt_2._0
             Dialog_OpenFile.Filter = "All Files (*.*)|*.*";
             Dialog_OpenFile.FilterIndex = 1;
 
-            listBox_mode.SelectedIndex = 0;
-
+            //Načtení nastavení z INI
             if (File.Exists(Path.Combine(Application.StartupPath, "settings.ini")) == true){
                 colorPath = Color.FromArgb(Convert.ToInt32(IniReadValue("settings.ini", "Colors", "path")));
                 colorDrill = Color.FromArgb(Convert.ToInt32(IniReadValue("settings.ini", "Colors", "drill")));
                 colorTranslation = Color.FromArgb(Convert.ToInt32(IniReadValue("settings.ini", "Colors", "translation")));
+                numericPort = Convert.ToInt32(IniReadValue("settings.ini", "COM", "port"));
+            }
+        }
+
+        private void buttonOpenPort_Click(object sender, EventArgs e)
+        {
+            //Nastavení o tevření portu
+            mainSerialPort.PortName = "COM" + numericPort.ToString();
+            mainSerialPort.BaudRate = 115200;
+            mainSerialPort.Parity = Parity.None;
+            mainSerialPort.StopBits = StopBits.One;
+            mainSerialPort.DataBits = 8;
+            mainSerialPort.Handshake = Handshake.None;
+            mainSerialPort.DataReceived += DataReceived_Read;
+            mainSerialPort.DtrEnable = true;
+            mainSerialPort.RtsEnable = true;
+            mainSerialPort.Close();
+
+            try{
+                mainSerialPort.Open();
+            }catch (Exception ex){
+                labelPortStatus.Text = ex.GetType().ToString();
+            }
+
+
+            if (mainSerialPort.IsOpen == true){
+                labelPortStatus.Text = "Port je otevřen!";
+            }
+        }
+
+        //Čtení ze Sériového portu
+        private void DataReceived_Read(object sender, SerialDataReceivedEventArgs e)
+        {
+            SerialPort mySerial = (SerialPort)sender;
+
+            if (this.InvokeRequired)
+            {
+                listBoxSerialRead.BeginInvoke(new MethodInvoker(delegate
+                {
+                    listBoxSerialRead.Items.Add(mySerial.ReadChar());
+                    listBoxSerialRead.SelectedIndex = listBoxSerialRead.Items.Count - 1;
+                }));
             }
         }
 
@@ -110,8 +172,6 @@ namespace PixIt_2._0
             DialogResult result = Dialog_OpenFile.ShowDialog();
 	        if (result == DialogResult.OK){
                 LoadedImage = new Bitmap(Dialog_OpenFile.FileName);
-                button_settings.Enabled = true;
-                listBox_mode.Enabled = true;
                 button_draw.Enabled = true;             
                 label5.Text = LoadedImage.Width.ToString() ;
                 label6.Text = LoadedImage.Height.ToString() ;
@@ -676,10 +736,12 @@ namespace PixIt_2._0
 
         private void settings_close(object sender, FormClosedEventArgs e)
         {
+            //Zapsání nastavení do INI
             settingsFormOpen = false;
             IniWriteValue("settings.ini", "Colors", "path", colorPath.ToArgb().ToString());
             IniWriteValue("settings.ini", "Colors", "drill", colorDrill.ToArgb().ToString());
             IniWriteValue("settings.ini", "Colors", "translation", colorTranslation.ToArgb().ToString());
+            IniWriteValue("settings.ini", "COM", "port", numericPort.ToString());
         }
 
         private void listBox_Vectors_SelectedIndexChanged(object sender, EventArgs e)
