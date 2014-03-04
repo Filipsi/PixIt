@@ -50,6 +50,7 @@
             this.labelPortStatus = new System.Windows.Forms.Label();
             this.listBoxSerialRead = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.button_ManualControl = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Bitmap_Original)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_DrawVectors)).BeginInit();
             this.SuspendLayout();
@@ -260,11 +261,22 @@
             this.label3.TabIndex = 34;
             this.label3.Text = "Data ze Sériového portu";
             // 
+            // button_ManualControl
+            // 
+            this.button_ManualControl.Location = new System.Drawing.Point(12, 162);
+            this.button_ManualControl.Name = "button_ManualControl";
+            this.button_ManualControl.Size = new System.Drawing.Size(113, 48);
+            this.button_ManualControl.TabIndex = 35;
+            this.button_ManualControl.Text = "Manuální ovládání";
+            this.button_ManualControl.UseVisualStyleBackColor = true;
+            this.button_ManualControl.Click += new System.EventHandler(this.button_ManualControl_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1236, 608);
+            this.Controls.Add(this.button_ManualControl);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.listBoxSerialRead);
             this.Controls.Add(this.labelPortStatus);
@@ -321,6 +333,7 @@
         private System.Windows.Forms.Label labelPortStatus;
         private System.Windows.Forms.ListBox listBoxSerialRead;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button_ManualControl;
     }
 }
 

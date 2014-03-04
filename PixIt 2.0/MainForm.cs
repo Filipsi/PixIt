@@ -18,17 +18,19 @@ namespace PixIt_2._0
         Bitmap LoadedImage;
         Bitmap ShowVectors;
         Settings settingsForm;
+        ManualControl manualControlForm;
 
         //Delegát pro práci s DataReceived_Event
         delegate void SetTextCallback(string text);
 
         //Vytvoření handleru pro sériový port
-        SerialPort mainSerialPort = new SerialPort();
+        public static SerialPort mainSerialPort = new SerialPort();
 
         int x = 0;
         int y = 0;
         int vectorI = 0;
         bool settingsFormOpen = false;
+        bool manualControlFormOpen = false;
 
         int[] vectorStartX = new int[500];
         int[] vectorStartY = new int[500];
@@ -142,7 +144,7 @@ namespace PixIt_2._0
             {
                 listBoxSerialRead.BeginInvoke(new MethodInvoker(delegate
                 {
-                    listBoxSerialRead.Items.Add(mySerial.ReadChar());
+                    listBoxSerialRead.Items.Add(mySerial.ReadExisting());
                     listBoxSerialRead.SelectedIndex = listBoxSerialRead.Items.Count - 1;
                 }));
             }
@@ -800,6 +802,23 @@ namespace PixIt_2._0
                 {
                     x = 0; y++;
                 }
+        }
+
+        private void button_ManualControl_Click(object sender, EventArgs e)
+        {
+            if (manualControlFormOpen == false)
+            {
+                manualControlFormOpen = true;
+                manualControlForm = new ManualControl();
+                manualControlForm.FormClosed += new FormClosedEventHandler(manualControl_close);
+                manualControlForm.Show();
+            }
+        }
+
+        private void manualControl_close(object sender, FormClosedEventArgs e)
+        {
+            manualControlFormOpen = false;
+
         }
     }
 }
