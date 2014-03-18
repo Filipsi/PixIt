@@ -1,0 +1,10 @@
+c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\bin\Debug\PixIt 0.3.exe.config
+c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\bin\Debug\PixIt 0.3.exe
+c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\bin\Debug\PixIt 0.3.pdb
+c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\obj\Debug\PixIt 0.3.csprojResolveAssemblyReference.cache
+c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\obj\Debug\PixIt_0._3.formMain.resources
+c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\obj\Debug\PixIt_0._3.formSet.resources
+c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\obj\Debug\PixIt_0._3.Properties.Resources.resources
+c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\obj\Debug\PixIt 0.3.csproj.GenerateResource.Cache
+c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\obj\Debug\PixIt 0.3.exe
+c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\obj\Debug\PixIt 0.3.pdb
