@@ -8,3 +8,15 @@ c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\obj\Deb
 c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\obj\Debug\PixIt 0.3.csproj.GenerateResource.Cache
 c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\obj\Debug\PixIt 0.3.exe
 c:\users\michi\documents\visual studio 2013\Projects\PixIt 0.3\PixIt 0.3\obj\Debug\PixIt 0.3.pdb
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.exe.config
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.exe
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.pdb
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.exe
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.pdb
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.csprojResolveAssemblyReference.cache
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formMain.resources
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formManual.resources
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formSettings.resources
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.Properties.Resources.resources
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.csproj.GenerateResource.Cache
+C:\Users\Michi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formDebug.resources
