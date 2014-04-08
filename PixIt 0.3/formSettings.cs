@@ -11,13 +11,21 @@ namespace PixIt_0._3
 {
     public partial class formSettings : Form
     {
+        public void debugAddLine(string text)
+        {
+            if (System.Windows.Forms.Application.OpenForms["formDebug"] != null)
+            {
+                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxDebug.Items.Add(text);
+            }
+        }
+
         public formSettings()
         {
             InitializeComponent();
             this.TopMost = true;
             this.Focus();
             this.BringToFront();
-            formMain.debugResult = 9;
+            debugAddLine("Bylo otevřeno okno nastavení");
         }
 
         public void Settings_Load(object sender, EventArgs e)
@@ -50,8 +58,7 @@ namespace PixIt_0._3
 
         private void numPort_Click(object sender, EventArgs e)
         {
-            formMain.numPort = Convert.ToInt32(numPort.Value);
-            formMain.debugResult = 8;
+            debugAddLine("Číslo portu změněno na COM" + numPort.Value);
         }     
     }
 }

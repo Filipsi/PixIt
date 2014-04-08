@@ -27,20 +27,14 @@ namespace PixIt_0._3
         // Načtení ostatních formů
         formSettings settings;
         formManual manualControl;
-        formDebug debug;
 
         // Proměnné
         string[, ,] point = new string[400, 400, 20];
 
-        // Pro kontrolu zda už není otevřeno
         bool settingsFormOpen = false;
         bool manualControlFormOpen = false;
-        bool debugFormOpen = false;
+        Form debugFormOpenedID = null;
         bool isPictureLoaded = false;
-
-        // Pro posílání zpráv Debugu
-        public static int debugResult = 0;
-        public static string errorNumber;
 
         // Vytvoření handleru pro sériový port
         public static SerialPort mainSerialPort = new SerialPort();
@@ -48,7 +42,6 @@ namespace PixIt_0._3
         int x = 0;
         int y = 0;
 
-        // Pro práci v settings
         public static string settingColor = "";
         public static Color colorPath = Color.White;
         public static Color colorDrill = Color.White;
@@ -119,7 +112,7 @@ namespace PixIt_0._3
             IniWriteValue("settings.ini", "Colors", "drill", colorDrill.ToArgb().ToString());
             IniWriteValue("settings.ini", "Colors", "translation", colorTranslation.ToArgb().ToString());
             IniWriteValue("settings.ini", "COM", "port", numPort.ToString());
-            debugResult = 10;
+            debugAddLine("Okno nastavení bylo uzavřeno");
         }
 
         // Načtení obrázku
@@ -134,9 +127,7 @@ namespace PixIt_0._3
                 toolHeight.Text = "Height: " + LoadedImage.Height.ToString();
                 isPictureLoaded = true;
                 ReloadPictureBoxs();
-                debugResult = 11;
-                errorNumber = "Šířka obrázku: " + LoadedImage.Width.ToString() + "    Výška obrázku: " + LoadedImage.Height.ToString();
-
+                debugAddLine("Byl načten obrázek - " + "Šířka obrázku: " + LoadedImage.Width.ToString() + "    Výška obrázku: " + LoadedImage.Height.ToString());
             }
         }
 
@@ -159,17 +150,17 @@ namespace PixIt_0._3
             {
                 case "path":
                     colorPath = LoadedImage.GetPixel(e.X, e.Y);
-                    debugResult = 5;
+                    debugAddLine("Číslo portu změněno na: " + formMain.numPort);
                     break;
 
                 case "drill":
                     colorDrill = LoadedImage.GetPixel(e.X, e.Y);
-                    debugResult = 6;
+                    debugAddLine("Barva vrtání změněna na: " + formMain.colorDrill);
                     break;
 
                 case "translation":
                     colorTranslation = LoadedImage.GetPixel(e.X, e.Y);
-                    debugResult = 7;
+                    debugAddLine("Barva přechodu změněna na: " + formMain.colorTranslation);
                     break;
 
             }
@@ -179,15 +170,7 @@ namespace PixIt_0._3
         // Když se klikne na button otevření portu
         private void btnPort_Click(object sender, EventArgs e)
         {
-            // Otevře form debug
-            if (debugFormOpen == false && mainSerialPort.IsOpen == false)
-            {
-                debugFormOpen = true;
-                debug = new formDebug();
-                debug.FormClosed += new FormClosedEventHandler(debug_close);
-                debug.Show();
-                Thread.Sleep(1500);
-            }
+            openDebug();
 
             // Pokud port ješte není otevřen
             if (mainSerialPort.IsOpen == false)
@@ -212,8 +195,7 @@ namespace PixIt_0._3
                 catch (Exception ex)
                 {
                     toolPortStatus.Text = "Stav portu: Port je uzavřen! Chyba při otevření - " + ex.GetType().ToString();
-                    errorNumber = ex.GetType().ToString();
-                    debugResult = 1;
+                    debugAddLine("Chyba při otevření portu: " + ex.GetType().ToString());
                 }
                 // Pokud je port otevřen, změní stav ve statusu a zapíše do debugu
                 if (mainSerialPort.IsOpen == true)
@@ -221,7 +203,7 @@ namespace PixIt_0._3
                     picOpenPort.BackColor = Color.Green;
                     btnPort.Text = "Zavřít port";
                     toolPortStatus.Text = "Stav portu: Port je otevřen!";
-                    debugResult = 2;
+                    debugAddLine("Port byl otevřen");
                 }
             }
             // Pokud port není uzavřen
@@ -235,9 +217,8 @@ namespace PixIt_0._3
                 // Pokud se port nepodaří zavřít vypíše patřičnou chybovou hlášku
                 catch (Exception ex)
                 {
-                    toolPortStatus.Text = "Stav portu: Port je otevřen! Chyba chyba při uzavření - " + ex.GetType().ToString();
-                    errorNumber = ex.GetType().ToString();
-                    debugResult = 3;
+                    toolPortStatus.Text = "Stav portu: Port je otevřen! Chyba chyba při uzavření - " + ex.GetType().ToString(); 
+                    debugAddLine("Chyba při uzavření portu" + ex.GetType().ToString());
                 }
                 // Pokud se port uzavřel změní stav ve statusu a zapíše do debugu
                 if (mainSerialPort.IsOpen == false)
@@ -245,8 +226,21 @@ namespace PixIt_0._3
                     picOpenPort.BackColor = Color.Red;
                     btnPort.Text = "Otevřít port";
                     toolPortStatus.Text = "Stav portu: Port je uzavřen!";
-                    debugResult = 4;
+                    debugAddLine("Port byl uzavřen");
                 }
+            }
+        }
+        
+        //Funkce pro tevření Debug okna
+        private void openDebug()
+        {
+            if (debugFormOpenedID == null)
+            {
+                debugFormOpenedID = new formDebug();
+                debugFormOpenedID.FormClosed += new FormClosedEventHandler(debug_close);
+                debugFormOpenedID.Show();
+
+
             }
         }
 
@@ -266,26 +260,20 @@ namespace PixIt_0._3
         private void manualControl_close(object sender, FormClosedEventArgs e)
         {
             manualControlFormOpen = false;
-            debugResult = 13;
+            debugAddLine("Manuální ovládání bylo uzavřeno");
 
         }
 
         // Otevře form Debugu
         private void buttonDebug_Click(object sender, EventArgs e)
         {
-            if (debugFormOpen == false)
-            {
-                debugFormOpen = true;
-                debug = new formDebug();
-                debug.FormClosed += new FormClosedEventHandler(debug_close);
-                debug.Show();
-            }
+            openDebug();
         }
 
         //Když se form debugu uzavře tak změní kontrolní proměnnou
         private void debug_close(object sender, FormClosedEventArgs e)
         {
-            debugFormOpen = false;
+            debugFormOpenedID = null;
         }
 
         private void btnDraw_Click(object sender, EventArgs e)
@@ -293,6 +281,8 @@ namespace PixIt_0._3
             getRoutes();
             getEnds();
         }
+
+
 
         //Zjistí trasy v obrázku
         private void getRoutes()
@@ -320,7 +310,8 @@ namespace PixIt_0._3
                 {
                     x = 0; y++;
                 }
-            } debugResult = 14; errorNumber = Convert.ToString(citac);
+            } 
+            debugAddLine("V obrázku je " + citac + " pixelů trasy");
         }
 
         private void getEnds()
@@ -412,6 +403,19 @@ namespace PixIt_0._3
                     }
                 }
             } ReloadPictureBoxs();
+        }
+
+        public void debugAddLine(string text)
+        {
+                if (System.Windows.Forms.Application.OpenForms["formDebug"] != null)
+                {
+                    (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxDebug.Items.Add(text);
+                }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

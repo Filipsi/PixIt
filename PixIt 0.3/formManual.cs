@@ -16,12 +16,20 @@ namespace PixIt_0._3
         const int moveXm = 0;
         const int moveYp = 0;
         const int moveYm = 0;
-        int valSaved = 0;  
+        int valSaved = 0;
+
+        public void debugAddLine(string text)
+        {
+            if (System.Windows.Forms.Application.OpenForms["formDebug"] != null)
+            {
+                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxDebug.Items.Add(text);
+            }
+        }
 
         public formManual()
         {
             InitializeComponent();
-            formMain.debugResult = 12;
+            debugAddLine("Manuální ovládání bylo otevřeno");
         }
         
         private void delay(int delayTime)

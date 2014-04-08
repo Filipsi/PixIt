@@ -28,28 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.listBoxSerialPort = new System.Windows.Forms.ListBox();
             this.labelSerialPort = new System.Windows.Forms.Label();
             this.listBoxDebug = new System.Windows.Forms.ListBox();
             this.labelDebug = new System.Windows.Forms.Label();
-            this.timerDebugResult = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // listBoxSerialPort
             // 
             this.listBoxSerialPort.FormattingEnabled = true;
-            this.listBoxSerialPort.Location = new System.Drawing.Point(372, 25);
+            this.listBoxSerialPort.ItemHeight = 16;
+            this.listBoxSerialPort.Location = new System.Drawing.Point(496, 31);
+            this.listBoxSerialPort.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxSerialPort.Name = "listBoxSerialPort";
-            this.listBoxSerialPort.Size = new System.Drawing.Size(133, 251);
+            this.listBoxSerialPort.Size = new System.Drawing.Size(176, 308);
             this.listBoxSerialPort.TabIndex = 9;
             // 
             // labelSerialPort
             // 
             this.labelSerialPort.AutoSize = true;
-            this.labelSerialPort.Location = new System.Drawing.Point(369, 9);
+            this.labelSerialPort.Location = new System.Drawing.Point(492, 11);
+            this.labelSerialPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelSerialPort.Name = "labelSerialPort";
-            this.labelSerialPort.Size = new System.Drawing.Size(120, 13);
+            this.labelSerialPort.Size = new System.Drawing.Size(160, 17);
             this.labelSerialPort.TabIndex = 14;
             this.labelSerialPort.Text = "Data ze sériového portu";
             // 
@@ -58,36 +59,36 @@
             this.listBoxDebug.BackColor = System.Drawing.Color.Black;
             this.listBoxDebug.ForeColor = System.Drawing.Color.White;
             this.listBoxDebug.FormattingEnabled = true;
-            this.listBoxDebug.Location = new System.Drawing.Point(13, 26);
+            this.listBoxDebug.ItemHeight = 16;
+            this.listBoxDebug.Location = new System.Drawing.Point(13, 33);
+            this.listBoxDebug.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxDebug.Name = "listBoxDebug";
-            this.listBoxDebug.Size = new System.Drawing.Size(353, 251);
+            this.listBoxDebug.Size = new System.Drawing.Size(469, 308);
             this.listBoxDebug.TabIndex = 15;
             // 
             // labelDebug
             // 
             this.labelDebug.AutoSize = true;
-            this.labelDebug.Location = new System.Drawing.Point(12, 10);
+            this.labelDebug.Location = new System.Drawing.Point(16, 12);
+            this.labelDebug.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelDebug.Name = "labelDebug";
-            this.labelDebug.Size = new System.Drawing.Size(39, 13);
+            this.labelDebug.Size = new System.Drawing.Size(50, 17);
             this.labelDebug.TabIndex = 16;
             this.labelDebug.Text = "Debug";
             // 
-            // timerDebugResult
-            // 
-            this.timerDebugResult.Interval = 1000;
-            this.timerDebugResult.Tick += new System.EventHandler(this.timerDebugResult_Tick);
-            // 
             // formDebug
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(517, 283);
+            this.ClientSize = new System.Drawing.Size(689, 348);
             this.Controls.Add(this.labelDebug);
             this.Controls.Add(this.listBoxDebug);
             this.Controls.Add(this.labelSerialPort);
             this.Controls.Add(this.listBoxSerialPort);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "formDebug";
             this.Text = "Debug okno";
+            this.Load += new System.EventHandler(this.formDebug_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -99,6 +100,5 @@
         private System.Windows.Forms.Label labelDebug;
         public System.Windows.Forms.ListBox listBoxSerialPort;
         public System.Windows.Forms.ListBox listBoxDebug;
-        public System.Windows.Forms.Timer timerDebugResult;
     }
 }
