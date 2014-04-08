@@ -104,6 +104,7 @@
             this.btnDraw.TabIndex = 4;
             this.btnDraw.Text = "Vykreslit";
             this.btnDraw.UseVisualStyleBackColor = false;
+            this.btnDraw.Click += new System.EventHandler(this.btnDraw_Click);
             // 
             // picOriginal
             // 

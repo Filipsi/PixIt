@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -29,16 +28,16 @@ namespace PixIt_0._3
         formSettings settings;
         formManual manualControl;
         formDebug debug;
-        
+
         // Proměnné
-        int[,] point = new int[400, 400];
+        string[, ,] point = new string[400, 400, 20];
 
         // Pro kontrolu zda už není otevřeno
         bool settingsFormOpen = false;
         bool manualControlFormOpen = false;
         bool debugFormOpen = false;
         bool isPictureLoaded = false;
-        
+
         // Pro posílání zpráv Debugu
         public static int debugResult = 0;
         public static string errorNumber;
@@ -46,13 +45,16 @@ namespace PixIt_0._3
         // Vytvoření handleru pro sériový port
         public static SerialPort mainSerialPort = new SerialPort();
 
+        int x = 0;
+        int y = 0;
+
         // Pro práci v settings
         public static string settingColor = "";
         public static Color colorPath = Color.White;
         public static Color colorDrill = Color.White;
         public static Color colorTranslation = Color.White;
         public static int numPort = 3;
-        
+
         public formMain()
         {
             InitializeComponent();
@@ -95,7 +97,7 @@ namespace PixIt_0._3
                 numPort = Convert.ToInt32(IniReadValue("settings.ini", "COM", "port"));
             }
         }
-        
+
         // Otevře formulář settings
         private void btnSetttings_Click(object sender, EventArgs e)
         {
@@ -107,7 +109,7 @@ namespace PixIt_0._3
                 settings.Show();
             }
         }
-        
+
         //Uložení nastavení při zavřeni settings
         private void settings_close(object sender, FormClosedEventArgs e)
         {
@@ -141,7 +143,8 @@ namespace PixIt_0._3
         // Zobrazení barvy na kterou najede myš
         private void picOriginal_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isPictureLoaded == true) {
+            if (isPictureLoaded == true)
+            {
                 if (settingsFormOpen == true && e.X < LoadedImage.Width && e.X > 0 && e.Y < LoadedImage.Height && e.Y > 0)
                 {
                     settings.picCursorColor.BackColor = LoadedImage.GetPixel(e.X, e.Y);
@@ -185,7 +188,7 @@ namespace PixIt_0._3
                 debug.Show();
                 Thread.Sleep(1500);
             }
-            
+
             // Pokud port ješte není otevřen
             if (mainSerialPort.IsOpen == false)
             {
@@ -195,7 +198,7 @@ namespace PixIt_0._3
                 mainSerialPort.Parity = Parity.None;
                 mainSerialPort.StopBits = StopBits.One;
                 mainSerialPort.DataBits = 8;
-                mainSerialPort.Handshake = Handshake.None;               
+                mainSerialPort.Handshake = Handshake.None;
                 mainSerialPort.DtrEnable = true;
                 mainSerialPort.RtsEnable = true;
                 mainSerialPort.Close();
@@ -244,8 +247,8 @@ namespace PixIt_0._3
                     toolPortStatus.Text = "Stav portu: Port je uzavřen!";
                     debugResult = 4;
                 }
-            }     
-        }                
+            }
+        }
 
         //Otevře form manuálního ovládání
         private void btnManual_Click(object sender, EventArgs e)
@@ -258,7 +261,7 @@ namespace PixIt_0._3
                 manualControl.Show();
             }
         }
-        
+
         // Když se form manuálního ovládání uzavře tak změní kontrolní proměnnou
         private void manualControl_close(object sender, FormClosedEventArgs e)
         {
@@ -278,11 +281,137 @@ namespace PixIt_0._3
                 debug.Show();
             }
         }
-        
+
         //Když se form debugu uzavře tak změní kontrolní proměnnou
         private void debug_close(object sender, FormClosedEventArgs e)
         {
             debugFormOpen = false;
+        }
+
+        private void btnDraw_Click(object sender, EventArgs e)
+        {
+            getRoutes();
+            getEnds();
+        }
+
+        //Zjistí trasy v obrázku
+        private void getRoutes()
+        {
+            int citac = 0;
+            Color thisPixel = LoadedImage.GetPixel(x, y);
+
+            while (x < LoadedImage.Width - 1 || y < LoadedImage.Height - 1)
+            {
+                thisPixel = LoadedImage.GetPixel(x, y);
+                if (thisPixel == colorPath || thisPixel == colorTranslation)
+                {
+                    point[x, y, 0] = "ROUTE";
+                    citac++;
+                }
+                else
+                {
+                    point[x, y, 0] = "NULL";
+                }
+                if (x < LoadedImage.Width - 1)
+                {
+                    x++;
+                }
+                else
+                {
+                    x = 0; y++;
+                }
+            } debugResult = 14; errorNumber = Convert.ToString(citac);
+        }
+
+        private void getEnds()
+        {
+            for (int i = 2; i < 398; i++)
+            {
+                for (int u = 2; u < 398; u++)
+                {
+                    if (point[i, u, 0] == "ROUTE")
+                    {
+                        if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i, u + 3, 0] == "NULL" && point[i, u - 1, 0] == "ROUTE" && point[i + 2, u + 1, 0] == "ROUTE")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "Xp";
+                        }
+                        else if (point[i + 2, u, 0] == "ROUTE" && point[i - 1, u, 0] == "NULL" && point[i, u + 1, 0] == "NULL" && point[i, u - 2, 0] == "ROUTE" && point[i + 3, u, 0] == "NULL" && point[i, u - 3, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "XspYsn";
+                        }
+                        else if (point[i + 2, u, 0] == "ROUTE" && point[i - 1, u, 0] == "NULL" && point[i, u + 2, 0] == "NULL" && point[i, u - 2, 0] == "NULL")
+                        {
+                        }
+                        else if (point[i + 2, u, 0] == "ROUTE" && point[i - 1, u, 0] == "NULL" && point[i, u + 2, 0] == "NULL" && point[i, u - 2, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "Xp";
+                        }
+                        else if (point[i + 1, u, 0] == "NULL" && point[i - 2, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 2, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "Xn";
+                        }
+                        else if (point[i + 2, u, 0] == "NULL" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "ROUTE" && point[i, u - 1, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "Yp";
+                        }
+                        else if (point[i + 2, u, 0] == "NULL" && point[i - 2, u, 0] == "NULL" && point[i, u + 1, 0] == "NULL" && point[i, u - 2, 0] == "ROUTE")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "Yn";
+                        }
+                        else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL" && point[i + 2, u + 2, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "XpY";
+                        }
+                        else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE" && point[i - 2, u - 2, 0] == "NULL" && point[i - 2, u + 2, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "XnY";
+                        }
+                        else if (point[i + 3, u, 0] == "ROUTE" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i + 2, u + 2, 0] == "NULL" && point[i - 2, u + 2, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "XYp";
+                        }
+                        else if (point[i + 3, u, 0] == "ROUTE" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL" && point[i - 2, u - 2, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "XYn";
+                        }
+                        else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i + 2, u + 2, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "XpYp";
+                        }
+                        else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i - 2, u + 2, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "XnYp";
+                        }
+                        else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "XpYp";
+                        }
+                        else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i - 2, u - 2, 0] == "NULL")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "XpYp";
+                        }
+                        else if (point[i + 3, u, 0] == "ROUTE" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE")
+                        {
+                            LoadedImage.SetPixel(i, u, Color.Red);
+                            point[i, u, 1] = "XY";
+                        }
+                    }
+                }
+            } ReloadPictureBoxs();
         }
     }
 }

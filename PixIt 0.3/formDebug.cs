@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -14,6 +13,10 @@ namespace PixIt_0._3
 {
     public partial class formDebug : Form
     {
+        public void addLine(string text){
+            listBoxDebug.Items.Add(text);
+        }
+
         public formDebug()
         {
             InitializeComponent();
@@ -60,6 +63,7 @@ namespace PixIt_0._3
                     case 11: listBoxDebug.Items.Add("Byl načten obrázek - " + formMain.errorNumber); break;
                     case 12: listBoxDebug.Items.Add("Manuální ovládání bylo otevřeno"); break;
                     case 13: listBoxDebug.Items.Add("Manuální ovládání bylo uzavřeno"); break;
+                    case 14: listBoxDebug.Items.Add("V obrázku je " + formMain.errorNumber + " pixelů trasy"); break;
                 }
                 formMain.debugResult = 0;
             }          
