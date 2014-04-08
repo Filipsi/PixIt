@@ -13,6 +13,11 @@ namespace PixIt_0._3
 {
     public partial class formDebug : Form
     {
+        public void addLine(string text){
+            listBoxDebug.Items.Add(text);
+            listBoxDebug.SelectedIndex = listBoxDebug.Items.Count - 1;
+        }
+
         public formDebug()
         {
             InitializeComponent();

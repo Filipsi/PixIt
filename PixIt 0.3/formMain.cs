@@ -240,7 +240,7 @@ namespace PixIt_0._3
                 debugFormOpenedID.FormClosed += new FormClosedEventHandler(debug_close);
                 debugFormOpenedID.Show();
 
-
+                
             }
         }
 
@@ -409,13 +409,8 @@ namespace PixIt_0._3
         {
                 if (System.Windows.Forms.Application.OpenForms["formDebug"] != null)
                 {
-                    (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxDebug.Items.Add(text);
+                    (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLine(text);
                 }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

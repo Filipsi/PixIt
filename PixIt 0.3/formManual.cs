@@ -22,7 +22,7 @@ namespace PixIt_0._3
         {
             if (System.Windows.Forms.Application.OpenForms["formDebug"] != null)
             {
-                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxDebug.Items.Add(text);
+                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLine(text);
             }
         }
 
