@@ -30,6 +30,9 @@ namespace PixIt_0._3
 
         // Proměnné
         string[, ,] point = new string[400, 400, 20];
+        Point[] startPoint = new Point[400];
+        Point[] endPoint = new Point[400];
+        string[] directionPoint = new string[400];
 
         bool settingsFormOpen = false;
         bool manualControlFormOpen = false;
@@ -170,7 +173,6 @@ namespace PixIt_0._3
         // Když se klikne na button otevření portu
         private void btnPort_Click(object sender, EventArgs e)
         {
-            openDebug();
 
             // Pokud port ješte není otevřen
             if (mainSerialPort.IsOpen == false)
@@ -184,6 +186,8 @@ namespace PixIt_0._3
                 mainSerialPort.Handshake = Handshake.None;
                 mainSerialPort.DtrEnable = true;
                 mainSerialPort.RtsEnable = true;
+                mainSerialPort.Encoding = Encoding.UTF8;
+                mainSerialPort.DataReceived += DataReceived_Read;
                 mainSerialPort.Close();
 
                 // Zkusit otevřít port
@@ -230,6 +234,24 @@ namespace PixIt_0._3
                 }
             }
         }
+
+        //Čtení z Seriového portu
+        private void DataReceived_Read(object sender, SerialDataReceivedEventArgs e)
+        {
+            SerialPort mySerial = (SerialPort)sender;
+
+            if (this.InvokeRequired)
+            {
+                if (System.Windows.Forms.Application.OpenForms["formDebug"] != null)
+                {
+                    (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxSerialPort.BeginInvoke(new MethodInvoker(delegate
+                    {
+                        (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxSerialPort.Items.Add(mySerial.ReadLine());
+                        (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxSerialPort.SelectedIndex = (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxSerialPort.Items.Count - 1;
+                    }));        
+                }
+            }
+        }
         
         //Funkce pro tevření Debug okna
         private void openDebug()
@@ -239,8 +261,6 @@ namespace PixIt_0._3
                 debugFormOpenedID = new formDebug();
                 debugFormOpenedID.FormClosed += new FormClosedEventHandler(debug_close);
                 debugFormOpenedID.Show();
-
-                
             }
         }
 
@@ -409,7 +429,7 @@ namespace PixIt_0._3
         {
                 if (System.Windows.Forms.Application.OpenForms["formDebug"] != null)
                 {
-                    (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLine(text);
+                    (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLineDebug(text);
                 }
         }
     }

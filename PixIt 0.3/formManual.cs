@@ -16,13 +16,14 @@ namespace PixIt_0._3
         const int moveXm = 0;
         const int moveYp = 0;
         const int moveYm = 0;
+
         int valSaved = 0;
 
         public void debugAddLine(string text)
         {
             if (System.Windows.Forms.Application.OpenForms["formDebug"] != null)
             {
-                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLine(text);
+                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLineDebug(text);
             }
         }
 
@@ -48,7 +49,8 @@ namespace PixIt_0._3
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            formMain.mainSerialPort.WriteLine(numericUpDown1.Value.ToString());
+            formMain.mainSerialPort.Write(Convert.ToChar(Convert.ToInt32(numericUpDown1.Value)).ToString());
+            debugAddLine(Convert.ToChar(Convert.ToInt32(numericUpDown1.Value)).ToString());
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -58,17 +60,13 @@ namespace PixIt_0._3
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            if (numericUpDown1.Value > 0) { valSaved = Convert.ToInt32(numericUpDown1.Value); ; numericUpDown1.Value = 0; } else { numericUpDown1.Value = valSaved; }
+            if (numericUpDown1.Value != numericUpDown3.Value) { valSaved = Convert.ToInt32(numericUpDown1.Value); ; numericUpDown1.Value = numericUpDown3.Value; } else { numericUpDown1.Value = valSaved; }
             
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void formManual_Load(object sender, EventArgs e)
         {
-            for (int i = 1; i <= Convert.ToInt32(numericUpDown2.Value); i++)
-            {
-                if (numericUpDown1.Value > 0) { valSaved = Convert.ToInt32(numericUpDown1.Value); ; numericUpDown1.Value = 0; } else { numericUpDown1.Value = valSaved; }
-                Thread.Sleep(3);
-            }
+
         }
 
     }

@@ -13,15 +13,19 @@ namespace PixIt_0._3
 {
     public partial class formDebug : Form
     {
-        public void addLine(string text){
+        public void addLineDebug(string text){
             listBoxDebug.Items.Add(text);
             listBoxDebug.SelectedIndex = listBoxDebug.Items.Count - 1;
+        }
+
+        public void addLineSerial(string text){
+            listBoxSerialPort.Items.Add(text);
+            listBoxSerialPort.SelectedIndex = listBoxSerialPort.Items.Count - 1;
         }
 
         public formDebug()
         {
             InitializeComponent();
-            formMain.mainSerialPort.DataReceived += DataReceived_Read;
             listBoxDebug.Items.Add("Debug byl úspěšně načten");
             listBoxDebug.Items.Add("Barva cest: " + formMain.colorPath);
             listBoxDebug.Items.Add("Barva vrtání: " + formMain.colorDrill);
@@ -31,24 +35,6 @@ namespace PixIt_0._3
             this.Focus();
             this.BringToFront();
         }
-        private void DataReceived_Read(object sender, SerialDataReceivedEventArgs e)
-        {
-            SerialPort mySerial = (SerialPort)sender;
-
-            if (this.InvokeRequired)
-            {
-                listBoxSerialPort.BeginInvoke(new MethodInvoker(delegate
-                {
-                    listBoxSerialPort.Items.Add(mySerial.ReadExisting());
-                    listBoxSerialPort.SelectedIndex = listBoxSerialPort.Items.Count - 1;
-                }));
-            }
-        }
-
-        private void formDebug_Load(object sender, EventArgs e)
-        {
-
-        }
-       
+ 
     }
 }

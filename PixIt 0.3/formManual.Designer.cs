@@ -34,22 +34,21 @@
             this.buttonDOWN = new System.Windows.Forms.Button();
             this.buttonLEFT = new System.Windows.Forms.Button();
             this.checkBoxFastMode = new System.Windows.Forms.CheckBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.button2 = new System.Windows.Forms.Button();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonRIGHT
             // 
             this.buttonRIGHT.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonRIGHT.Location = new System.Drawing.Point(88, 51);
+            this.buttonRIGHT.Location = new System.Drawing.Point(117, 63);
+            this.buttonRIGHT.Margin = new System.Windows.Forms.Padding(4);
             this.buttonRIGHT.Name = "buttonRIGHT";
-            this.buttonRIGHT.Size = new System.Drawing.Size(34, 38);
+            this.buttonRIGHT.Size = new System.Drawing.Size(45, 47);
             this.buttonRIGHT.TabIndex = 2;
             this.buttonRIGHT.Text = "⇨";
             this.buttonRIGHT.UseVisualStyleBackColor = true;
@@ -57,9 +56,10 @@
             // buttonUP
             // 
             this.buttonUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonUP.Location = new System.Drawing.Point(48, 7);
+            this.buttonUP.Location = new System.Drawing.Point(64, 9);
+            this.buttonUP.Margin = new System.Windows.Forms.Padding(4);
             this.buttonUP.Name = "buttonUP";
-            this.buttonUP.Size = new System.Drawing.Size(34, 38);
+            this.buttonUP.Size = new System.Drawing.Size(45, 47);
             this.buttonUP.TabIndex = 3;
             this.buttonUP.Text = "⇧";
             this.buttonUP.UseVisualStyleBackColor = true;
@@ -68,9 +68,10 @@
             // buttonDOWN
             // 
             this.buttonDOWN.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonDOWN.Location = new System.Drawing.Point(48, 51);
+            this.buttonDOWN.Location = new System.Drawing.Point(64, 63);
+            this.buttonDOWN.Margin = new System.Windows.Forms.Padding(4);
             this.buttonDOWN.Name = "buttonDOWN";
-            this.buttonDOWN.Size = new System.Drawing.Size(34, 38);
+            this.buttonDOWN.Size = new System.Drawing.Size(45, 47);
             this.buttonDOWN.TabIndex = 4;
             this.buttonDOWN.Text = "⇩";
             this.buttonDOWN.UseVisualStyleBackColor = true;
@@ -78,9 +79,10 @@
             // buttonLEFT
             // 
             this.buttonLEFT.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonLEFT.Location = new System.Drawing.Point(8, 51);
+            this.buttonLEFT.Location = new System.Drawing.Point(11, 63);
+            this.buttonLEFT.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLEFT.Name = "buttonLEFT";
-            this.buttonLEFT.Size = new System.Drawing.Size(34, 38);
+            this.buttonLEFT.Size = new System.Drawing.Size(45, 47);
             this.buttonLEFT.TabIndex = 5;
             this.buttonLEFT.Text = "⇦";
             this.buttonLEFT.UseVisualStyleBackColor = true;
@@ -88,35 +90,34 @@
             // checkBoxFastMode
             // 
             this.checkBoxFastMode.AutoSize = true;
-            this.checkBoxFastMode.Location = new System.Drawing.Point(133, 7);
+            this.checkBoxFastMode.Location = new System.Drawing.Point(177, 9);
+            this.checkBoxFastMode.Margin = new System.Windows.Forms.Padding(4);
             this.checkBoxFastMode.Name = "checkBoxFastMode";
-            this.checkBoxFastMode.Size = new System.Drawing.Size(81, 17);
+            this.checkBoxFastMode.Size = new System.Drawing.Size(103, 21);
             this.checkBoxFastMode.TabIndex = 6;
             this.checkBoxFastMode.Text = "Rychlý mód";
             this.checkBoxFastMode.UseVisualStyleBackColor = true;
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 500;
-            // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(146, 51);
+            this.numericUpDown1.Location = new System.Drawing.Point(195, 142);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(68, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(91, 22);
             this.numericUpDown1.TabIndex = 7;
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(139, 77);
+            this.button1.Location = new System.Drawing.Point(252, 172);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(100, 28);
             this.button1.TabIndex = 8;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
@@ -124,38 +125,28 @@
             // 
             // timer2
             // 
-            this.timer2.Interval = 1;
+            this.timer2.Interval = 200;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
-            // button2
+            // numericUpDown3
             // 
-            this.button2.Location = new System.Drawing.Point(289, 77);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Location = new System.Drawing.Point(289, 51);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.numericUpDown3.Location = new System.Drawing.Point(294, 142);
+            this.numericUpDown3.Margin = new System.Windows.Forms.Padding(4);
+            this.numericUpDown3.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(68, 20);
-            this.numericUpDown2.TabIndex = 10;
+            this.numericUpDown3.Name = "numericUpDown3";
+            this.numericUpDown3.Size = new System.Drawing.Size(91, 22);
+            this.numericUpDown3.TabIndex = 11;
             // 
             // formManual
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(441, 241);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(588, 297);
+            this.Controls.Add(this.numericUpDown3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.checkBoxFastMode);
@@ -163,10 +154,12 @@
             this.Controls.Add(this.buttonDOWN);
             this.Controls.Add(this.buttonUP);
             this.Controls.Add(this.buttonRIGHT);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "formManual";
             this.Text = "Manuální ovládání";
+            this.Load += new System.EventHandler(this.formManual_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,11 +172,9 @@
         private System.Windows.Forms.Button buttonDOWN;
         private System.Windows.Forms.Button buttonLEFT;
         private System.Windows.Forms.CheckBox checkBoxFastMode;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer timer2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown numericUpDown3;
     }
 }

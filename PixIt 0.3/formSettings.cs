@@ -15,7 +15,7 @@ namespace PixIt_0._3
         {
             if (System.Windows.Forms.Application.OpenForms["formDebug"] != null)
             {
-                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLine(text);
+                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLineDebug(text);
             }
         }
 
@@ -59,6 +59,11 @@ namespace PixIt_0._3
         private void numPort_Click(object sender, EventArgs e)
         {
             debugAddLine("Číslo portu změněno na COM" + numPort.Value);
+        }
+
+        private void numPort_ValueChanged(object sender, EventArgs e)
+        {
+            formMain.numPort = Convert.ToInt32(numPort.Value);
         }     
     }
 }

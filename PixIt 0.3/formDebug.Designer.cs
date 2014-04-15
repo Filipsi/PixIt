@@ -88,7 +88,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "formDebug";
             this.Text = "Debug okno";
-            this.Load += new System.EventHandler(this.formDebug_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
