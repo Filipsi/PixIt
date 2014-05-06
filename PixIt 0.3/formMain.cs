@@ -34,6 +34,8 @@ namespace PixIt_0._3
         Point[] endPoint = new Point[400];
         string[] directionPoint = new string[400];
 
+        public static string serialLastReadedValue = "";
+
         bool settingsFormOpen = false;
         bool manualControlFormOpen = false;
         Form debugFormOpenedID = null;
@@ -149,25 +151,28 @@ namespace PixIt_0._3
         // Nastavení barvy pro určitou věc
         private void picOriginal_MouseClick(object sender, MouseEventArgs e)
         {
-            switch (settingColor)
+            if (settingsFormOpen == true)
             {
-                case "path":
-                    colorPath = LoadedImage.GetPixel(e.X, e.Y);
-                    debugAddLine("Číslo portu změněno na: " + formMain.numPort);
-                    break;
+                switch (settingColor)
+                {
+                    case "path":
+                        colorPath = LoadedImage.GetPixel(e.X, e.Y);
+                        debugAddLine("Číslo portu změněno na: " + formMain.numPort);
+                        break;
 
-                case "drill":
-                    colorDrill = LoadedImage.GetPixel(e.X, e.Y);
-                    debugAddLine("Barva vrtání změněna na: " + formMain.colorDrill);
-                    break;
+                    case "drill":
+                        colorDrill = LoadedImage.GetPixel(e.X, e.Y);
+                        debugAddLine("Barva vrtání změněna na: " + formMain.colorDrill);
+                        break;
 
-                case "translation":
-                    colorTranslation = LoadedImage.GetPixel(e.X, e.Y);
-                    debugAddLine("Barva přechodu změněna na: " + formMain.colorTranslation);
-                    break;
+                    case "translation":
+                        colorTranslation = LoadedImage.GetPixel(e.X, e.Y);
+                        debugAddLine("Barva přechodu změněna na: " + formMain.colorTranslation);
+                        break;
 
+                }
+                settingColor = ""; settings.loadColors();
             }
-            settingColor = ""; settings.loadColors();
         }
 
         // Když se klikne na button otevření portu
@@ -180,14 +185,15 @@ namespace PixIt_0._3
                 // Nastavení otevření portu
                 mainSerialPort.PortName = "COM" + numPort.ToString();
                 mainSerialPort.BaudRate = 115200;
+                mainSerialPort.DataBits = 8;
                 mainSerialPort.Parity = Parity.None;
                 mainSerialPort.StopBits = StopBits.One;
-                mainSerialPort.DataBits = 8;
                 mainSerialPort.Handshake = Handshake.None;
                 mainSerialPort.DtrEnable = true;
                 mainSerialPort.RtsEnable = true;
-                mainSerialPort.Encoding = Encoding.UTF8;
-                mainSerialPort.DataReceived += DataReceived_Read;
+                //mainSerialPort.Encoding = Encoding.Unicode;
+                mainSerialPort.Encoding = Encoding.GetEncoding(28591);
+                //mainSerialPort.DataReceived += DataReceived_Read;
                 mainSerialPort.Close();
 
                 // Zkusit otevřít port
@@ -240,13 +246,16 @@ namespace PixIt_0._3
         {
             SerialPort mySerial = (SerialPort)sender;
 
+            string data = Convert.ToChar(mySerial.ReadByte()).ToString();
+
             if (this.InvokeRequired)
             {
                 if (System.Windows.Forms.Application.OpenForms["formDebug"] != null)
                 {
                     (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxSerialPort.BeginInvoke(new MethodInvoker(delegate
                     {
-                        (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxSerialPort.Items.Add(mySerial.ReadLine());
+                        (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxSerialPort.Items.Add(data);
+
                         (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxSerialPort.SelectedIndex = (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).listBoxSerialPort.Items.Count - 1;
                     }));        
                 }
@@ -432,5 +441,7 @@ namespace PixIt_0._3
                     (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLineDebug(text);
                 }
         }
+
     }
+
 }

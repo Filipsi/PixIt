@@ -12,12 +12,18 @@ namespace PixIt_0._3
 {
     public partial class formManual : Form
     {
-        const int moveXp = 0;
-        const int moveXm = 0;
-        const int moveYp = 0;
-        const int moveYm = 0;
+        const int moveYleft = 128 + 3;
+        const int moveYright = 128 + 4;
+        const int moveXleft = 128 + 1;
+        const int moveXright = 128 + 2;
+        const int moveZup = 128 + 5;
+        const int moveZdown = 128 + 6;
+        const int penUp = 128 + 7;
+        const int penDown = 128 + 8;
+        const int drillOnRight = 128 + 9;
+        const int drillOnLeft = 128 + 10;
+        const int drillOff = 128 + 11;
 
-        int valSaved = 0;
 
         public void debugAddLine(string text)
         {
@@ -42,32 +48,114 @@ namespace PixIt_0._3
             sw.Stop();
         }
 
-        private void buttonUP_MouseDown(object sender, MouseEventArgs e)
+        private void serialSend(int valueSend)
         {
+            /*
+            var encoding = Encoding.Unicode;
+            byte[] encodeBytes = encoding.GetBytes(Convert.ToChar(valueSend).ToString());
+            formMain.mainSerialPort.Write(encodeBytes, 0, 1);
+            */
+
+            formMain.mainSerialPort.Write(Convert.ToChar(valueSend).ToString());
+        }
+
+        private void buttonSerialSend_Click(object sender, EventArgs e)
+        {
+            serialSend(Convert.ToInt32(textBoxSerialSendData.Text));
+        }
+
+        private bool getSenstorState(int senstorID)
+        {
+            bool retVal;
+
+            formMain.mainSerialPort.Write(Convert.ToChar(senstorID).ToString());
+            string data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
+            if (data == "@") { retVal = true; } else { retVal = false; }
+            formMain.mainSerialPort.Write(Convert.ToChar(senstorID-32).ToString());
+
+            formMain.mainSerialPort.DiscardInBuffer();
+            debugAddLine(data);
+
+            return retVal;
+        }
+
+        private void buttonUP_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i <= 100; i++)
+            {
+                serialSend(moveYleft);
+                Thread.Sleep(1);
+                serialSend(moveYleft + 16);
+                Thread.Sleep(1);
+                serialSend(moveYleft);
+            }
+        }
+
+        private void buttonDOWN_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i <= 100; i++)
+            {
+                serialSend(moveYright);
+                Thread.Sleep(1);
+                serialSend(moveYright + 16);
+                Thread.Sleep(1);
+                serialSend(moveYright);
+            }
+        }
+
+        private void buttonLEFT_Click(object sender, EventArgs e)
+        {
+            int delay = 3;
+            for (int i = 0; i <= 50; i++)
+            {
+                serialSend(moveXleft);
+                Thread.Sleep(delay);
+                serialSend(moveXleft+ 16);
+                Thread.Sleep(delay);
+                serialSend(moveXleft);
+            }
+        }
+
+        private void buttonRIGHT_Click(object sender, EventArgs e)
+        {
+            int delay = 3;
+            for (int i = 0; i <= 50; i++)
+            {
+                serialSend(moveXright);
+                Thread.Sleep(delay);
+                serialSend(moveXright + 16);
+                Thread.Sleep(delay);
+                serialSend(moveXright);
+            }
+        }
+
+        private void buttonZup_Click(object sender, EventArgs e)
+        {
+            bool a = false;
+
+            while (a == false)
+            {
+                a = getSenstorState(165);
+                Thread.Sleep(10);
+                buttonZup.Text = a.ToString();
+                serialSend(moveZup);
+                Thread.Sleep(500);
+                serialSend(moveZup + 16);
+                Thread.Sleep(500);
+                serialSend(moveZup);
+            }
 
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            formMain.mainSerialPort.Write(Convert.ToChar(Convert.ToInt32(numericUpDown1.Value)).ToString());
-            debugAddLine(Convert.ToChar(Convert.ToInt32(numericUpDown1.Value)).ToString());
-        }
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (timer2.Enabled == true) { timer2.Enabled = false; } else { timer2.Enabled = true; }
-        }
-
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-            if (numericUpDown1.Value != numericUpDown3.Value) { valSaved = Convert.ToInt32(numericUpDown1.Value); ; numericUpDown1.Value = numericUpDown3.Value; } else { numericUpDown1.Value = valSaved; }
-            
-        }
-
-        private void formManual_Load(object sender, EventArgs e)
-        {
-
+            button1.Text = getSenstorState(165).ToString();
         }
 
     }
+
+    
 }
