@@ -191,6 +191,8 @@ namespace PixIt_0._3
                 mainSerialPort.Handshake = Handshake.None;
                 mainSerialPort.DtrEnable = true;
                 mainSerialPort.RtsEnable = true;
+                mainSerialPort.WriteTimeout = 300;
+                mainSerialPort.ReadTimeout = 300;
                 //mainSerialPort.Encoding = Encoding.Unicode;
                 mainSerialPort.Encoding = Encoding.GetEncoding(28591);
                 //mainSerialPort.DataReceived += DataReceived_Read;
