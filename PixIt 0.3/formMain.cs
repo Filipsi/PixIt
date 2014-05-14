@@ -30,9 +30,20 @@ namespace PixIt_0._3
 
         // Proměnné
         string[, ,] point = new string[400, 400, 20];
-        Point[] startPoint = new Point[400];
-        Point[] endPoint = new Point[400];
+
+        int[] vectorPointX = new int[400];
+        int[] vectorPointY = new int[400];
         string[] directionPoint = new string[400];
+        int vectorCount = 0;
+
+        int[] decodeVectorPointStartX = new int[400];
+        int[] decodeVectorPointStartY = new int[400];
+        int[] decodeVectorPointEndX = new int[400];
+        int[] decodeVectorPointEndY = new int[400];
+        int[] decodeLengthPoint = new int[400];
+        int decodedVectorsCount = 0;
+
+
 
         public static string serialLastReadedValue = "";
 
@@ -78,6 +89,7 @@ namespace PixIt_0._3
         private void ReloadPictureBoxs()
         {
             picOriginal.Image = (Image)LoadedImage;
+            picDraw.Image = (Image)ShowVectors;
         }
 
         // Funkce pro načtení nastavení
@@ -127,6 +139,7 @@ namespace PixIt_0._3
             if (result == DialogResult.OK)
             {
                 LoadedImage = new Bitmap(dialogOpenFile.FileName);
+                ShowVectors = new Bitmap(LoadedImage.Width, LoadedImage.Height);
                 btnDraw.Enabled = true;
                 toolWidth.Text = "Width: " + LoadedImage.Width.ToString();
                 toolHeight.Text = "Height: " + LoadedImage.Height.ToString();
@@ -311,6 +324,15 @@ namespace PixIt_0._3
         {
             getRoutes();
             getEnds();
+
+            //toolVectorCount.Text = "Počet tras: " + vectorCount;
+            for (int i = 0; i < vectorCount; i++)
+            {
+                listBoxVectors.Items.Add("[" + vectorPointX[i] + "," + vectorPointY[i] + "] " + directionPoint[i]);
+            }
+
+            getVectors();
+
         }
 
 
@@ -356,84 +378,353 @@ namespace PixIt_0._3
                         if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i, u + 3, 0] == "NULL" && point[i, u - 1, 0] == "ROUTE" && point[i + 2, u + 1, 0] == "ROUTE")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "Xp";
+                            point[i, u, 1] = "XpY0";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "XpY0";
+
+                            vectorCount++;
                         }
                         else if (point[i + 2, u, 0] == "ROUTE" && point[i - 1, u, 0] == "NULL" && point[i, u + 1, 0] == "NULL" && point[i, u - 2, 0] == "ROUTE" && point[i + 3, u, 0] == "NULL" && point[i, u - 3, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "XspYsn";
-                        }
-                        else if (point[i + 2, u, 0] == "ROUTE" && point[i - 1, u, 0] == "NULL" && point[i, u + 2, 0] == "NULL" && point[i, u - 2, 0] == "NULL")
-                        {
+                            point[i, u, 1] = "XpYn";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "XpYn";
+
+                            vectorCount++;
                         }
                         else if (point[i + 2, u, 0] == "ROUTE" && point[i - 1, u, 0] == "NULL" && point[i, u + 2, 0] == "NULL" && point[i, u - 2, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "Xp";
+                            point[i, u, 1] = "XpY0";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "XpY0";
+
+                            vectorCount++;
                         }
                         else if (point[i + 1, u, 0] == "NULL" && point[i - 2, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 2, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "Xn";
+                            point[i, u, 1] = "XnY0";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "XnY0";
+
+                            vectorCount++;
                         }
                         else if (point[i + 2, u, 0] == "NULL" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "ROUTE" && point[i, u - 1, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "Yp";
+                            point[i, u, 1] = "X0Yp";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "X0Yp";
+
+                            vectorCount++;
                         }
                         else if (point[i + 2, u, 0] == "NULL" && point[i - 2, u, 0] == "NULL" && point[i, u + 1, 0] == "NULL" && point[i, u - 2, 0] == "ROUTE")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "Yn";
+                            point[i, u, 1] = "X0Yn";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "X0Yn";
+
+                            vectorCount++;
                         }
                         else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL" && point[i + 2, u + 2, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "XpY";
+                            point[i, u, 1] = "XpY1";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "XpY1";
+
+                            vectorCount++;
                         }
                         else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE" && point[i - 2, u - 2, 0] == "NULL" && point[i - 2, u + 2, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "XnY";
+                            point[i, u, 1] = "XnY1";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "XnY1";
+
+                            vectorCount++;
                         }
                         else if (point[i + 3, u, 0] == "ROUTE" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i + 2, u + 2, 0] == "NULL" && point[i - 2, u + 2, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "XYp";
+                            point[i, u, 1] = "X1Yp";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "X1Yn";
+
+                            vectorCount++;
                         }
                         else if (point[i + 3, u, 0] == "ROUTE" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL" && point[i - 2, u - 2, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "XYn";
+                            point[i, u, 1] = "X1Yn";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "X1Yn";
+
+                            vectorCount++;
                         }
                         else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i + 2, u + 2, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XpYp";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "XpYp";
+
+                            vectorCount++;
                         }
                         else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i - 2, u + 2, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XnYp";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "XnYp";
+
+                            vectorCount++;
                         }
                         else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "XpYp";
+                            point[i, u, 1] = "XpYn";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "XpYn";
+
+                            vectorCount++;
                         }
                         else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i - 2, u - 2, 0] == "NULL")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "XpYp";
+                            point[i, u, 1] = "XnYn";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "XnYn";
+
+                            vectorCount++;
                         }
                         else if (point[i + 3, u, 0] == "ROUTE" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE")
                         {
                             LoadedImage.SetPixel(i, u, Color.Red);
-                            point[i, u, 1] = "XY";
+                            point[i, u, 1] = "X1Y1";
+
+                            vectorPointX[vectorCount] = i;
+                            vectorPointY[vectorCount] = u;
+                            directionPoint[vectorCount] = "X1Y1";
+
+                            vectorCount++;
                         }
                     }
                 }
-            } ReloadPictureBoxs();
+            } 
+            
+            ReloadPictureBoxs();
+        }
+
+        private void processVector(int checkID, int i)
+        {
+            listBoxRes.Items.Add("  Nalezen bod: " + vectorPointX[i] + "," + vectorPointY[i]);
+
+            //Uloží dvojci bodů jako vektor
+            //Zapíše StartX/Y
+            decodeVectorPointStartX[decodedVectorsCount] = vectorPointX[checkID];
+            decodeVectorPointStartY[decodedVectorsCount] = vectorPointY[checkID];
+            //Zapíše EndX/Y
+            decodeVectorPointEndX[decodedVectorsCount] = vectorPointX[i];
+            decodeVectorPointEndY[decodedVectorsCount] = vectorPointY[i];
+
+            listBoxDecodedVectors.Items.Add("[" + decodeVectorPointStartX[decodedVectorsCount] + "," + decodeVectorPointStartY[decodedVectorsCount] + "] -> [" + decodeVectorPointEndX[decodedVectorsCount] + "," + decodeVectorPointEndY[decodedVectorsCount] + "]");
+
+            //Uloží
+            decodedVectorsCount++;
+
+            //Smaže první (začáteční) bod
+            vectorPointX[checkID] = 0;
+            vectorPointY[checkID] = 0;
+        }
+
+        private int copmarePoints(int pointIndex, string direction)
+        {
+            int retVal = 0;
+            int minCompareValue;
+            int minCompareIndex = -1;
+
+            switch (direction)
+            {
+                case "Yp":
+                    minCompareValue = LoadedImage.Height - vectorPointY[pointIndex];
+
+                    for (int i = 0; i < vectorCount; i++){
+                        string YVal = directionPoint[i].Substring(directionPoint[i].IndexOf("Y") + 1, 1);
+
+                        if (vectorPointX[pointIndex] == vectorPointX[i] && vectorPointY[i] < minCompareValue && YVal == "n" && vectorPointY[i] > vectorPointY[pointIndex])
+                        {
+                            minCompareValue = vectorPointY[i];
+                            minCompareIndex = i;
+                        }
+                    }
+
+                    if (minCompareValue == LoadedImage.Height - vectorPointY[pointIndex]) { retVal = -1; } else { retVal = minCompareIndex; }
+                    break;
+
+                case "Yn":
+                    minCompareValue = LoadedImage.Height - vectorPointY[pointIndex];
+
+                    for (int i = 0; i < vectorCount; i++)
+                    {
+                        string YVal = directionPoint[i].Substring(directionPoint[i].IndexOf("Y") + 1, 1);
+
+                        if (vectorPointX[pointIndex] == vectorPointX[i] && vectorPointY[i] < minCompareValue && YVal == "p" && vectorPointY[i] < vectorPointY[pointIndex])
+                        {
+                            minCompareValue = vectorPointY[i];
+                            minCompareIndex = i;
+                        }
+                    }
+
+                    if (minCompareValue == LoadedImage.Height - vectorPointY[pointIndex]) { retVal = -1; } else { retVal = minCompareIndex; }
+                    break;
+
+                case "Xp":
+                    minCompareValue = LoadedImage.Width - vectorPointX[pointIndex];
+
+                    for (int i = 0; i < vectorCount; i++)
+                    {
+                        string XVal = directionPoint[i].Substring(directionPoint[i].IndexOf("X") + 1, 1);
+
+                        if (vectorPointY[pointIndex] == vectorPointY[i] && vectorPointX[i] < minCompareValue && XVal == "n" && vectorPointX[i] > vectorPointX[pointIndex])
+                        {
+                            minCompareValue = vectorPointY[i];
+                            minCompareIndex = i;
+                        }
+                    }
+                    if (minCompareValue == LoadedImage.Width - vectorPointX[pointIndex]) { retVal = -1; } else { retVal = minCompareIndex; }
+                    break;
+
+                case "Xn":
+                    minCompareValue = LoadedImage.Width - vectorPointX[pointIndex];
+
+                    for (int i = 0; i < vectorCount; i++)
+                    {
+                        string XVal = directionPoint[i].Substring(directionPoint[i].IndexOf("X") + 1, 1);
+
+                        if (vectorPointY[pointIndex] == vectorPointY[i] && vectorPointX[i] < minCompareValue && XVal == "p" && vectorPointX[i] < vectorPointX[pointIndex])
+                        {
+                            minCompareValue = vectorPointY[i];
+                            minCompareIndex = i;
+                        }
+                    }
+                    if (minCompareValue == LoadedImage.Width - vectorPointX[pointIndex]) { retVal = -1; } else { retVal = minCompareIndex; }
+                    break;
+            }
+
+            return retVal;
+        }
+
+        private void getVectors()
+        {
+            //decodeVectorPointX
+            //decodeVectorPointY
+            //decodeDirectionPoint
+            //decodeLengthPoint
+
+            //vectorPointX
+            //vectorPointY
+            //directionPoint
+
+            int checkID = 0;
+            string deleteDirection = "";
+            string XVal; string YVal;
+
+            do{
+                XVal = "";
+                YVal = "";
+
+                if (deleteDirection != ""){
+                    directionPoint[checkID] = directionPoint[checkID].Replace(deleteDirection, deleteDirection.Substring(0, 1) + "0");
+                    listBoxRes.Items.Add("Upraveno s deleteDirection");
+                }
+
+                //Zjistí hodnoty cest X a Y pro bod checkID
+                listBoxRes.Items.Add("Bod: [" + vectorPointX[checkID] + "," + vectorPointY[checkID] + "]");
+                XVal = directionPoint[checkID].Substring(directionPoint[checkID].IndexOf("X") + 1, 1);
+                YVal = directionPoint[checkID].Substring(directionPoint[checkID].IndexOf("Y") + 1, 1);
+                listBoxRes.Items.Add(" XVal: " + XVal + " / YVal: " + YVal);
+
+
+                if (XVal == "0" && YVal == "p")
+                {
+                    int pointFindIndex = copmarePoints(checkID, "Yp");
+                    if(pointFindIndex != -1){
+                        processVector(checkID, pointFindIndex);
+                        checkID = pointFindIndex;
+                        deleteDirection = "Yn";
+                    } else { listBoxRes.Items.Add("ForceBreak!"); break; }
+                }
+                else if (XVal == "0" && YVal == "n")
+                {
+                    int pointFindIndex = copmarePoints(checkID, "Yn");
+                    if (pointFindIndex != -1)
+                    {
+                        processVector(checkID, pointFindIndex);
+                        checkID = pointFindIndex;
+                        deleteDirection = "Yp";
+                    }else { listBoxRes.Items.Add("ForceBreak!"); break; }
+                }
+                else if (XVal == "p" && YVal == "0")
+                {
+                    int pointFindIndex = copmarePoints(checkID, "Xp");
+                    if (pointFindIndex != -1)
+                    {
+                        processVector(checkID, pointFindIndex);
+                        checkID = pointFindIndex;
+                        deleteDirection = "Xn";
+                    }else { listBoxRes.Items.Add("ForceBreak!"); break; }
+                }
+                else if (XVal == "n" && YVal == "0")
+                {
+                    int pointFindIndex = copmarePoints(checkID, "Xn");
+                    if (pointFindIndex != -1)
+                    {
+                        processVector(checkID, pointFindIndex);
+                        checkID = pointFindIndex;
+                        deleteDirection = "Xp";
+                    }
+                    else { listBoxRes.Items.Add("ForceBreak!"); break; }
+                }
+                else { break; }
+
+            } while (true);
+
+
+
+
+
         }
 
         public void debugAddLine(string text)
@@ -442,6 +733,70 @@ namespace PixIt_0._3
                 {
                     (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLineDebug(text);
                 }
+        }
+
+        private void listBoxVectors_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowVectors.Dispose();
+            ShowVectors = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+            //ShowVectors.SetPixel(vectorPointX[listBoxVectors.SelectedIndex], vectorPointY[listBoxVectors.SelectedIndex], Color.DarkBlue);
+            ShowVectors.SetPixel(decodeVectorPointStartX[listBoxVectors.SelectedIndex], decodeVectorPointStartY[listBoxVectors.SelectedIndex], Color.Blue);
+            ShowVectors.SetPixel(decodeVectorPointEndX[listBoxVectors.SelectedIndex], decodeVectorPointEndY[listBoxVectors.SelectedIndex], Color.Red);
+            ReloadPictureBoxs();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            label1.Text = decodedVectorsCount.ToString();
+
+            ShowVectors.Dispose();
+            ShowVectors = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+
+            for (int ii = 0; ii < decodedVectorsCount ; ii++)
+            {
+
+            int x = decodeVectorPointEndX[ii] - decodeVectorPointStartX[ii];
+            int y = decodeVectorPointEndY[ii] - decodeVectorPointStartY[ii];
+
+            listBoxRes.Items.Add(x + "/" + y);
+            
+
+            if (x != 0)
+            {
+                for (int i = 0; i <= Math.Abs(x); i++)
+                {
+                    if (x > 0)
+                    {
+                        ShowVectors.SetPixel(decodeVectorPointStartX[ii] + i, decodeVectorPointStartY[ii], Color.Green);
+                    }
+
+                    if (x < 0)
+                    {
+                        ShowVectors.SetPixel(decodeVectorPointStartX[ii] - i, decodeVectorPointStartY[ii], Color.Green);
+                    }
+                }
+            }
+
+            if (y != 0)
+            {
+                for (int i = 0; i <= Math.Abs(y); i++)
+                {
+                    if (y > 0)
+                    {
+                        ShowVectors.SetPixel(decodeVectorPointStartX[ii], decodeVectorPointStartY[ii] + i, Color.Green);
+                    }
+
+                    if (y < 0)
+                    {
+                        ShowVectors.SetPixel(decodeVectorPointStartX[ii], decodeVectorPointStartY[ii] - i, Color.Green);
+                        
+                    }
+                }
+            }
+
+            }
+
+            ReloadPictureBoxs();
         }
 
     }

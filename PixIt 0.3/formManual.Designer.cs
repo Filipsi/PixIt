@@ -46,8 +46,12 @@
             this.buttonDrillOnRight = new System.Windows.Forms.Button();
             this.buttonDrillOff = new System.Windows.Forms.Button();
             this.textBoxTestStateVal = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.numericUpDownFastModeBurst = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.button3 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFastModeBurst)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonRIGHT
@@ -67,7 +71,7 @@
             // buttonLEFT
             // 
             this.buttonLEFT.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonLEFT.Location = new System.Drawing.Point(11, 63);
+            this.buttonLEFT.Location = new System.Drawing.Point(9, 62);
             this.buttonLEFT.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLEFT.Name = "buttonLEFT";
             this.buttonLEFT.Size = new System.Drawing.Size(45, 47);
@@ -81,7 +85,7 @@
             // checkBoxFastMode
             // 
             this.checkBoxFastMode.AutoSize = true;
-            this.checkBoxFastMode.Location = new System.Drawing.Point(329, 158);
+            this.checkBoxFastMode.Location = new System.Drawing.Point(236, 236);
             this.checkBoxFastMode.Margin = new System.Windows.Forms.Padding(4);
             this.checkBoxFastMode.Name = "checkBoxFastMode";
             this.checkBoxFastMode.Size = new System.Drawing.Size(103, 21);
@@ -118,7 +122,7 @@
             // 
             // buttonDefValXYZ
             // 
-            this.buttonDefValXYZ.Location = new System.Drawing.Point(323, 205);
+            this.buttonDefValXYZ.Location = new System.Drawing.Point(467, 28);
             this.buttonDefValXYZ.Name = "buttonDefValXYZ";
             this.buttonDefValXYZ.Size = new System.Drawing.Size(109, 63);
             this.buttonDefValXYZ.TabIndex = 10;
@@ -137,6 +141,8 @@
             this.buttonUP.Text = "⇧";
             this.buttonUP.UseVisualStyleBackColor = true;
             this.buttonUP.Click += new System.EventHandler(this.buttonUP_Click);
+            this.buttonUP.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonUP_MouseDown);
+            this.buttonUP.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonUP_MouseUp);
             // 
             // buttonDOWN
             // 
@@ -149,6 +155,8 @@
             this.buttonDOWN.Text = "⇩";
             this.buttonDOWN.UseVisualStyleBackColor = true;
             this.buttonDOWN.Click += new System.EventHandler(this.buttonDOWN_Click);
+            this.buttonDOWN.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonDOWN_MouseDown);
+            this.buttonDOWN.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonDOWN_MouseUp);
             // 
             // buttonZdown
             // 
@@ -161,6 +169,8 @@
             this.buttonZdown.Text = "⇩";
             this.buttonZdown.UseVisualStyleBackColor = true;
             this.buttonZdown.Click += new System.EventHandler(this.buttonZdown_Click);
+            this.buttonZdown.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonZdown_MouseDown);
+            this.buttonZdown.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonZdown_MouseUp);
             // 
             // buttonZup
             // 
@@ -173,6 +183,8 @@
             this.buttonZup.Text = "⇧";
             this.buttonZup.UseVisualStyleBackColor = true;
             this.buttonZup.Click += new System.EventHandler(this.buttonZup_Click);
+            this.buttonZup.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonZup_MouseDown);
+            this.buttonZup.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonZup_MouseUp);
             // 
             // buttonPenDown
             // 
@@ -200,7 +212,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(448, 244);
+            this.button2.Location = new System.Drawing.Point(343, 161);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(98, 41);
             this.button2.TabIndex = 15;
@@ -245,32 +257,59 @@
             this.textBoxTestStateVal.Size = new System.Drawing.Size(100, 22);
             this.textBoxTestStateVal.TabIndex = 19;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(62, 158);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "label1";
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(484, 151);
+            this.button1.Location = new System.Drawing.Point(477, 151);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(82, 23);
             this.button1.TabIndex = 21;
             this.button1.Text = "radioTest";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
+            // numericUpDownFastModeBurst
+            // 
+            this.numericUpDownFastModeBurst.Location = new System.Drawing.Point(236, 264);
+            this.numericUpDownFastModeBurst.Maximum = new decimal(new int[] {
+            379,
+            0,
+            0,
+            0});
+            this.numericUpDownFastModeBurst.Name = "numericUpDownFastModeBurst";
+            this.numericUpDownFastModeBurst.Size = new System.Drawing.Size(120, 22);
+            this.numericUpDownFastModeBurst.TabIndex = 22;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(102, 161);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 22);
+            this.numericUpDown1.TabIndex = 23;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(441, 232);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(118, 40);
+            this.button3.TabIndex = 24;
+            this.button3.Text = "DrawTextHeBa";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // formManual
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(588, 297);
+            this.ClientSize = new System.Drawing.Size(594, 297);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.numericUpDownFastModeBurst);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxTestStateVal);
             this.Controls.Add(this.buttonDrillOff);
             this.Controls.Add(this.buttonDrillOnRight);
@@ -292,6 +331,8 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "formManual";
             this.Text = "Manuální ovládání";
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFastModeBurst)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -317,7 +358,9 @@
         private System.Windows.Forms.Button buttonDrillOnRight;
         private System.Windows.Forms.Button buttonDrillOff;
         private System.Windows.Forms.TextBox textBoxTestStateVal;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.NumericUpDown numericUpDownFastModeBurst;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button button3;
     }
 }

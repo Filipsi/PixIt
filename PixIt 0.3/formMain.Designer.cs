@@ -45,7 +45,12 @@
             this.toolPortStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolWidth = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolHeight = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolVectorCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.buttonDebug = new System.Windows.Forms.Button();
+            this.listBoxRes = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.listBoxDecodedVectors = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.picOriginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDraw)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).BeginInit();
@@ -144,6 +149,7 @@
             this.listBoxVectors.Name = "listBoxVectors";
             this.listBoxVectors.Size = new System.Drawing.Size(159, 372);
             this.listBoxVectors.TabIndex = 7;
+            this.listBoxVectors.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged);
             // 
             // labelOriginal
             // 
@@ -195,11 +201,12 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolPortStatus,
             this.toolWidth,
-            this.toolHeight});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 413);
+            this.toolHeight,
+            this.toolVectorCount});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 696);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1250, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1508, 25);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 20;
             this.statusStrip1.Text = "statusStrip1";
@@ -224,6 +231,13 @@
             this.toolHeight.Size = new System.Drawing.Size(69, 20);
             this.toolHeight.Text = "Height: 0";
             // 
+            // toolVectorCount
+            // 
+            this.toolVectorCount.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
+            this.toolVectorCount.Name = "toolVectorCount";
+            this.toolVectorCount.Size = new System.Drawing.Size(89, 20);
+            this.toolVectorCount.Text = "Počet tras: 0";
+            // 
             // buttonDebug
             // 
             this.buttonDebug.Location = new System.Drawing.Point(19, 181);
@@ -235,11 +249,53 @@
             this.buttonDebug.UseVisualStyleBackColor = true;
             this.buttonDebug.Click += new System.EventHandler(this.buttonDebug_Click);
             // 
+            // listBoxRes
+            // 
+            this.listBoxRes.FormattingEnabled = true;
+            this.listBoxRes.ItemHeight = 16;
+            this.listBoxRes.Location = new System.Drawing.Point(201, 427);
+            this.listBoxRes.Name = "listBoxRes";
+            this.listBoxRes.Size = new System.Drawing.Size(294, 212);
+            this.listBoxRes.TabIndex = 22;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(818, 449);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(116, 23);
+            this.button1.TabIndex = 23;
+            this.button1.Text = "Zobraz Vektory";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(830, 427);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(46, 17);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "label1";
+            // 
+            // listBoxDecodedVectors
+            // 
+            this.listBoxDecodedVectors.FormattingEnabled = true;
+            this.listBoxDecodedVectors.ItemHeight = 16;
+            this.listBoxDecodedVectors.Location = new System.Drawing.Point(1243, 31);
+            this.listBoxDecodedVectors.Margin = new System.Windows.Forms.Padding(4);
+            this.listBoxDecodedVectors.Name = "listBoxDecodedVectors";
+            this.listBoxDecodedVectors.Size = new System.Drawing.Size(159, 372);
+            this.listBoxDecodedVectors.TabIndex = 25;
+            // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1250, 438);
+            this.ClientSize = new System.Drawing.Size(1508, 721);
+            this.Controls.Add(this.listBoxDecodedVectors);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.listBoxRes);
             this.Controls.Add(this.buttonDebug);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.picOpenPort);
@@ -289,6 +345,11 @@
         private System.Windows.Forms.ToolStripStatusLabel toolHeight;
         private System.Windows.Forms.Button buttonDebug;
         public System.Windows.Forms.ToolStripStatusLabel toolPortStatus;
+        private System.Windows.Forms.ToolStripStatusLabel toolVectorCount;
+        private System.Windows.Forms.ListBox listBoxRes;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox listBoxDecodedVectors;
     }
 }
 
