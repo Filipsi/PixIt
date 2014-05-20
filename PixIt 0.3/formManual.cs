@@ -12,33 +12,12 @@ namespace PixIt_0._3
 {
     public partial class formManual : Form
     {
-        const int moveYup = 128 + 3;
-        const int moveYdown = 128 + 4;
-        const int moveXleft = 128 + 1;
-        const int moveXright = 128 + 2;
-        const int moveZup = 128 + 5;
-        const int moveZdown = 128 + 6;
-
-        const int penUp = 128 + 7;
-        const int penDown = 128 + 8;
-
-        const int drillOnRight = 128  + 9;
-        const int drillOnLeft = 128  + 10;
-        const int drillOff = 128 + 11;
-        const int drillXDefPos = 45;
-
-        const int releUp = 128 + 7;
-        const int releDown = 128 + 8;
-
-        const float xRadio = 2.12F;
-
         bool ButtonXLeftIsCLecked = false;
         bool ButtonXRightIsCLecked = false;
         bool ButtonDrillUpIsCLecked = false;
         bool ButtonDrillDownIsCLecked = false;
         bool ButtonYUpIsCLecked = false;
         bool ButtonYDownIsCLecked = false;
-
 
         public void debugAddLine(string text)
         {
@@ -54,6 +33,7 @@ namespace PixIt_0._3
             debugAddLine("Manuální ovládání bylo otevřeno");
         }
         
+        /*
         private void delay(int delayTime)
         {
             Stopwatch sw;
@@ -61,7 +41,7 @@ namespace PixIt_0._3
 
             while (sw.ElapsedMilliseconds <= delayTime) { };
             sw.Stop();
-        }
+        }*/
 
         private void serialSend(int valueSend)
         {
@@ -109,75 +89,96 @@ namespace PixIt_0._3
         {
             if (checkBoxFastMode.Checked == false)
             {
-                serialSend(moveYup);
+                serialSend(PrinterControl.moveYup);
                 Thread.Sleep(1);
-                serialSend(moveYup + 16);
+                serialSend(PrinterControl.moveYup + 16);
                 Thread.Sleep(1);
-                serialSend(moveYup);
+                serialSend(PrinterControl.moveYup);
             }
         }
 
         private void buttonDOWN_Click(object sender, EventArgs e)
         {
             if(checkBoxFastMode.Checked == false){
-                serialSend(moveYdown);
+                serialSend(PrinterControl.moveYdown);
                 Thread.Sleep(1);
-                serialSend(moveYdown + 16);
+                serialSend(PrinterControl.moveYdown + 16);
                 Thread.Sleep(1);
-                serialSend(moveYdown);
+                serialSend(PrinterControl.moveYdown);
             }
         }
 
         private void buttonZup_Click(object sender, EventArgs e)
         {
             if (checkBoxFastMode.Checked == false){
-                serialSend(moveZup);
+                serialSend(PrinterControl.moveZup);
                 Thread.Sleep(3);
-                serialSend(moveZup + 16);
+                serialSend(PrinterControl.moveZup + 16);
                 Thread.Sleep(3);
-                serialSend(moveZup);
+                serialSend(PrinterControl.moveZup);
             }
         }
 
         private void buttonZdown_Click(object sender, EventArgs e)
         {
+            string data;
+            bool retVal;
+
             if (checkBoxFastMode.Checked == false){
-                serialSend(moveZdown);
-                Thread.Sleep(3);
-                serialSend(moveZdown + 16);
-                Thread.Sleep(3);
-                serialSend(moveZdown);
+                Thread.Sleep(2);
+
+                serialSend(PrinterControl.moveZdown + 16 + 32);
+
+                formMain.mainSerialPort.DiscardInBuffer();
+                data = "";
+                try{
+                    data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
+                }catch (TimeoutException) { }
+                if (data == "@") { retVal = true; } else { retVal = false; }
+
+                serialSend(PrinterControl.moveZdown);
+
+                if (retVal == true)
+                {
+                    for (int i = 0; i <= 40; i++)
+                    {
+                        serialSend(PrinterControl.moveZup);
+                        Thread.Sleep(1);
+                        serialSend(PrinterControl.moveZup + 16);
+                        serialSend(PrinterControl.moveZup);
+                    }
+                }
             }
         }
 
         private void buttonDrillOnLeft_Click(object sender, EventArgs e)
         {
             int delay = 1;
-            serialSend(drillOnLeft);
+            serialSend(PrinterControl.drillOnLeft);
             Thread.Sleep(delay);
-            serialSend(drillOnLeft + 16);
+            serialSend(PrinterControl.drillOnLeft + 16);
             Thread.Sleep(delay);
-            serialSend(drillOnLeft);
+            serialSend(PrinterControl.drillOnLeft);
         }
 
         private void buttonDrillOnRight_Click(object sender, EventArgs e)
         {
             int delay = 1;
-            serialSend(drillOnRight);
+            serialSend(PrinterControl.drillOnRight);
             Thread.Sleep(delay);
-            serialSend(drillOnRight + 16);
+            serialSend(PrinterControl.drillOnRight + 16);
             Thread.Sleep(delay);
-            serialSend(drillOnRight);
+            serialSend(PrinterControl.drillOnRight);
         }
 
         private void buttonDrillOff_Click(object sender, EventArgs e)
         {
             int delay = 1;
-            serialSend(drillOff);
+            serialSend(PrinterControl.drillOff);
             Thread.Sleep(delay);
-            serialSend(drillOff + 16);
+            serialSend(PrinterControl.drillOff + 16);
             Thread.Sleep(delay);
-            serialSend(drillOff);
+            serialSend(PrinterControl.drillOff);
         }
 
 
@@ -186,52 +187,24 @@ namespace PixIt_0._3
             buttTestState.Text = getSenstorState(int.Parse(textBoxTestStateVal.Text)).ToString();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            bool retVal;
-
-            do{
-            serialSend(moveXleft);
-            Thread.Sleep(10);
-
-            
-            formMain.mainSerialPort.Write(Convert.ToChar(177).ToString());
-
-            formMain.mainSerialPort.DiscardInBuffer();
-            string data = "";
-            try
-            {
-                data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
-            }
-            catch (TimeoutException) { }
-            if (data == "@") { retVal = true; } else { retVal = false; }
-
-            formMain.mainSerialPort.Write(Convert.ToChar(129).ToString());
-
-            formMain.mainSerialPort.DiscardInBuffer();
-            
-            } while (retVal == false);
-
-        }
-
         private void buttonPenUp_Click(object sender, EventArgs e)
         {
             int delay = 1;
-            serialSend(penUp);
+            serialSend(PrinterControl.penUp);
             Thread.Sleep(delay);
-            serialSend(penUp + 16);
+            serialSend(PrinterControl.penUp + 16);
             Thread.Sleep(delay);
-            serialSend(penUp);
+            serialSend(PrinterControl.penUp);
         }
 
         private void buttonPenDown_Click(object sender, EventArgs e)
         {
             int delay = 1;
-            serialSend(penDown);
+            serialSend(PrinterControl.penDown);
             Thread.Sleep(delay);
-            serialSend(penDown + 16);
+            serialSend(PrinterControl.penDown + 16);
             Thread.Sleep(delay);
-            serialSend(penDown);
+            serialSend(PrinterControl.penDown);
         }
 
         private void buttonLEFT_MouseDown(object sender, MouseEventArgs e)
@@ -241,10 +214,10 @@ namespace PixIt_0._3
 
             if (checkBoxFastMode.Checked == true)
             {
-                serialSend(moveXleft);
+                serialSend(PrinterControl.moveXleft);
                 Application.DoEvents();
                 Thread.Sleep(10);
-                serialSend(moveXleft + 32);
+                serialSend(PrinterControl.moveXleft + 32);
 
                 formMain.mainSerialPort.DiscardInBuffer();
                 string data = "";
@@ -253,14 +226,14 @@ namespace PixIt_0._3
                 }catch (TimeoutException) { }
                 if (data == "@") { retVal = true; } else { retVal = false; }
 
-                serialSend(moveXleft);
+                serialSend(PrinterControl.moveXleft);
 
                 while (ButtonXLeftIsCLecked == true && retVal == false)
                 {
                     Application.DoEvents();
                     Thread.Sleep(5);
 
-                    serialSend(moveXleft + 16 + 32);
+                    serialSend(PrinterControl.moveXleft + 16 + 32);
 
                     formMain.mainSerialPort.DiscardInBuffer();
                     data = "";
@@ -269,7 +242,7 @@ namespace PixIt_0._3
                     }catch (TimeoutException) { }
                     if (data == "@") { retVal = true; } else { retVal = false; }
 
-                    serialSend(moveXleft);
+                    serialSend(PrinterControl.moveXleft);
                     formMain.mainSerialPort.DiscardInBuffer();
                 }
 
@@ -280,7 +253,7 @@ namespace PixIt_0._3
         private void buttonLEFT_MouseUp(object sender, MouseEventArgs e)
         {
             ButtonXLeftIsCLecked = false;
-            serialSend(moveXleft);
+            serialSend(PrinterControl.moveXleft);
         }
 
         private void buttonRIGHT_MouseDown(object sender, MouseEventArgs e)
@@ -290,10 +263,10 @@ namespace PixIt_0._3
 
             if (checkBoxFastMode.Checked == true)
             {
-                serialSend(moveXright);
+                serialSend(PrinterControl.moveXright);
                 Application.DoEvents();
                 Thread.Sleep(10);
-                serialSend(moveXright + 32);
+                serialSend(PrinterControl.moveXright + 32);
 
                 formMain.mainSerialPort.DiscardInBuffer();
                 string data = "";
@@ -302,14 +275,14 @@ namespace PixIt_0._3
                 }catch (TimeoutException) { }
                 if (data == "@") { retVal = true; } else { retVal = false; }
 
-                serialSend(moveXright);
+                serialSend(PrinterControl.moveXright);
 
                 while (ButtonXRightIsCLecked == true && retVal == false)
                 {
                     Application.DoEvents();
                     Thread.Sleep(5);
 
-                    serialSend(moveXright + 16 + 32);
+                    serialSend(PrinterControl.moveXright + 16 + 32);
 
                     formMain.mainSerialPort.DiscardInBuffer();
                     data = "";
@@ -318,7 +291,7 @@ namespace PixIt_0._3
                     } catch (TimeoutException) { }
                     if (data == "@") { retVal = true; } else { retVal = false; }
 
-                    serialSend(moveXright);
+                    serialSend(PrinterControl.moveXright);
                     formMain.mainSerialPort.DiscardInBuffer();
                 }
 
@@ -329,156 +302,12 @@ namespace PixIt_0._3
         private void buttonRIGHT_MouseUp(object sender, MouseEventArgs e)
         {
             ButtonXRightIsCLecked = false;
-            serialSend(moveXright);
+            serialSend(PrinterControl.moveXright);
         }
 
         private void buttonDefValXYZ_Click(object sender, EventArgs e)
         {
-            serialSend(drillOff);
-            Thread.Sleep(1);
-            serialSend(drillOff + 16);
-            Thread.Sleep(1);
-            serialSend(drillOff);
-            Thread.Sleep(10);
-
-
-            serialSend(penUp);
-            Thread.Sleep(1);
-            serialSend(penUp + 16);
-            Thread.Sleep(1);
-            serialSend(penUp);
-            Thread.Sleep(10);
-
-            bool retVal;
-
-            //Zup
-            serialSend(moveZup);
-            Application.DoEvents();
-            Thread.Sleep(10);
-            formMain.mainSerialPort.Write(Convert.ToChar(moveZup + 32).ToString());
-
-            formMain.mainSerialPort.DiscardInBuffer();
-            string data = "";
-            try{
-                data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
-            }catch (TimeoutException) { }
-            if (data == "@") { retVal = true; } else { retVal = false; }
-
-            serialSend(moveZup);
-
-
-            while (retVal == false)
-            {
-                serialSend(moveZup);
-                Application.DoEvents();
-                Thread.Sleep(10);
-
-                formMain.mainSerialPort.Write(Convert.ToChar(moveZup + 16 + 32).ToString());
-
-                formMain.mainSerialPort.DiscardInBuffer();
-                data = "";
-                try
-                {
-                    data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
-                }
-                catch (TimeoutException) { }
-                if (data == "@") { retVal = true; } else { retVal = false; }
-
-                formMain.mainSerialPort.Write(Convert.ToChar(moveZup).ToString());
-                formMain.mainSerialPort.DiscardInBuffer();
-            }
-            //----------------
-
-            //X
-            serialSend(moveXleft);
-            Application.DoEvents();
-            Thread.Sleep(10);
-            formMain.mainSerialPort.Write(Convert.ToChar(moveXleft + 32).ToString());
-
-            formMain.mainSerialPort.DiscardInBuffer();
-            data = "";
-            try
-            {
-                data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
-            }
-            catch (TimeoutException) { }
-            if (data == "@") { retVal = true; } else { retVal = false; }
-
-            serialSend(moveXleft);
-
-
-            while (retVal == false)
-            {
-                serialSend(moveXleft);
-                Application.DoEvents();
-                Thread.Sleep(10);
-
-                formMain.mainSerialPort.Write(Convert.ToChar(moveXleft + 16 + 32).ToString());
-
-                formMain.mainSerialPort.DiscardInBuffer();
-                data = "";
-                try
-                {
-                    data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
-                }
-                catch (TimeoutException) { }
-                if (data == "@") { retVal = true; } else { retVal = false; }
-
-                formMain.mainSerialPort.Write(Convert.ToChar(moveXleft).ToString());
-                formMain.mainSerialPort.DiscardInBuffer();
-            }
-            //---------------------
-
-            //Y
-            serialSend(moveYdown);
-            Application.DoEvents();
-            Thread.Sleep(10);
-            formMain.mainSerialPort.Write(Convert.ToChar(moveYdown + 32).ToString());
-
-            formMain.mainSerialPort.DiscardInBuffer();
-            data = "";
-            try
-            {
-                data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
-            }
-            catch (TimeoutException) { }
-            if (data == "@") { retVal = true; } else { retVal = false; }
-
-            serialSend(moveYdown);
-
-
-            while (retVal == false)
-            {
-                serialSend(moveYdown);
-                Application.DoEvents();
-                Thread.Sleep(10);
-
-                formMain.mainSerialPort.Write(Convert.ToChar(moveYdown + 16 + 32).ToString());
-
-                formMain.mainSerialPort.DiscardInBuffer();
-                data = "";
-                try
-                {
-                    data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
-                }
-                catch (TimeoutException) { }
-                if (data == "@") { retVal = true; } else { retVal = false; }
-
-                formMain.mainSerialPort.Write(Convert.ToChar(moveYdown).ToString());
-                formMain.mainSerialPort.DiscardInBuffer();
-            }
-            //---------------------
-
-            for (int i = 1; i <= drillXDefPos; i++)
-            {
-                serialSend(moveXright);
-                Thread.Sleep(1);
-                serialSend(moveXright + 16);
-                Thread.Sleep(1);
-                serialSend(moveXright);
-                Thread.Sleep(10);
-            }
-
+            PrinterControl.defaultPosDrill();
         }
 
         private void buttonLEFT_Click(object sender, EventArgs e)
@@ -487,27 +316,26 @@ namespace PixIt_0._3
             numericUpDown1.Value = 0;
 
             if (checkBoxFastMode.Checked == false){
-
-                serialSend(moveXleft);
+                serialSend(PrinterControl.moveXleft);
 
                 for (int i = 1; i <= numericUpDownFastModeBurst.Value; i++)
                 {
                     Application.DoEvents();
                     Thread.Sleep(10);
-                    serialSend(moveXleft + 32);
+                    serialSend(PrinterControl.moveXleft + 32);
 
                     formMain.mainSerialPort.DiscardInBuffer();
                     data = "";
                     try{
                         data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
                     }catch (TimeoutException) { }
-                    if (data == "@") { serialSend(moveXleft); break; }
+                    if (data == "@") { serialSend(PrinterControl.moveXleft); break; }
 
-                    serialSend(moveXleft);
+                    serialSend(PrinterControl.moveXleft);
                     Thread.Sleep(1);
-                    serialSend(moveXleft + 16);
+                    serialSend(PrinterControl.moveXleft + 16);
                     Thread.Sleep(1);
-                    serialSend(moveXleft);
+                    serialSend(PrinterControl.moveXleft);
 
                     numericUpDown1.Value = numericUpDown1.Value + 1;
                 }
@@ -519,25 +347,11 @@ namespace PixIt_0._3
             if (checkBoxFastMode.Checked == false)
             {
                 int delay = 1;
-                serialSend(moveXright);
+                serialSend(PrinterControl.moveXright);
                 Thread.Sleep(delay);
-                serialSend(moveXright + 16);
+                serialSend(PrinterControl.moveXright + 16);
                 Thread.Sleep(delay);
-                serialSend(moveXright);
-            }
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            int moveMm = 100;
-
-            for(int i = 1; i <= moveMm * xRadio; i++){
-                int delay = 5;
-                serialSend(moveXright);
-                Thread.Sleep(delay);
-                serialSend(moveXright + 16);
-                Thread.Sleep(delay);
-                serialSend(moveXright);
+                serialSend(PrinterControl.moveXright);
             }
         }
 
@@ -548,10 +362,10 @@ namespace PixIt_0._3
 
             if (checkBoxFastMode.Checked == true)
             {
-                serialSend(moveZup);
+                serialSend(PrinterControl.moveZup);
                 Application.DoEvents();
                 Thread.Sleep(10);
-                serialSend(moveZup + 32);
+                serialSend(PrinterControl.moveZup + 32);
 
                 formMain.mainSerialPort.DiscardInBuffer();
                 string data = "";
@@ -560,14 +374,14 @@ namespace PixIt_0._3
                 }catch (TimeoutException) { }
                 if (data == "@") { retVal = true; } else { retVal = false; }
 
-                serialSend(moveZup);
+                serialSend(PrinterControl.moveZup);
 
                 while (ButtonDrillUpIsCLecked == true && retVal == false)
                 {
                     Application.DoEvents();
                     Thread.Sleep(5);
 
-                    serialSend(moveZup + 16 + 32);
+                    serialSend(PrinterControl.moveZup + 16 + 32);
 
                     formMain.mainSerialPort.DiscardInBuffer();
                     data = "";
@@ -576,7 +390,7 @@ namespace PixIt_0._3
                     }catch (TimeoutException) { }
                     if (data == "@") { retVal = true; } else { retVal = false; }
 
-                    serialSend(moveZup);
+                    serialSend(PrinterControl.moveZup);
 
                     formMain.mainSerialPort.DiscardInBuffer();
                 }
@@ -586,7 +400,7 @@ namespace PixIt_0._3
         private void buttonZup_MouseUp(object sender, MouseEventArgs e)
         {
             ButtonDrillUpIsCLecked = false;
-            serialSend(moveZup);
+            serialSend(PrinterControl.moveZup);
         }
 
         private void buttonZdown_MouseDown(object sender, MouseEventArgs e)
@@ -596,10 +410,11 @@ namespace PixIt_0._3
 
             if (checkBoxFastMode.Checked == true)
             {
-                serialSend(moveZdown);
+                serialSend(PrinterControl.moveZdown);
                 Application.DoEvents();
                 Thread.Sleep(10);
-                serialSend(moveZdown + 32);
+
+                serialSend(PrinterControl.moveZdown + 32);
 
                 formMain.mainSerialPort.DiscardInBuffer();
                 string data = "";
@@ -613,26 +428,36 @@ namespace PixIt_0._3
                     Application.DoEvents();
                     Thread.Sleep(5);
 
-                    serialSend(moveZdown + 16 + 32);
+                    serialSend(PrinterControl.moveZdown + 16 + 32);
 
                     formMain.mainSerialPort.DiscardInBuffer();
                     data = "";
                     try{
                         data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
                     }catch (TimeoutException) { }
-                    if (data == "@") { retVal = true; } else { retVal = false; }
+                    if (data == "@") { retVal = true; }else{ retVal = false; }
 
-                    serialSend(moveZdown);
-
+                    serialSend(PrinterControl.moveZdown);
                     formMain.mainSerialPort.DiscardInBuffer();
+
+                    if (retVal == true){
+                        for (int i = 0; i <= 40; i++){
+                            serialSend(PrinterControl.moveZup);
+                            Thread.Sleep(1);
+                            serialSend(PrinterControl.moveZup + 16);
+                            serialSend(PrinterControl.moveZup);
+                        }
+                    }
+
                 }
+
             }
         }
 
         private void buttonZdown_MouseUp(object sender, MouseEventArgs e)
         {
             ButtonDrillDownIsCLecked = false;
-            serialSend(moveZdown);
+            serialSend(PrinterControl.moveZdown);
         }
 
         private void buttonUP_MouseDown(object sender, MouseEventArgs e)
@@ -642,10 +467,10 @@ namespace PixIt_0._3
 
             if (checkBoxFastMode.Checked == true)
             {
-                serialSend(moveYup);
+                serialSend(PrinterControl.moveYup);
                 Application.DoEvents();
                 Thread.Sleep(10);
-                serialSend(moveYup + 32);
+                serialSend(PrinterControl.moveYup + 32);
 
                 formMain.mainSerialPort.DiscardInBuffer();
                 string data = "";
@@ -661,7 +486,7 @@ namespace PixIt_0._3
                     Application.DoEvents();
                     Thread.Sleep(5);
 
-                    serialSend(moveYup + 16 + 32);
+                    serialSend(PrinterControl.moveYup + 16 + 32);
 
                     formMain.mainSerialPort.DiscardInBuffer();
                     data = "";
@@ -672,7 +497,7 @@ namespace PixIt_0._3
                     catch (TimeoutException) { }
                     if (data == "@") { retVal = true; } else { retVal = false; }
 
-                    serialSend(moveYup);
+                    serialSend(PrinterControl.moveYup);
 
                     formMain.mainSerialPort.DiscardInBuffer();
                 }
@@ -682,7 +507,7 @@ namespace PixIt_0._3
         private void buttonUP_MouseUp(object sender, MouseEventArgs e)
         {
             ButtonYUpIsCLecked = false;
-            serialSend(moveYup);
+            serialSend(PrinterControl.moveYup);
         }
 
         private void buttonDOWN_MouseDown(object sender, MouseEventArgs e)
@@ -692,10 +517,10 @@ namespace PixIt_0._3
 
             if (checkBoxFastMode.Checked == true)
             {
-                serialSend(moveYdown);
+                serialSend(PrinterControl.moveYdown);
                 Application.DoEvents();
                 Thread.Sleep(10);
-                serialSend(moveYdown + 32);
+                serialSend(PrinterControl.moveYdown + 32);
 
                 formMain.mainSerialPort.DiscardInBuffer();
                 string data = "";
@@ -711,7 +536,7 @@ namespace PixIt_0._3
                     Application.DoEvents();
                     Thread.Sleep(5);
 
-                    serialSend(moveYdown + 16 + 32);
+                    serialSend(PrinterControl.moveYdown + 16 + 32);
 
                     formMain.mainSerialPort.DiscardInBuffer();
                     data = "";
@@ -722,7 +547,7 @@ namespace PixIt_0._3
                     catch (TimeoutException) { }
                     if (data == "@") { retVal = true; } else { retVal = false; }
 
-                    serialSend(moveYdown);
+                    serialSend(PrinterControl.moveYdown);
 
                     formMain.mainSerialPort.DiscardInBuffer();
                 }
@@ -732,28 +557,21 @@ namespace PixIt_0._3
         private void buttonDOWN_MouseUp(object sender, MouseEventArgs e)
         {
             ButtonYDownIsCLecked = false;
-            serialSend(moveYdown);
+            serialSend(PrinterControl.moveYdown);
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button1_Click_1(object sender, EventArgs e)
         {
-            buttonDefValXYZ.PerformClick();
-
-            for (int i = 1; i <= 100; i++){
-                serialSend(moveXright);
-                Thread.Sleep(1);
-                serialSend(moveXright + 16);
-                Thread.Sleep(1);
-                serialSend(moveXright);
-                Thread.Sleep(1);
-            }
+            PrinterControl.defaultPosPen();
         }
 
-
-
-
+        private void button2_Click(object sender, EventArgs e)
+        {
+            PrinterControl.goToPoint((int)numericX.Value, (int)numericY.Value);
+            labelPosX.Text = PrinterControl.posPenX.ToString();
+            labelPosY.Text = PrinterControl.posPenY.ToString();
+        }
 
     }
 
-    
 }

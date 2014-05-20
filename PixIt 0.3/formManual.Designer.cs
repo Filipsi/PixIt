@@ -41,17 +41,22 @@
             this.buttonZup = new System.Windows.Forms.Button();
             this.buttonPenDown = new System.Windows.Forms.Button();
             this.buttonPenUp = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.buttonDrillOnLeft = new System.Windows.Forms.Button();
             this.buttonDrillOnRight = new System.Windows.Forms.Button();
             this.buttonDrillOff = new System.Windows.Forms.Button();
             this.textBoxTestStateVal = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.numericUpDownFastModeBurst = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.button3 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.labelPosX = new System.Windows.Forms.Label();
+            this.labelPosY = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.numericX = new System.Windows.Forms.NumericUpDown();
+            this.numericY = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFastModeBurst)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericY)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonRIGHT
@@ -85,7 +90,7 @@
             // checkBoxFastMode
             // 
             this.checkBoxFastMode.AutoSize = true;
-            this.checkBoxFastMode.Location = new System.Drawing.Point(236, 236);
+            this.checkBoxFastMode.Location = new System.Drawing.Point(72, 117);
             this.checkBoxFastMode.Margin = new System.Windows.Forms.Padding(4);
             this.checkBoxFastMode.Name = "checkBoxFastMode";
             this.checkBoxFastMode.Size = new System.Drawing.Size(103, 21);
@@ -122,11 +127,11 @@
             // 
             // buttonDefValXYZ
             // 
-            this.buttonDefValXYZ.Location = new System.Drawing.Point(467, 28);
+            this.buttonDefValXYZ.Location = new System.Drawing.Point(462, 12);
             this.buttonDefValXYZ.Name = "buttonDefValXYZ";
-            this.buttonDefValXYZ.Size = new System.Drawing.Size(109, 63);
+            this.buttonDefValXYZ.Size = new System.Drawing.Size(109, 44);
             this.buttonDefValXYZ.TabIndex = 10;
-            this.buttonDefValXYZ.Text = "Výchozí poloha";
+            this.buttonDefValXYZ.Text = "Výchozí poloha vrtačky";
             this.buttonDefValXYZ.UseVisualStyleBackColor = true;
             this.buttonDefValXYZ.Click += new System.EventHandler(this.buttonDefValXYZ_Click);
             // 
@@ -210,16 +215,6 @@
             this.buttonPenUp.UseVisualStyleBackColor = true;
             this.buttonPenUp.Click += new System.EventHandler(this.buttonPenUp_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(343, 161);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(98, 41);
-            this.button2.TabIndex = 15;
-            this.button2.Text = "TestLoop";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // buttonDrillOnLeft
             // 
             this.buttonDrillOnLeft.Location = new System.Drawing.Point(236, 9);
@@ -257,31 +252,26 @@
             this.textBoxTestStateVal.Size = new System.Drawing.Size(100, 22);
             this.textBoxTestStateVal.TabIndex = 19;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(477, 151);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(82, 23);
-            this.button1.TabIndex = 21;
-            this.button1.Text = "radioTest";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // numericUpDownFastModeBurst
             // 
-            this.numericUpDownFastModeBurst.Location = new System.Drawing.Point(236, 264);
+            this.numericUpDownFastModeBurst.Location = new System.Drawing.Point(9, 117);
             this.numericUpDownFastModeBurst.Maximum = new decimal(new int[] {
             379,
             0,
             0,
             0});
             this.numericUpDownFastModeBurst.Name = "numericUpDownFastModeBurst";
-            this.numericUpDownFastModeBurst.Size = new System.Drawing.Size(120, 22);
+            this.numericUpDownFastModeBurst.Size = new System.Drawing.Size(56, 22);
             this.numericUpDownFastModeBurst.TabIndex = 22;
+            this.numericUpDownFastModeBurst.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(102, 161);
+            this.numericUpDown1.Location = new System.Drawing.Point(462, 264);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             500,
             0,
@@ -291,30 +281,95 @@
             this.numericUpDown1.Size = new System.Drawing.Size(120, 22);
             this.numericUpDown1.TabIndex = 23;
             // 
-            // button3
+            // button1
             // 
-            this.button3.Location = new System.Drawing.Point(441, 232);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(118, 40);
-            this.button3.TabIndex = 24;
-            this.button3.Text = "DrawTextHeBa";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button1.Location = new System.Drawing.Point(462, 63);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(109, 47);
+            this.button1.TabIndex = 24;
+            this.button1.Text = "Výchozí poloha tužky";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // labelPosX
+            // 
+            this.labelPosX.AutoSize = true;
+            this.labelPosX.Location = new System.Drawing.Point(402, 190);
+            this.labelPosX.Name = "labelPosX";
+            this.labelPosX.Size = new System.Drawing.Size(40, 17);
+            this.labelPosX.TabIndex = 25;
+            this.labelPosX.Text = "posX";
+            // 
+            // labelPosY
+            // 
+            this.labelPosY.AutoSize = true;
+            this.labelPosY.Location = new System.Drawing.Point(402, 207);
+            this.labelPosY.Name = "labelPosY";
+            this.labelPosY.Size = new System.Drawing.Size(40, 17);
+            this.labelPosY.TabIndex = 26;
+            this.labelPosY.Text = "posY";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(268, 218);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(119, 29);
+            this.button2.TabIndex = 27;
+            this.button2.Text = "GoTo";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // numericX
+            // 
+            this.numericX.Location = new System.Drawing.Point(268, 190);
+            this.numericX.Maximum = new decimal(new int[] {
+            379,
+            0,
+            0,
+            0});
+            this.numericX.Name = "numericX";
+            this.numericX.Size = new System.Drawing.Size(57, 22);
+            this.numericX.TabIndex = 28;
+            this.numericX.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // numericY
+            // 
+            this.numericY.Location = new System.Drawing.Point(330, 190);
+            this.numericY.Maximum = new decimal(new int[] {
+            379,
+            0,
+            0,
+            0});
+            this.numericY.Name = "numericY";
+            this.numericY.Size = new System.Drawing.Size(57, 22);
+            this.numericY.TabIndex = 29;
+            this.numericY.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // formManual
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 297);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.numericY);
+            this.Controls.Add(this.numericX);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.labelPosY);
+            this.Controls.Add(this.labelPosX);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.numericUpDownFastModeBurst);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.textBoxTestStateVal);
             this.Controls.Add(this.buttonDrillOff);
             this.Controls.Add(this.buttonDrillOnRight);
             this.Controls.Add(this.buttonDrillOnLeft);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.buttonPenDown);
             this.Controls.Add(this.buttonPenUp);
             this.Controls.Add(this.buttonZdown);
@@ -333,6 +388,8 @@
             this.Text = "Manuální ovládání";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFastModeBurst)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericY)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -353,14 +410,17 @@
         private System.Windows.Forms.Button buttonZup;
         private System.Windows.Forms.Button buttonPenDown;
         private System.Windows.Forms.Button buttonPenUp;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button buttonDrillOnLeft;
         private System.Windows.Forms.Button buttonDrillOnRight;
         private System.Windows.Forms.Button buttonDrillOff;
         private System.Windows.Forms.TextBox textBoxTestStateVal;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.NumericUpDown numericUpDownFastModeBurst;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label labelPosX;
+        private System.Windows.Forms.Label labelPosY;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.NumericUpDown numericX;
+        private System.Windows.Forms.NumericUpDown numericY;
     }
 }

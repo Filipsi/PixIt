@@ -35,7 +35,7 @@
             this.btnDraw = new System.Windows.Forms.Button();
             this.picOriginal = new System.Windows.Forms.PictureBox();
             this.picDraw = new System.Windows.Forms.PictureBox();
-            this.listBoxVectors = new System.Windows.Forms.ListBox();
+            this.listBoxPoints = new System.Windows.Forms.ListBox();
             this.labelOriginal = new System.Windows.Forms.Label();
             this.labelDraw = new System.Windows.Forms.Label();
             this.labelVectots = new System.Windows.Forms.Label();
@@ -51,10 +51,14 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxDecodedVectors = new System.Windows.Forms.ListBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picOriginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDraw)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -140,16 +144,16 @@
             this.picDraw.TabIndex = 6;
             this.picDraw.TabStop = false;
             // 
-            // listBoxVectors
+            // listBoxPoints
             // 
-            this.listBoxVectors.FormattingEnabled = true;
-            this.listBoxVectors.ItemHeight = 16;
-            this.listBoxVectors.Location = new System.Drawing.Point(1076, 31);
-            this.listBoxVectors.Margin = new System.Windows.Forms.Padding(4);
-            this.listBoxVectors.Name = "listBoxVectors";
-            this.listBoxVectors.Size = new System.Drawing.Size(159, 372);
-            this.listBoxVectors.TabIndex = 7;
-            this.listBoxVectors.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged);
+            this.listBoxPoints.FormattingEnabled = true;
+            this.listBoxPoints.ItemHeight = 16;
+            this.listBoxPoints.Location = new System.Drawing.Point(1076, 31);
+            this.listBoxPoints.Margin = new System.Windows.Forms.Padding(4);
+            this.listBoxPoints.Name = "listBoxPoints";
+            this.listBoxPoints.Size = new System.Drawing.Size(159, 372);
+            this.listBoxPoints.TabIndex = 7;
+            this.listBoxPoints.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged);
             // 
             // labelOriginal
             // 
@@ -255,7 +259,7 @@
             this.listBoxRes.ItemHeight = 16;
             this.listBoxRes.Location = new System.Drawing.Point(201, 427);
             this.listBoxRes.Name = "listBoxRes";
-            this.listBoxRes.Size = new System.Drawing.Size(294, 212);
+            this.listBoxRes.Size = new System.Drawing.Size(428, 212);
             this.listBoxRes.TabIndex = 22;
             // 
             // button1
@@ -284,14 +288,48 @@
             this.listBoxDecodedVectors.Location = new System.Drawing.Point(1243, 31);
             this.listBoxDecodedVectors.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxDecodedVectors.Name = "listBoxDecodedVectors";
-            this.listBoxDecodedVectors.Size = new System.Drawing.Size(159, 372);
+            this.listBoxDecodedVectors.Size = new System.Drawing.Size(230, 372);
             this.listBoxDecodedVectors.TabIndex = 25;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(1076, 440);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 22);
+            this.numericUpDown1.TabIndex = 27;
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(19, 449);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(153, 212);
+            this.listBox1.TabIndex = 28;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(1189, 407);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 17);
+            this.label2.TabIndex = 29;
+            this.label2.Text = "label2";
             // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1508, 721);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.listBoxDecodedVectors);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
@@ -302,7 +340,7 @@
             this.Controls.Add(this.labelVectots);
             this.Controls.Add(this.labelDraw);
             this.Controls.Add(this.labelOriginal);
-            this.Controls.Add(this.listBoxVectors);
+            this.Controls.Add(this.listBoxPoints);
             this.Controls.Add(this.picDraw);
             this.Controls.Add(this.picOriginal);
             this.Controls.Add(this.btnDraw);
@@ -320,6 +358,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -334,7 +373,7 @@
         private System.Windows.Forms.Button btnDraw;
         private System.Windows.Forms.PictureBox picOriginal;
         private System.Windows.Forms.PictureBox picDraw;
-        private System.Windows.Forms.ListBox listBoxVectors;
+        private System.Windows.Forms.ListBox listBoxPoints;
         private System.Windows.Forms.Label labelOriginal;
         private System.Windows.Forms.Label labelDraw;
         private System.Windows.Forms.Label labelVectots;
@@ -350,6 +389,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBoxDecodedVectors;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
