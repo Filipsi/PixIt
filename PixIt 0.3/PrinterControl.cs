@@ -31,6 +31,9 @@ namespace PixIt_0._3
         public const int releDown = 128 + 8;
 
         public const float xRadio = 2.12F;
+        public const float yRadio = 8.6F;
+
+        public static float Dpi = 0;
 
         public static int posPenX = 0;
         public static int posPenY = 0;
@@ -42,32 +45,109 @@ namespace PixIt_0._3
             } catch (TimeoutException) { }
         }
 
+        public static void penUp_SetAndWait(){
+            string data;
+            bool retVal;
+
+            serialSend(PrinterControl.penUp);
+            Application.DoEvents();
+            Thread.Sleep(10);
+            serialSend(PrinterControl.penUp + 32);
+
+            formMain.mainSerialPort.DiscardInBuffer();
+            data = "";
+            try{
+                data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
+            }catch (TimeoutException) { }
+            if (data == "@") { retVal = true; } else { retVal = false; }
+
+            serialSend(PrinterControl.penUp);
+
+            while (retVal == false){
+                Application.DoEvents();
+                Thread.Sleep(5);
+
+                serialSend(PrinterControl.penUp + 16 + 32);
+
+                formMain.mainSerialPort.DiscardInBuffer();
+                data = "";
+                try {
+                    data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
+                }catch (TimeoutException) { }
+                if (data == "@") { retVal = true; } else { retVal = false; }
+
+                serialSend(PrinterControl.penUp);
+
+                formMain.mainSerialPort.DiscardInBuffer();
+            }
+        }
+
+        public static void penDown_SetAndWait()
+        {
+            string data;
+            bool retVal;
+
+            serialSend(PrinterControl.penDown);
+            Application.DoEvents();
+            Thread.Sleep(10);
+            serialSend(PrinterControl.penDown + 32);
+
+            formMain.mainSerialPort.DiscardInBuffer();
+            data = "";
+            try{
+                data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
+            }catch (TimeoutException) { }
+            if (data == "@") { retVal = true; } else { retVal = false; }
+
+            serialSend(PrinterControl.penDown);
+
+            while (retVal == false)
+            {
+                Application.DoEvents();
+                Thread.Sleep(5);
+
+                serialSend(PrinterControl.penDown + 16 + 32);
+
+                formMain.mainSerialPort.DiscardInBuffer();
+                data = "";
+                try
+                {
+                    data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
+                }
+                catch (TimeoutException) { }
+                if (data == "@") { retVal = true; } else { retVal = false; }
+
+                serialSend(PrinterControl.penDown);
+
+                formMain.mainSerialPort.DiscardInBuffer();
+            }
+        }
+
         public static void defaultPosDrill()
         {
+            bool retVal = false;
+            string data = "";
+
             serialSend(drillOff);
             Thread.Sleep(1);
             serialSend(drillOff + 16);
             Thread.Sleep(1);
             serialSend(drillOff);
-            Thread.Sleep(10);
+            Thread.Sleep(5);
 
-            serialSend(penUp);
-            Thread.Sleep(1);
-            serialSend(penUp + 16);
-            Thread.Sleep(1);
-            serialSend(penUp);
-            Thread.Sleep(10);
+            penUp_SetAndWait();
 
-            bool retVal;
+
 
             //Zup
+
             serialSend(moveZup);
             Application.DoEvents();
-            Thread.Sleep(10);
+            Thread.Sleep(5);
             formMain.mainSerialPort.Write(Convert.ToChar(moveZup + 32).ToString());
 
             formMain.mainSerialPort.DiscardInBuffer();
-            string data = "";
+            data = "";
             try
             {
                 data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
@@ -81,7 +161,7 @@ namespace PixIt_0._3
             {
                 serialSend(moveZup);
                 Application.DoEvents();
-                Thread.Sleep(10);
+                Thread.Sleep(5);
 
                 formMain.mainSerialPort.Write(Convert.ToChar(moveZup + 16 + 32).ToString());
 
@@ -102,7 +182,7 @@ namespace PixIt_0._3
             //X
             serialSend(moveXleft);
             Application.DoEvents();
-            Thread.Sleep(10);
+            Thread.Sleep(5);
             formMain.mainSerialPort.Write(Convert.ToChar(moveXleft + 32).ToString());
 
             formMain.mainSerialPort.DiscardInBuffer();
@@ -120,7 +200,7 @@ namespace PixIt_0._3
             {
                 serialSend(moveXleft);
                 Application.DoEvents();
-                Thread.Sleep(10);
+                Thread.Sleep(5);
 
                 formMain.mainSerialPort.Write(Convert.ToChar(moveXleft + 16 + 32).ToString());
 
@@ -152,7 +232,7 @@ namespace PixIt_0._3
             //Y
             serialSend(moveYdown);
             Application.DoEvents();
-            Thread.Sleep(10);
+            Thread.Sleep(5);
             formMain.mainSerialPort.Write(Convert.ToChar(moveYdown + 32).ToString());
 
             formMain.mainSerialPort.DiscardInBuffer();
@@ -170,7 +250,7 @@ namespace PixIt_0._3
             {
                 serialSend(moveYdown);
                 Application.DoEvents();
-                Thread.Sleep(10);
+                Thread.Sleep(5);
 
                 formMain.mainSerialPort.Write(Convert.ToChar(moveYdown + 16 + 32).ToString());
 
@@ -228,17 +308,93 @@ namespace PixIt_0._3
             posPenY = 0;
         }
 
-        public static void goToPoint(int x, int y)
+        public static void movePenUp()
+        {
+            serialSend(penUp);
+            Thread.Sleep(1);
+            serialSend(penUp + 16);
+            Thread.Sleep(1);
+            serialSend(penUp);
+            Thread.Sleep(1);
+        }
+
+        public static void movePenDown()
+        {
+            serialSend(penDown);
+            Thread.Sleep(1);
+            serialSend(penDown + 16);
+            Thread.Sleep(1);
+            serialSend(penDown);
+            Thread.Sleep(1);
+        }
+
+        public static void movePen(int steps, string direction)
+        {
+            int delay = 8;
+
+            //X+
+            if (direction == "Xp"){
+                for (int i = 0; i <= steps; i++){
+                    serialSend(moveXright);
+                    Thread.Sleep(delay);
+                    serialSend(moveXright + 16);
+                    Thread.Sleep(delay);
+                    serialSend(moveXright);
+                    Thread.Sleep(delay + 2);
+                }
+            }
+
+            //X-
+            if (direction == "Xn"){
+                for (int i = 0; i <= steps; i++){
+                    serialSend(moveXleft);
+                    Thread.Sleep(delay);
+                    serialSend(moveXleft + 16);
+                    Thread.Sleep(delay);
+                    serialSend(moveXleft);
+                    Thread.Sleep(delay + 2);
+                }
+            }
+
+            //Y+
+            if (direction == "Yp"){
+                for (int i = 0; i <= steps; i++){
+                    serialSend(moveYup);
+                    Thread.Sleep(delay);
+                    serialSend(moveYup + 16);
+                    Thread.Sleep(delay);
+                    serialSend(moveYup);
+                    Thread.Sleep(delay + 2);
+                }
+            }
+
+            //Y-
+            if (direction == "Yn"){
+                for (int i = 0; i <= steps; i++){
+                    serialSend(moveYdown);
+                    Thread.Sleep(delay);
+                    serialSend(moveYdown + 16);
+                    Thread.Sleep(delay);
+                    serialSend(moveYdown);
+                    Thread.Sleep(delay + 2);
+                }
+            }
+
+
+        }
+
+        public static void movePenTo(int x, int y, int posPenX, int posPenY)
         {
             int moveX = 0;
             int moveY = 0;
 
-            if (posPenX != x || posPenY != y){
+            if (posPenX != x || posPenY != y) {
                 //X+
                 if (x > posPenX){
                     moveX = posPenX + x;
 
-                    for (int i = 0; i <= moveX; i++){
+                    for (int i = 0; i <= moveX; i++)
+                    {
                         serialSend(moveXright);
                         Thread.Sleep(1);
                         serialSend(moveXright + 16);
@@ -252,7 +408,8 @@ namespace PixIt_0._3
                 if (x < posPenX){
                     moveX = posPenX - x;
 
-                    for (int i = 0; i <= moveX; i++){
+                    for (int i = 0; i <= moveX; i++)
+                    {
                         serialSend(moveXleft);
                         Thread.Sleep(1);
                         serialSend(moveXleft + 16);
@@ -281,7 +438,8 @@ namespace PixIt_0._3
                 if (y < posPenX){
                     moveY = posPenY - y;
 
-                    for (int i = 0; i <= moveY; i++){
+                    for (int i = 0; i <= moveY; i++)
+                    {
                         serialSend(moveYdown);
                         Thread.Sleep(1);
                         serialSend(moveYdown + 16);
@@ -291,9 +449,8 @@ namespace PixIt_0._3
                     }
                 }
 
-                posPenX = x;
-                posPenY = y;
             }
+
 
         }
     }

@@ -38,6 +38,9 @@
             this.picTranslationColor = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.numPort = new System.Windows.Forms.NumericUpDown();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.numericDpi = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picCursorColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDrillColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPathColor)).BeginInit();
@@ -45,12 +48,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.picTranslationColor)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericDpi)).BeginInit();
             this.SuspendLayout();
             // 
             // btnRoute
             // 
             this.btnRoute.Location = new System.Drawing.Point(87, 23);
-            this.btnRoute.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRoute.Margin = new System.Windows.Forms.Padding(4);
             this.btnRoute.Name = "btnRoute";
             this.btnRoute.Size = new System.Drawing.Size(100, 28);
             this.btnRoute.TabIndex = 0;
@@ -61,7 +66,7 @@
             // btnDrill
             // 
             this.btnDrill.Location = new System.Drawing.Point(87, 79);
-            this.btnDrill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDrill.Margin = new System.Windows.Forms.Padding(4);
             this.btnDrill.Name = "btnDrill";
             this.btnDrill.Size = new System.Drawing.Size(100, 28);
             this.btnDrill.TabIndex = 1;
@@ -74,7 +79,7 @@
             this.picCursorColor.BackColor = System.Drawing.Color.White;
             this.picCursorColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picCursorColor.Location = new System.Drawing.Point(8, 23);
-            this.picCursorColor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picCursorColor.Margin = new System.Windows.Forms.Padding(4);
             this.picCursorColor.Name = "picCursorColor";
             this.picCursorColor.Size = new System.Drawing.Size(70, 147);
             this.picCursorColor.TabIndex = 3;
@@ -85,7 +90,7 @@
             this.picDrillColor.BackColor = System.Drawing.Color.White;
             this.picDrillColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picDrillColor.Location = new System.Drawing.Point(91, 101);
-            this.picDrillColor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picDrillColor.Margin = new System.Windows.Forms.Padding(4);
             this.picDrillColor.Name = "picDrillColor";
             this.picDrillColor.Size = new System.Drawing.Size(91, 16);
             this.picDrillColor.TabIndex = 4;
@@ -96,7 +101,7 @@
             this.picPathColor.BackColor = System.Drawing.Color.White;
             this.picPathColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picPathColor.Location = new System.Drawing.Point(91, 47);
-            this.picPathColor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picPathColor.Margin = new System.Windows.Forms.Padding(4);
             this.picPathColor.Name = "picPathColor";
             this.picPathColor.Size = new System.Drawing.Size(91, 16);
             this.picPathColor.TabIndex = 5;
@@ -112,9 +117,9 @@
             this.groupSetColor.Controls.Add(this.picDrillColor);
             this.groupSetColor.Controls.Add(this.picPathColor);
             this.groupSetColor.Location = new System.Drawing.Point(16, 15);
-            this.groupSetColor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupSetColor.Margin = new System.Windows.Forms.Padding(4);
             this.groupSetColor.Name = "groupSetColor";
-            this.groupSetColor.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupSetColor.Padding = new System.Windows.Forms.Padding(4);
             this.groupSetColor.Size = new System.Drawing.Size(196, 186);
             this.groupSetColor.TabIndex = 7;
             this.groupSetColor.TabStop = false;
@@ -123,7 +128,7 @@
             // btnTransition
             // 
             this.btnTransition.Location = new System.Drawing.Point(87, 133);
-            this.btnTransition.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnTransition.Margin = new System.Windows.Forms.Padding(4);
             this.btnTransition.Name = "btnTransition";
             this.btnTransition.Size = new System.Drawing.Size(100, 28);
             this.btnTransition.TabIndex = 6;
@@ -136,7 +141,7 @@
             this.picTranslationColor.BackColor = System.Drawing.Color.White;
             this.picTranslationColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picTranslationColor.Location = new System.Drawing.Point(91, 155);
-            this.picTranslationColor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picTranslationColor.Margin = new System.Windows.Forms.Padding(4);
             this.picTranslationColor.Name = "picTranslationColor";
             this.picTranslationColor.Size = new System.Drawing.Size(91, 16);
             this.picTranslationColor.TabIndex = 7;
@@ -146,10 +151,10 @@
             // 
             this.groupBox1.Controls.Add(this.numPort);
             this.groupBox1.Location = new System.Drawing.Point(221, 16);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox1.Size = new System.Drawing.Size(177, 185);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(177, 62);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nastavení COM portu";
@@ -157,21 +162,58 @@
             // numPort
             // 
             this.numPort.Location = new System.Drawing.Point(8, 26);
-            this.numPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numPort.Margin = new System.Windows.Forms.Padding(4);
             this.numPort.Name = "numPort";
             this.numPort.Size = new System.Drawing.Size(161, 22);
             this.numPort.TabIndex = 0;
             this.numPort.ValueChanged += new System.EventHandler(this.numPort_ValueChanged);
             this.numPort.Click += new System.EventHandler(this.numPort_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.numericDpi);
+            this.groupBox2.Location = new System.Drawing.Point(220, 86);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Size = new System.Drawing.Size(177, 62);
+            this.groupBox2.TabIndex = 9;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Nastavení tisku";
+            // 
+            // numericDpi
+            // 
+            this.numericDpi.Location = new System.Drawing.Point(45, 26);
+            this.numericDpi.Margin = new System.Windows.Forms.Padding(4);
+            this.numericDpi.Maximum = new decimal(new int[] {
+            1600,
+            0,
+            0,
+            0});
+            this.numericDpi.Name = "numericDpi";
+            this.numericDpi.Size = new System.Drawing.Size(124, 22);
+            this.numericDpi.TabIndex = 0;
+            this.numericDpi.ValueChanged += new System.EventHandler(this.numericDpi_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "DPI";
+            // 
             // formSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(415, 215);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupSetColor);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "formSettings";
             this.Text = "Nastavení";
             this.Load += new System.EventHandler(this.Settings_Load);
@@ -182,6 +224,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.picTranslationColor)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericDpi)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -198,5 +243,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NumericUpDown numPort;
         public System.Windows.Forms.PictureBox picCursorColor;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numericDpi;
     }
 }

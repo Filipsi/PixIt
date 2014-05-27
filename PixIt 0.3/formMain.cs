@@ -45,7 +45,9 @@ namespace PixIt_0._3
         int[] vectorStartY = new int[400];
         int[] vectorEndX = new int[400];
         int[] vectorEndY = new int[400];
+        string[] vectorDirection = new string[400];
         int[] vectorRouteI = new int[400];
+        int[] vectorLength = new int[400];
         int vectorCount = 0;
         int vectorRoutesCount = 1;
 
@@ -111,6 +113,7 @@ namespace PixIt_0._3
                 colorDrill = Color.FromArgb(Convert.ToInt32(IniReadValue("settings.ini", "Colors", "drill")));
                 colorTranslation = Color.FromArgb(Convert.ToInt32(IniReadValue("settings.ini", "Colors", "translation")));
                 numPort = Convert.ToInt32(IniReadValue("settings.ini", "COM", "port"));
+                PrinterControl.Dpi = Convert.ToInt32(IniReadValue("settings.ini", "PrintSettings", "dpi"));
             }
         }
 
@@ -135,6 +138,7 @@ namespace PixIt_0._3
             IniWriteValue("settings.ini", "Colors", "drill", colorDrill.ToArgb().ToString());
             IniWriteValue("settings.ini", "Colors", "translation", colorTranslation.ToArgb().ToString());
             IniWriteValue("settings.ini", "COM", "port", numPort.ToString());
+            IniWriteValue("settings.ini", "PrintSettings", "dpi", PrinterControl.Dpi.ToString());
             debugAddLine("Okno nastavení bylo uzavřeno");
         }
 
@@ -354,8 +358,7 @@ namespace PixIt_0._3
                 }
             }
 
-
-
+            //Vypočítá cesty
             int startPointIndex = 0;
             while (startPointIndex != -1)
             {
@@ -619,9 +622,22 @@ namespace PixIt_0._3
             //Zapíše EndX/Y
             vectorEndX[vectorCount] = pointX[i];
             vectorEndY[vectorCount] = pointY[i];
+            //Zapíše direction
+            string direction = "";
+            if      (pointX[checkIndex] > pointX[i]) { direction += "Xn"; }
+            else if (pointX[checkIndex] < pointX[i]) { direction += "Xp"; }
+
+            if      (pointY[checkIndex] > pointY[i]) { direction += "Yn"; }
+            else if (pointY[checkIndex] < pointY[i]) { direction += "Yp"; }
+
+            vectorDirection[vectorCount] = direction;
+            //Uloží délku
+            if (vectorDirection[vectorCount].Substring(0, 1) == "X") { vectorLength[vectorCount] = vectorEndX[vectorCount] - vectorStartX[vectorCount]; }
+            else if (vectorDirection[vectorCount].Substring(0, 1) == "Y") { vectorLength[vectorCount] = vectorEndY[vectorCount] - vectorStartY[vectorCount]; }
+            vectorLength[vectorCount] = Math.Abs(vectorLength[vectorCount]);
 
             vectorRouteI[vectorCount] = vectorRoutesCount;
-            listBoxDecodedVectors.Items.Add(vectorRouteI[vectorCount] + " [" + vectorStartX[vectorCount] + "," + vectorStartY[vectorCount] + "] -> [" + vectorEndX[vectorCount] + "," + vectorEndY[vectorCount] + "]");
+            listBoxVectors.Items.Add(vectorRouteI[vectorCount] + " [" + vectorStartX[vectorCount] + "," + vectorStartY[vectorCount] + "] -> [" + vectorEndX[vectorCount] + "," + vectorEndY[vectorCount] + "] (" + vectorDirection[vectorCount] + " : " + vectorLength[vectorCount] + ")");
 
             //Uloží
             vectorCount++;
@@ -741,7 +757,6 @@ namespace PixIt_0._3
                     break;
             }
 
-            listBox1.Items.Add(retVal);
             return retVal;
         }
 
@@ -1092,6 +1107,94 @@ namespace PixIt_0._3
         {
             listBoxPoints.SelectedIndex = (int)numericUpDown1.Value;
         }
+
+        private int getRouteIStart(int routeI)
+        {
+            int retVal = -1;
+
+            for (int i = 0; i <= vectorCount; i++){
+                if (vectorRouteI[i] == routeI){
+                    retVal = i;
+                    break;
+                }
+            }
+
+            return retVal;
+        }
+
+        private void buttonPrint_Click(object sender, EventArgs e)
+        {
+            PrinterControl.defaultPosPen();
+
+            decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
+            decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
+
+            int lastI = 0; int currectDrawingRouteI = 1;
+            for (int routeI = 1; routeI < vectorRoutesCount; routeI++)
+            {
+                int endPointX, endPointY;
+                if (lastI != 0){
+                    endPointX = vectorEndX[lastI - 1];
+                    endPointY = vectorEndY[lastI - 1];
+                } else { endPointX = 0; endPointY = 0; }
+
+                int moveX = endPointX - vectorStartX[getRouteIStart(routeI)];
+                int moveY = endPointY - vectorStartY[getRouteIStart(routeI)];
+
+                int stepsStartX = (int)Math.Round((Math.Abs(moveX) * DpiXRadio), 0);
+                int stepsStartY = (int)Math.Round((Math.Abs(moveY) * DpiYRadio), 0);
+                listBox1.Items.Add(stepsStartX + "/" + stepsStartY);
+
+
+                Thread.Sleep(500);
+                Application.DoEvents();
+
+                PrinterControl.penUp_SetAndWait();
+                    string xDir, yDir;
+                    if (moveX < 0) { xDir = "Xp"; } else { xDir = "Xn"; }
+                    if (moveY < 0) { yDir = "Yp"; } else { yDir = "Yn"; }
+                    PrinterControl.movePen(stepsStartX, xDir);
+                    Thread.Sleep(100);
+                    Application.DoEvents();
+                    PrinterControl.movePen(stepsStartY, yDir);
+                PrinterControl.penDown_SetAndWait();
+
+                listBox1.Items.Add(moveX + "/" + moveY + " (" + xDir + "/" + yDir + ")");
+
+                int i = lastI;
+                float stepsRestEnd = 0;
+                while (vectorRouteI[i] == currectDrawingRouteI){
+                    listBoxVectors.SelectedIndex = i;
+
+                    int stepsEnd = 0;
+                    if (vectorDirection[i].Substring(0, 1) == "X"){
+                        stepsEnd = (int)Math.Round((vectorLength[i] * DpiXRadio) + (decimal)stepsRestEnd, 0);
+                        stepsRestEnd = (float)(vectorLength[i] * DpiXRadio - stepsEnd);
+                    }
+                    else if (vectorDirection[i].Substring(0, 1) == "Y"){
+                        stepsEnd = (int)Math.Round((vectorLength[i] * DpiYRadio) + (decimal)stepsRestEnd, 0);
+                        stepsRestEnd = (float)(vectorLength[i] * DpiYRadio - stepsEnd);
+                    }
+
+                    listBox1.Items.Add(stepsEnd + "(" + stepsRestEnd + ")");
+
+                    PrinterControl.movePen(stepsEnd, vectorDirection[i]);
+
+                    Thread.Sleep(1000);
+                    Application.DoEvents();
+                    i++;
+                }
+
+                lastI = i;
+                currectDrawingRouteI++;
+            }
+
+        }
+
+
+
+
+
 
     }
 

@@ -89,22 +89,29 @@ namespace PixIt_0._3
         {
             if (checkBoxFastMode.Checked == false)
             {
-                serialSend(PrinterControl.moveYup);
-                Thread.Sleep(1);
-                serialSend(PrinterControl.moveYup + 16);
-                Thread.Sleep(1);
-                serialSend(PrinterControl.moveYup);
+                for (int i = 0; i < numericUpDownFastModeBurst.Value; i++)
+                {
+                    serialSend(PrinterControl.moveYup);
+                    Thread.Sleep(1);
+                    serialSend(PrinterControl.moveYup + 16);
+                    Thread.Sleep(1);
+                    serialSend(PrinterControl.moveYup);
+                    numericUpDown2.Value++;
+                }
             }
         }
 
         private void buttonDOWN_Click(object sender, EventArgs e)
         {
             if(checkBoxFastMode.Checked == false){
-                serialSend(PrinterControl.moveYdown);
-                Thread.Sleep(1);
-                serialSend(PrinterControl.moveYdown + 16);
-                Thread.Sleep(1);
-                serialSend(PrinterControl.moveYdown);
+                for (int i = 0; i < numericUpDownFastModeBurst.Value; i++)
+                {
+                    serialSend(PrinterControl.moveYdown);
+                    Thread.Sleep(1);
+                    serialSend(PrinterControl.moveYdown + 16);
+                    Thread.Sleep(1);
+                    serialSend(PrinterControl.moveYdown);
+                }
             }
         }
 
@@ -307,37 +314,22 @@ namespace PixIt_0._3
 
         private void buttonDefValXYZ_Click(object sender, EventArgs e)
         {
+            PrinterControl.posPenX = 0;
+            PrinterControl.posPenY = 0;
             PrinterControl.defaultPosDrill();
         }
 
         private void buttonLEFT_Click(object sender, EventArgs e)
         {
-            string data;
-            numericUpDown1.Value = 0;
-
             if (checkBoxFastMode.Checked == false){
-                serialSend(PrinterControl.moveXleft);
-
                 for (int i = 1; i <= numericUpDownFastModeBurst.Value; i++)
                 {
-                    Application.DoEvents();
-                    Thread.Sleep(10);
-                    serialSend(PrinterControl.moveXleft + 32);
-
-                    formMain.mainSerialPort.DiscardInBuffer();
-                    data = "";
-                    try{
-                        data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
-                    }catch (TimeoutException) { }
-                    if (data == "@") { serialSend(PrinterControl.moveXleft); break; }
-
+                    int delay = 1;
                     serialSend(PrinterControl.moveXleft);
-                    Thread.Sleep(1);
+                    Thread.Sleep(delay);
                     serialSend(PrinterControl.moveXleft + 16);
-                    Thread.Sleep(1);
+                    Thread.Sleep(delay);
                     serialSend(PrinterControl.moveXleft);
-
-                    numericUpDown1.Value = numericUpDown1.Value + 1;
                 }
             }
         }
@@ -346,12 +338,15 @@ namespace PixIt_0._3
         {
             if (checkBoxFastMode.Checked == false)
             {
-                int delay = 1;
-                serialSend(PrinterControl.moveXright);
-                Thread.Sleep(delay);
-                serialSend(PrinterControl.moveXright + 16);
-                Thread.Sleep(delay);
-                serialSend(PrinterControl.moveXright);
+                for (int i = 0; i < numericUpDownFastModeBurst.Value; i++)
+                {
+                    int delay = 1;
+                    serialSend(PrinterControl.moveXright);
+                    Thread.Sleep(delay);
+                    serialSend(PrinterControl.moveXright + 16);
+                    Thread.Sleep(delay);
+                    serialSend(PrinterControl.moveXright);
+                }
             }
         }
 
@@ -562,14 +557,9 @@ namespace PixIt_0._3
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            PrinterControl.posPenX = 0;
+            PrinterControl.posPenY = 0;
             PrinterControl.defaultPosPen();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            PrinterControl.goToPoint((int)numericX.Value, (int)numericY.Value);
-            labelPosX.Text = PrinterControl.posPenX.ToString();
-            labelPosY.Text = PrinterControl.posPenY.ToString();
         }
 
     }

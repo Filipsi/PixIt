@@ -48,15 +48,10 @@
             this.numericUpDownFastModeBurst = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
-            this.labelPosX = new System.Windows.Forms.Label();
-            this.labelPosY = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.numericX = new System.Windows.Forms.NumericUpDown();
-            this.numericY = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFastModeBurst)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonRIGHT
@@ -256,7 +251,7 @@
             // 
             this.numericUpDownFastModeBurst.Location = new System.Drawing.Point(9, 117);
             this.numericUpDownFastModeBurst.Maximum = new decimal(new int[] {
-            379,
+            9999,
             0,
             0,
             0});
@@ -291,63 +286,18 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // labelPosX
+            // numericUpDown2
             // 
-            this.labelPosX.AutoSize = true;
-            this.labelPosX.Location = new System.Drawing.Point(402, 190);
-            this.labelPosX.Name = "labelPosX";
-            this.labelPosX.Size = new System.Drawing.Size(40, 17);
-            this.labelPosX.TabIndex = 25;
-            this.labelPosX.Text = "posX";
-            // 
-            // labelPosY
-            // 
-            this.labelPosY.AutoSize = true;
-            this.labelPosY.Location = new System.Drawing.Point(402, 207);
-            this.labelPosY.Name = "labelPosY";
-            this.labelPosY.Size = new System.Drawing.Size(40, 17);
-            this.labelPosY.TabIndex = 26;
-            this.labelPosY.Text = "posY";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(268, 218);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(119, 29);
-            this.button2.TabIndex = 27;
-            this.button2.Text = "GoTo";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // numericX
-            // 
-            this.numericX.Location = new System.Drawing.Point(268, 190);
-            this.numericX.Maximum = new decimal(new int[] {
-            379,
+            this.numericUpDown2.Location = new System.Drawing.Point(73, 164);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            99999,
             0,
             0,
             0});
-            this.numericX.Name = "numericX";
-            this.numericX.Size = new System.Drawing.Size(57, 22);
-            this.numericX.TabIndex = 28;
-            this.numericX.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // numericY
-            // 
-            this.numericY.Location = new System.Drawing.Point(330, 190);
-            this.numericY.Maximum = new decimal(new int[] {
-            379,
-            0,
-            0,
-            0});
-            this.numericY.Name = "numericY";
-            this.numericY.Size = new System.Drawing.Size(57, 22);
-            this.numericY.TabIndex = 29;
-            this.numericY.Value = new decimal(new int[] {
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(119, 22);
+            this.numericUpDown2.TabIndex = 30;
+            this.numericUpDown2.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -358,11 +308,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 297);
-            this.Controls.Add(this.numericY);
-            this.Controls.Add(this.numericX);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.labelPosY);
-            this.Controls.Add(this.labelPosX);
+            this.Controls.Add(this.numericUpDown2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.numericUpDownFastModeBurst);
@@ -388,8 +334,7 @@
             this.Text = "Manuální ovládání";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFastModeBurst)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -417,10 +362,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownFastModeBurst;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label labelPosX;
-        private System.Windows.Forms.Label labelPosY;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.NumericUpDown numericX;
-        private System.Windows.Forms.NumericUpDown numericY;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
     }
 }

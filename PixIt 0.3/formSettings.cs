@@ -39,6 +39,7 @@ namespace PixIt_0._3
             picDrillColor.BackColor = formMain.colorDrill;
             picTranslationColor.BackColor = formMain.colorTranslation;
             numPort.Value = formMain.numPort;
+            numericDpi.Value = (decimal)PrinterControl.Dpi;
         }
 
         private void btnRoute_Click(object sender, EventArgs e)
@@ -64,6 +65,11 @@ namespace PixIt_0._3
         private void numPort_ValueChanged(object sender, EventArgs e)
         {
             formMain.numPort = Convert.ToInt32(numPort.Value);
+        }
+
+        private void numericDpi_ValueChanged(object sender, EventArgs e)
+        {
+            PrinterControl.Dpi = Convert.ToInt32(numericDpi.Value);
         }     
     }
 }
