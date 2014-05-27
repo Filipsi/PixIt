@@ -40,6 +40,7 @@ namespace PixIt_0._3
             picTranslationColor.BackColor = formMain.colorTranslation;
             numPort.Value = formMain.numPort;
             numericDpi.Value = (decimal)PrinterControl.Dpi;
+            numericDrillTouchNum.Value = (decimal)PrinterControl.drillTouchNum;
         }
 
         private void btnRoute_Click(object sender, EventArgs e)
@@ -70,6 +71,11 @@ namespace PixIt_0._3
         private void numericDpi_ValueChanged(object sender, EventArgs e)
         {
             PrinterControl.Dpi = Convert.ToInt32(numericDpi.Value);
+        }
+
+        private void numericDrillTouchNum_ValueChanged(object sender, EventArgs e)
+        {
+            PrinterControl.drillTouchNum = (int)numericDrillTouchNum.Value;
         }     
     }
 }

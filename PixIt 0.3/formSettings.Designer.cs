@@ -39,8 +39,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.numPort = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.numericDpi = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.numericDpi = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.numericDrillTouchNum = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.picCursorColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDrillColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPathColor)).BeginInit();
@@ -50,6 +53,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericDpi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericDrillTouchNum)).BeginInit();
             this.SuspendLayout();
             // 
             // btnRoute
@@ -81,7 +85,7 @@
             this.picCursorColor.Location = new System.Drawing.Point(8, 23);
             this.picCursorColor.Margin = new System.Windows.Forms.Padding(4);
             this.picCursorColor.Name = "picCursorColor";
-            this.picCursorColor.Size = new System.Drawing.Size(70, 147);
+            this.picCursorColor.Size = new System.Drawing.Size(70, 181);
             this.picCursorColor.TabIndex = 3;
             this.picCursorColor.TabStop = false;
             // 
@@ -120,7 +124,7 @@
             this.groupSetColor.Margin = new System.Windows.Forms.Padding(4);
             this.groupSetColor.Name = "groupSetColor";
             this.groupSetColor.Padding = new System.Windows.Forms.Padding(4);
-            this.groupSetColor.Size = new System.Drawing.Size(196, 186);
+            this.groupSetColor.Size = new System.Drawing.Size(196, 212);
             this.groupSetColor.TabIndex = 7;
             this.groupSetColor.TabStop = false;
             this.groupSetColor.Text = "Nastavení barev";
@@ -154,7 +158,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(177, 62);
+            this.groupBox1.Size = new System.Drawing.Size(230, 62);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nastavení COM portu";
@@ -164,23 +168,35 @@
             this.numPort.Location = new System.Drawing.Point(8, 26);
             this.numPort.Margin = new System.Windows.Forms.Padding(4);
             this.numPort.Name = "numPort";
-            this.numPort.Size = new System.Drawing.Size(161, 22);
+            this.numPort.Size = new System.Drawing.Size(214, 22);
             this.numPort.TabIndex = 0;
             this.numPort.ValueChanged += new System.EventHandler(this.numPort_ValueChanged);
             this.numPort.Click += new System.EventHandler(this.numPort_Click);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.numericDrillTouchNum);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.numericDpi);
             this.groupBox2.Location = new System.Drawing.Point(220, 86);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(177, 62);
+            this.groupBox2.Size = new System.Drawing.Size(231, 133);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Nastavení tisku";
+            this.groupBox2.Text = "Nastavení tisku a vrtání";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "DPI";
             // 
             // numericDpi
             // 
@@ -192,24 +208,47 @@
             0,
             0});
             this.numericDpi.Name = "numericDpi";
-            this.numericDpi.Size = new System.Drawing.Size(124, 22);
+            this.numericDpi.Size = new System.Drawing.Size(178, 22);
             this.numericDpi.TabIndex = 0;
             this.numericDpi.ValueChanged += new System.EventHandler(this.numericDpi_ValueChanged);
             // 
-            // label1
+            // label2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "DPI";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 73);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(190, 17);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Při dotiku plochy zvednout o:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(49, 17);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Vrtání:";
+            // 
+            // numericDrillTouchNum
+            // 
+            this.numericDrillTouchNum.Location = new System.Drawing.Point(11, 94);
+            this.numericDrillTouchNum.Margin = new System.Windows.Forms.Padding(4);
+            this.numericDrillTouchNum.Maximum = new decimal(new int[] {
+            150,
+            0,
+            0,
+            0});
+            this.numericDrillTouchNum.Name = "numericDrillTouchNum";
+            this.numericDrillTouchNum.Size = new System.Drawing.Size(212, 22);
+            this.numericDrillTouchNum.TabIndex = 12;
+            this.numericDrillTouchNum.ValueChanged += new System.EventHandler(this.numericDrillTouchNum_ValueChanged);
             // 
             // formSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(415, 215);
+            this.ClientSize = new System.Drawing.Size(463, 240);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupSetColor);
@@ -227,6 +266,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericDpi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericDrillTouchNum)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -246,5 +286,8 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericDpi;
+        private System.Windows.Forms.NumericUpDown numericDrillTouchNum;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }

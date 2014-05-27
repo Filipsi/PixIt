@@ -8,6 +8,8 @@ namespace PixIt_0._3
 {
     static class PrinterControl
     {
+        public const int online = 128;
+
         public const int moveYup = 128 + 3;
         public const int moveYdown = 128 + 4;
         public const int moveXleft = 128 + 1;
@@ -38,11 +40,33 @@ namespace PixIt_0._3
         public static int posPenX = 0;
         public static int posPenY = 0;
 
-        private static void serialSend(int valueSend)
+        public static int drillTouchNum = 0;
+
+        public static void serialSend(int valueSend)
         {
             try{
                 formMain.mainSerialPort.Write(Convert.ToChar(valueSend).ToString());
             } catch (TimeoutException) { }
+        }
+
+        public static bool getSenstorState(int senstorID)
+        {
+            bool retVal;
+
+            formMain.mainSerialPort.Write(Convert.ToChar(senstorID).ToString());
+
+            formMain.mainSerialPort.DiscardInBuffer();
+            string data = "";
+            try{
+                data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
+            } catch (TimeoutException) { }
+            if (data == "@") { retVal = true; } else { retVal = false; }
+
+            formMain.mainSerialPort.Write(Convert.ToChar(senstorID - 32).ToString());
+
+            formMain.mainSerialPort.DiscardInBuffer();
+
+            return retVal;
         }
 
         public static void penUp_SetAndWait(){
@@ -378,77 +402,6 @@ namespace PixIt_0._3
                     serialSend(moveYdown);
                     Thread.Sleep(delay + 2);
                 }
-            }
-
-
-        }
-
-        public static void movePenTo(int x, int y, int posPenX, int posPenY)
-        {
-            int moveX = 0;
-            int moveY = 0;
-
-            if (posPenX != x || posPenY != y) {
-                //X+
-                if (x > posPenX){
-                    moveX = posPenX + x;
-
-                    for (int i = 0; i <= moveX; i++)
-                    {
-                        serialSend(moveXright);
-                        Thread.Sleep(1);
-                        serialSend(moveXright + 16);
-                        Thread.Sleep(1);
-                        serialSend(moveXright);
-                        Thread.Sleep(3);
-                    }
-                }
-
-                //X-
-                if (x < posPenX){
-                    moveX = posPenX - x;
-
-                    for (int i = 0; i <= moveX; i++)
-                    {
-                        serialSend(moveXleft);
-                        Thread.Sleep(1);
-                        serialSend(moveXleft + 16);
-                        Thread.Sleep(1);
-                        serialSend(moveXleft);
-                        Thread.Sleep(3);
-                    }
-                }
-
-                //Y+
-                if (y > posPenX){
-                    moveY = posPenY + y;
-
-                    for (int i = 0; i <= moveY; i++)
-                    {
-                        serialSend(moveYup);
-                        Thread.Sleep(1);
-                        serialSend(moveYup + 16);
-                        Thread.Sleep(1);
-                        serialSend(moveYup);
-                        Thread.Sleep(3);
-                    }
-                }
-
-                //Y-
-                if (y < posPenX){
-                    moveY = posPenY - y;
-
-                    for (int i = 0; i <= moveY; i++)
-                    {
-                        serialSend(moveYdown);
-                        Thread.Sleep(1);
-                        serialSend(moveYdown + 16);
-                        Thread.Sleep(1);
-                        serialSend(moveYdown);
-                        Thread.Sleep(3);
-                    }
-                }
-
             }
 
 

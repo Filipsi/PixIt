@@ -29,31 +29,30 @@ namespace PixIt_0._3
         formManual manualControl;
 
         // Proměnné
-        string[, ,] point = new string[400, 400, 20];
+        string[, ,] point = new string[1000, 1000, 20];
 
-        int[] pointX = new int[400];
-        int[] pointY = new int[400];
-        string[] directionPoint = new string[400];
+        int[] pointX = new int[10000];
+        int[] pointY = new int[10000];
+        string[] directionPoint = new string[10000];
         int pointCount = 0;
 
-        int[] pointX_duplicate = new int[400];
-        int[] pointY_duplicate = new int[400];
-        string[] directionPoint_duplicate = new string[400];
+        int[] pointX_duplicate = new int[10000];
+        int[] pointY_duplicate = new int[10000];
+        string[] directionPoint_duplicate = new string[10000];
 
-        int[] drillPointX = new int[400];
-        int[] drillPointY = new int[400];
+        int[] drillPointX = new int[10000];
+        int[] drillPointY = new int[10000];
         int drillPointCount = 0;
 
-        int[] vectorStartX = new int[400];
-        int[] vectorStartY = new int[400];
-        int[] vectorEndX = new int[400];
-        int[] vectorEndY = new int[400];
-        string[] vectorDirection = new string[400];
-        int[] vectorRouteI = new int[400];
-        int[] vectorLength = new int[400];
+        int[] vectorStartX = new int[10000];
+        int[] vectorStartY = new int[10000];
+        int[] vectorEndX = new int[10000];
+        int[] vectorEndY = new int[10000];
+        string[] vectorDirection = new string[10000];
+        int[] vectorRouteI = new int[10000];
+        int[] vectorLength = new int[10000];
         int vectorCount = 0;
         int vectorRoutesCount = 1;
-
 
         public static string serialLastReadedValue = "";
 
@@ -62,6 +61,8 @@ namespace PixIt_0._3
         Form debugFormOpenedID = null;
         bool isPictureLoaded = false;
         bool isPictureDrawed = false;
+
+        int testTimerTicks = 3;
 
         // Vytvoření handleru pro sériový port
         public static SerialPort mainSerialPort = new SerialPort();
@@ -117,6 +118,7 @@ namespace PixIt_0._3
                 colorTranslation = Color.FromArgb(Convert.ToInt32(IniReadValue("settings.ini", "Colors", "translation")));
                 numPort = Convert.ToInt32(IniReadValue("settings.ini", "COM", "port"));
                 PrinterControl.Dpi = Convert.ToInt32(IniReadValue("settings.ini", "PrintSettings", "dpi"));
+                PrinterControl.drillTouchNum = Convert.ToInt32(IniReadValue("settings.ini", "PrintSettings", "drillTouch"));
             }
         }
 
@@ -142,6 +144,7 @@ namespace PixIt_0._3
             IniWriteValue("settings.ini", "Colors", "translation", colorTranslation.ToArgb().ToString());
             IniWriteValue("settings.ini", "COM", "port", numPort.ToString());
             IniWriteValue("settings.ini", "PrintSettings", "dpi", PrinterControl.Dpi.ToString());
+            IniWriteValue("settings.ini", "PrintSettings", "drillTouch", PrinterControl.drillTouchNum.ToString());
             debugAddLine("Okno nastavení bylo uzavřeno");
         }
 
@@ -155,12 +158,13 @@ namespace PixIt_0._3
                 {
                     LoadedImage = new Bitmap(dialogOpenFile.FileName);
                     showBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
-                    btnDraw.Enabled = true;
                     toolWidth.Text = "Width: " + LoadedImage.Width.ToString();
                     toolHeight.Text = "Height: " + LoadedImage.Height.ToString();
                     isPictureLoaded = true;
                     ReloadPictureBoxs();
                     debugAddLine("Byl načten obrázek - " + "Šířka obrázku: " + LoadedImage.Width.ToString() + "    Výška obrázku: " + LoadedImage.Height.ToString());
+
+                    drawPicture();
                 }
             }
         }
@@ -207,7 +211,6 @@ namespace PixIt_0._3
         // Když se klikne na button otevření portu
         private void btnPort_Click(object sender, EventArgs e)
         {
-
             // Pokud port ješte není otevřen
             if (mainSerialPort.IsOpen == false)
             {
@@ -245,6 +248,10 @@ namespace PixIt_0._3
                     btnPort.Text = "Zavřít port";
                     toolPortStatus.Text = "Stav portu: Port je otevřen!";
                     debugAddLine("Port byl otevřen");
+
+                    testTimerTicks = 3;
+                    timerPrinterCheck.Enabled = true;
+
                 }
             }
             // Pokud port není uzavřen
@@ -264,10 +271,12 @@ namespace PixIt_0._3
                 // Pokud se port uzavřel změní stav ve statusu a zapíše do debugu
                 if (mainSerialPort.IsOpen == false)
                 {
-                    picOpenPort.BackColor = Color.Red;
+                    picOpenPort.BackColor = Color.Maroon;
                     btnPort.Text = "Otevřít port";
                     toolPortStatus.Text = "Stav portu: Port je uzavřen!";
                     debugAddLine("Port byl uzavřen");
+
+                    timerPrinterCheck.Enabled = false;
                 }
             }
         }
@@ -335,10 +344,12 @@ namespace PixIt_0._3
             debugFormOpenedID = null;
         }
 
-        private void btnDraw_Click(object sender, EventArgs e)
+        private void drawPicture()
         {
             if (isPictureLoaded == true)
             {
+                tabControl.SelectedIndex = 2;
+
                 getRoutes();
                 getPoints();
                 getDrills();
@@ -381,7 +392,6 @@ namespace PixIt_0._3
                     debugAddLine("----------------------------");
                     if (startPointIndex != -1){
                         convertToVectorAndRoute(startPointIndex);
-                        vectorRoutesCount++;
                     }
                 }
 
@@ -1082,13 +1092,15 @@ namespace PixIt_0._3
                     deleteDirection = "Yp";
                 }
 
-                else { break; }
+                else { vectorRoutesCount++; break; }
 
             } while (true);
 
             //Pokud už nelze najít další bod cesty, smaže i poslední použitý bod
             pointX[checkIndex] = 0;
             pointY[checkIndex] = 0;
+
+            
 
             //Aktualizuje body v listBoxVectors
             listBoxPoints.Items.Clear();
@@ -1222,20 +1234,18 @@ namespace PixIt_0._3
                 if (mainSerialPort.IsOpen == true)
                 {
                     PrinterControl.defaultPosPen();
-
+                    
                     decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
                     decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
 
-                    int lastI = 0; int currectDrawingRouteI = 1;
+                    int lastI = 0; int currectDrawingRouteI = 1; string lastYDir = "";
                     for (int routeI = 1; routeI < vectorRoutesCount; routeI++)
                     {
                         int endPointX, endPointY;
-                        if (lastI != 0)
-                        {
+                        if (lastI != 0){
                             endPointX = vectorEndX[lastI - 1];
                             endPointY = vectorEndY[lastI - 1];
-                        }
-                        else { endPointX = 0; endPointY = 0; }
+                        } else { endPointX = 0; endPointY = 0; }
 
                         int moveX = endPointX - vectorStartX[getRouteIStart(routeI)];
                         int moveY = endPointY - vectorStartY[getRouteIStart(routeI)];
@@ -1244,13 +1254,18 @@ namespace PixIt_0._3
                         int stepsStartY = (int)Math.Round((Math.Abs(moveY) * DpiYRadio), 0);
 
 
-                        Thread.Sleep(500);
+                        Thread.Sleep(100);
                         Application.DoEvents();
 
                         PrinterControl.penUp_SetAndWait();
                         string xDir, yDir;
                         if (moveX < 0) { xDir = "Xp"; } else { xDir = "Xn"; }
                         if (moveY < 0) { yDir = "Yp"; } else { yDir = "Yn"; }
+
+                        if (yDir == "Yp" && lastYDir == "Yn") { stepsStartY += 12; }
+                        if (yDir == "Yn" && lastYDir == "Yp") { stepsStartY += 12; }
+                        lastYDir = yDir;
+
                         PrinterControl.movePen(stepsStartX, xDir);
                         Thread.Sleep(100);
                         Application.DoEvents();
@@ -1276,9 +1291,21 @@ namespace PixIt_0._3
                                 stepsRestEnd = (float)(vectorLength[i] * DpiYRadio - stepsEnd);
                             }
 
+                            if (i != 0){
+                                if (i == lastI)
+                                {
+                                    if (vectorDirection[i] == "Yp" && lastYDir == "Yn") { stepsEnd += 12; }
+                                    if (vectorDirection[i] == "Yn" && lastYDir == "Yp") { stepsEnd += 12; }
+                                }
+                                else
+                                {
+                                    if (vectorDirection[i] == "Yp" && vectorDirection[i - 1] == "Yn") { stepsEnd += 12; }
+                                    if (vectorDirection[i] == "Yn" && vectorDirection[i - 1] == "Yp") { stepsEnd += 12; }
+                                }
+                            }
                             PrinterControl.movePen(stepsEnd, vectorDirection[i]);
 
-                            Thread.Sleep(1000);
+                            Thread.Sleep(200);
                             Application.DoEvents();
                             i++;
                         }
@@ -1292,8 +1319,170 @@ namespace PixIt_0._3
 
         }
 
+        private void buttonDrill_Click(object sender, EventArgs e)
+        {
+            tabControl.SelectedIndex = 1;
+
+            decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
+            decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
+
+            for (int modeI = 1; modeI <= 2; modeI++ )
+            {
+                if (modeI == 1){
+                    PrinterControl.defaultPosDrill();
+                }
+                else if (modeI == 2){
+                    PrinterControl.defaultPosPen();
+                }
+                Thread.Sleep(50);
+                Application.DoEvents();
+
+                for (int holeI = 0; holeI < drillPointCount; holeI++)
+                {
+                    listBoxPointsDrill.SelectedIndex = holeI;
+
+                    int moveX, moveY;
+                    if (holeI != 0){
+                        moveX = drillPointX[holeI] - drillPointX[holeI - 1];
+                        moveY = drillPointY[holeI] - drillPointY[holeI - 1];
+                    } else { moveX = drillPointX[holeI]; moveY = drillPointY[holeI]; }
+
+                    int stepsStartX = (int)Math.Round((Math.Abs(moveX) * DpiXRadio), 0);
+                    int stepsStartY = (int)Math.Round((Math.Abs(moveY) * DpiYRadio), 0);
+
+                    Thread.Sleep(100);
+                    Application.DoEvents();
 
 
+                    string xDir, yDir;
+                    if (moveX > 0) { xDir = "Xp"; } else { xDir = "Xn"; }
+                    if (moveY > 0) { yDir = "Yp"; } else { yDir = "Yn"; }
+                    PrinterControl.movePen(stepsStartX, xDir);
+                    Thread.Sleep(100);
+                    Application.DoEvents();
+                    PrinterControl.movePen(stepsStartY, yDir);
+
+                    Thread.Sleep(10);
+                    Application.DoEvents();
+
+
+                    //Mod vrtačky
+                    if (modeI == 1)
+                    {
+                        PrinterControl.serialSend(PrinterControl.drillOnRight);
+                        Thread.Sleep(1);
+                        PrinterControl.serialSend(PrinterControl.drillOnRight + 16);
+                        Thread.Sleep(1);
+                        PrinterControl.serialSend(PrinterControl.drillOnRight);
+
+                        Thread.Sleep(10);
+                        Application.DoEvents();
+
+                        PrinterControl.serialSend(PrinterControl.moveZdown);
+                        Application.DoEvents();
+                        Thread.Sleep(10);
+
+                        PrinterControl.serialSend(PrinterControl.moveZdown + 32);
+
+                        formMain.mainSerialPort.DiscardInBuffer();
+                        string data = ""; bool retVal;
+                        try
+                        {
+                            data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
+                        }
+                        catch (TimeoutException) { }
+                        if (data == "@") { retVal = true; } else { retVal = false; }
+                        Thread.Sleep(1);
+                        PrinterControl.serialSend(PrinterControl.moveZdown);
+                        Thread.Sleep(5);
+
+                        while (retVal == false)
+                        {
+                            Application.DoEvents();
+                            Thread.Sleep(5);
+
+                            PrinterControl.serialSend(PrinterControl.moveZdown + 16 + 32);
+
+                            formMain.mainSerialPort.DiscardInBuffer();
+                            data = "";
+                            try
+                            {
+                                data = Convert.ToChar(formMain.mainSerialPort.ReadByte()).ToString();
+                            }
+                            catch (TimeoutException) { }
+                            if (data == "@") { retVal = true; } else { retVal = false; }
+
+                            PrinterControl.serialSend(PrinterControl.moveZdown);
+                            formMain.mainSerialPort.DiscardInBuffer();
+
+                            if (retVal == true)
+                            {
+                                for (int i = 0; i <= PrinterControl.drillTouchNum; i++)
+                                {
+                                    PrinterControl.serialSend(PrinterControl.moveZup);
+                                    Thread.Sleep(1);
+                                    PrinterControl.serialSend(PrinterControl.moveZup + 16);
+                                    Thread.Sleep(1);
+                                    PrinterControl.serialSend(PrinterControl.moveZup);
+                                    Thread.Sleep(3);
+                                }
+
+                                Thread.Sleep(10);
+                                Application.DoEvents();
+
+                                PrinterControl.serialSend(PrinterControl.drillOff);
+                                Thread.Sleep(1);
+                                PrinterControl.serialSend(PrinterControl.drillOff + 16);
+                                Thread.Sleep(1);
+                                PrinterControl.serialSend(PrinterControl.drillOff);
+                                Thread.Sleep(1);
+
+                                break;
+                            }
+                        }
+
+                    //Pokud je mod tužky
+                    } else if (modeI == 2) {
+                        PrinterControl.penDown_SetAndWait();
+                        Thread.Sleep(300);
+                        Application.DoEvents();
+                        PrinterControl.penUp_SetAndWait();
+                    }
+                }
+
+            }
+
+
+        }
+
+        private void buttonPrintAndDraw_Click(object sender, EventArgs e)
+        {
+            if (mainSerialPort.IsOpen == true){
+                buttonPrint.PerformClick();
+                Thread.Sleep(500);
+                Application.DoEvents();
+                buttonDrill.PerformClick();
+            }
+        }
+
+        private void timerPrinterCheck_Tick(object sender, EventArgs e)
+        {
+            if (testTimerTicks == 0) { timerPrinterCheck.Enabled = false; }
+
+            bool status = PrinterControl.getSenstorState(160);
+            if (testTimerTicks == 0 && status == true){
+                try { 
+                    mainSerialPort.Close();
+                } catch (Exception) { }
+                picOpenPort.BackColor = Color.Maroon;
+                btnPort.Text = "Otevřít port";
+                toolPortStatus.Text = "Stav portu: Port je uzavřen!";
+                debugAddLine("Tiskárna není připojena!");
+                debugAddLine("Port byl uzavřen");
+            } else { testTimerTicks--; }
+
+            
+        }
 
 
 
