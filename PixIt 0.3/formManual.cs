@@ -51,11 +51,9 @@ namespace PixIt_0._3
             formMain.mainSerialPort.Write(encodeBytes, 0, 1);
             */
 
-            try
-            {
+            try{
                 formMain.mainSerialPort.Write(Convert.ToChar(valueSend).ToString());
-            }
-            catch (TimeoutException) { }
+            } catch (TimeoutException) { }
             
         }
 

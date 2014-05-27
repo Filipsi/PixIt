@@ -22,7 +22,7 @@ namespace PixIt_0._3
 
         // Vytvoření bitmap
         Bitmap LoadedImage;
-        Bitmap ShowVectors;
+        Bitmap showBitmap;
 
         // Načtení ostatních formů
         formSettings settings;
@@ -40,6 +40,9 @@ namespace PixIt_0._3
         int[] pointY_duplicate = new int[400];
         string[] directionPoint_duplicate = new string[400];
 
+        int[] drillPointX = new int[400];
+        int[] drillPointY = new int[400];
+        int drillPointCount = 0;
 
         int[] vectorStartX = new int[400];
         int[] vectorStartY = new int[400];
@@ -52,13 +55,13 @@ namespace PixIt_0._3
         int vectorRoutesCount = 1;
 
 
-
         public static string serialLastReadedValue = "";
 
         bool settingsFormOpen = false;
         bool manualControlFormOpen = false;
         Form debugFormOpenedID = null;
         bool isPictureLoaded = false;
+        bool isPictureDrawed = false;
 
         // Vytvoření handleru pro sériový port
         public static SerialPort mainSerialPort = new SerialPort();
@@ -97,7 +100,7 @@ namespace PixIt_0._3
         private void ReloadPictureBoxs()
         {
             picOriginal.Image = (Image)LoadedImage;
-            picDraw.Image = (Image)ShowVectors;
+            picDraw.Image = (Image)showBitmap;
         }
 
         // Funkce pro načtení nastavení
@@ -145,17 +148,20 @@ namespace PixIt_0._3
         // Načtení obrázku
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            DialogResult result = dialogOpenFile.ShowDialog();
-            if (result == DialogResult.OK)
+            if (isPictureLoaded == false)
             {
-                LoadedImage = new Bitmap(dialogOpenFile.FileName);
-                ShowVectors = new Bitmap(LoadedImage.Width, LoadedImage.Height);
-                btnDraw.Enabled = true;
-                toolWidth.Text = "Width: " + LoadedImage.Width.ToString();
-                toolHeight.Text = "Height: " + LoadedImage.Height.ToString();
-                isPictureLoaded = true;
-                ReloadPictureBoxs();
-                debugAddLine("Byl načten obrázek - " + "Šířka obrázku: " + LoadedImage.Width.ToString() + "    Výška obrázku: " + LoadedImage.Height.ToString());
+                DialogResult result = dialogOpenFile.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    LoadedImage = new Bitmap(dialogOpenFile.FileName);
+                    showBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+                    btnDraw.Enabled = true;
+                    toolWidth.Text = "Width: " + LoadedImage.Width.ToString();
+                    toolHeight.Text = "Height: " + LoadedImage.Height.ToString();
+                    isPictureLoaded = true;
+                    ReloadPictureBoxs();
+                    debugAddLine("Byl načten obrázek - " + "Šířka obrázku: " + LoadedImage.Width.ToString() + "    Výška obrázku: " + LoadedImage.Height.ToString());
+                }
             }
         }
 
@@ -301,8 +307,7 @@ namespace PixIt_0._3
         //Otevře form manuálního ovládání
         private void btnManual_Click(object sender, EventArgs e)
         {
-            if (manualControlFormOpen == false)
-            {
+            if (manualControlFormOpen == false && mainSerialPort.IsOpen == true){
                 manualControlFormOpen = true;
                 manualControl = new formManual();
                 manualControl.FormClosed += new FormClosedEventHandler(manualControl_close);
@@ -332,45 +337,57 @@ namespace PixIt_0._3
 
         private void btnDraw_Click(object sender, EventArgs e)
         {
-            getRoutes();
-            getPoints();
-
-
-            for (int i = 0; i < pointCount; i++)
+            if (isPictureLoaded == true)
             {
-                listBoxPoints.Items.Add("[" + pointX[i] + "," + pointY[i] + "] " + directionPoint[i]);
-            }
+                getRoutes();
+                getPoints();
+                getDrills();
 
-            for (int i = 0; i < pointCount; i++)
-            {
-                pointX_duplicate[i] = pointX[i];
-                pointY_duplicate[i] = pointY[i];
-                directionPoint_duplicate[i] = directionPoint[i];
-            }
 
-            //Smaže křižovatky typu + z pole, nesou potřeba
-            for (int i = 0; i < pointCount; i++){
-                string XDir = directionPoint[i].Substring(directionPoint[i].IndexOf("X") + 1, 1);
-                string YDir = directionPoint[i].Substring(directionPoint[i].IndexOf("Y") + 1, 1);
-                if (XDir == "1" && YDir == "1"){
-                    pointX[i] = 0;
-                    pointY[i] = 0;
+                for (int i = 0; i < pointCount; i++)
+                {
+                    listBoxPoints.Items.Add("[" + pointX[i] + "," + pointY[i] + "] " + directionPoint[i]);
                 }
-            }
 
-            //Vypočítá cesty
-            int startPointIndex = 0;
-            while (startPointIndex != -1)
-            {
-                startPointIndex = getStartPoint();
-                listBoxRes.Items.Add("----------------------------");
-                if (startPointIndex != -1){
-                    convertToVectorAndRoute(startPointIndex);
-                    vectorRoutesCount++;
+                for (int i = 0; i < pointCount; i++)
+                {
+                    pointX_duplicate[i] = pointX[i];
+                    pointY_duplicate[i] = pointY[i];
+                    directionPoint_duplicate[i] = directionPoint[i];
                 }
-            }
 
-            label2.Text = pointCount.ToString();
+                debugAddLine(drillPointCount.ToString());
+                for (int i = 0; i < drillPointCount; i++)
+                {
+                    listBoxPointsDrill.Items.Add("[" + drillPointX[i] + "," + drillPointY[i] + "] ");
+                }
+
+
+                //Smaže křižovatky typu + z pole, nesou potřeba
+                for (int i = 0; i < pointCount; i++){
+                    string XDir = directionPoint[i].Substring(directionPoint[i].IndexOf("X") + 1, 1);
+                    string YDir = directionPoint[i].Substring(directionPoint[i].IndexOf("Y") + 1, 1);
+                    if (XDir == "1" && YDir == "1"){
+                        pointX[i] = 0;
+                        pointY[i] = 0;
+                    }
+                }
+
+                //Vypočítá cesty
+                int startPointIndex = 0;
+                while (startPointIndex != -1)
+                {
+                    startPointIndex = getStartPoint();
+                    debugAddLine("----------------------------");
+                    if (startPointIndex != -1){
+                        convertToVectorAndRoute(startPointIndex);
+                        vectorRoutesCount++;
+                    }
+                }
+
+                buttonDrawVectors.PerformClick();
+                isPictureDrawed = true;
+            } else { debugAddLine("Nelze vykreslit! Nebyl načten obrázek!"); }
         }
 
         //Vrátí index bodu, který je nejbližší začátku pole a má pouze jeden platný směr
@@ -403,6 +420,7 @@ namespace PixIt_0._3
         private void getRoutes()
         {
             int citac = 0;
+            int citac2 = 0;
             Color thisPixel = LoadedImage.GetPixel(x, y);
 
             while (x < LoadedImage.Width - 1 || y < LoadedImage.Height - 1)
@@ -417,6 +435,15 @@ namespace PixIt_0._3
                 {
                     point[x, y, 0] = "NULL";
                 }
+                if (thisPixel == colorDrill || thisPixel == colorTranslation)
+                {
+                    point[x, y, 10] = "DRILL";
+                    citac2++;
+                }
+                else
+                {
+                    point[x, y, 10] = "NULL";
+                }
                 if (x < LoadedImage.Width - 1)
                 {
                     x++;
@@ -425,8 +452,10 @@ namespace PixIt_0._3
                 {
                     x = 0; y++;
                 }
-            } 
+            }
             debugAddLine("V obrázku je " + citac + " pixelů trasy");
+            debugAddLine("V obrázku je " + citac2 + " pixelů vrtani");
+
         }
 
         //Zjistí body
@@ -610,10 +639,49 @@ namespace PixIt_0._3
             ReloadPictureBoxs();
         }
 
+       private void getDrills()
+        {
+            int citac = 0;
+            for (int i = 2; i < 398; i++)
+            {
+                for (int u = 2; u < 398; u++)
+                {
+                    int v = 1;
+                    if (point[i, u, 10] == "NULL")
+                    {
+                        while (v <= 2)
+                        {
+                            if (point[i - v, u - v, 10] == "DRILL")
+                            {
+                                if (point[i + v, u + v, 10] != "DRILL" || point[i + v, u - v, 10] != "DRILL" || point[i - v, u + v, 10] != "DRILL" || point[i + 1, u, 10] == "DRILL" || point[i - 1, u, 10] == "DRILL" || point[i, u + 1, 10] == "DRILL" || point[i, u - 1, 10] == "DRILL")
+                                {
+                                    v = 2;
+                                }
+                                else
+                                {
+                                    point[i, u, 10] = "VRT";
+                                    LoadedImage.SetPixel(i, u, Color.White);
+                                    v = 2;
+                                    citac++;
+
+                                    drillPointX[drillPointCount] = i;
+                                    drillPointY[drillPointCount] = u;
+                                    drillPointCount++;
+                                }
+                            }
+                            v++;
+                        }
+                    }
+                }
+            }
+            debugAddLine("V obrázku je " + citac + " pixelů vrtů");
+        }
+
         //Zpracuje vektor
         private void processVector(int checkIndex, int i, string deleteDirection, bool deletePoint)
         {
-            listBoxRes.Items.Add("  Nalezen bod: " + pointX[i] + "," + pointY[i]);
+            debugAddLine("  Nalezen bod: " + pointX[i] + "," + pointY[i]);
+
 
             //Uloží dvojci bodů jako vektor
             //Zapíše StartX/Y
@@ -669,14 +737,14 @@ namespace PixIt_0._3
                         {
                             compareValue = pointY[i];
                             minCompareIndex = i;
-                            listBoxRes.Items.Add("Nalezen směr!");
+                            debugAddLine("Nalezen směr!");
                         }
 
                         if (pointX[pointIndex] == pointX[i] && pointY[i] < compareValue && YDir == "1" && pointY[i] > pointY[pointIndex])
                         {
                             compareValue = pointY[i];
                             minCompareIndex = i;
-                            listBoxRes.Items.Add("Nalezena křižovatka! (" + directionPoint[i] + ") Index: " + minCompareIndex);
+                            debugAddLine("Nalezena křižovatka! (" + directionPoint[i] + ") Index: " + minCompareIndex);
                         }
                     }
 
@@ -694,14 +762,14 @@ namespace PixIt_0._3
                         {
                             compareValue = pointY[i];
                             minCompareIndex = i;
-                            listBoxRes.Items.Add("  -Nalezen směr!");
+                            debugAddLine("  -Nalezen směr!");
                         }
 
                         if (pointX[pointIndex] == pointX[i] && pointY[i] > compareValue && YDir == "1" && pointY[i] < pointY[pointIndex])
                         {
                             compareValue = pointY[i];
                             minCompareIndex = i;
-                            listBoxRes.Items.Add("  -Nalezena křižovatka! (" + directionPoint[i] + ") Index: " + minCompareIndex);
+                            debugAddLine("  -Nalezena křižovatka! (" + directionPoint[i] + ") Index: " + minCompareIndex);
                         }
                     }
 
@@ -770,7 +838,7 @@ namespace PixIt_0._3
                 YDir = "";
 
                 if (deleteDirection != ""){
-                    listBoxRes.Items.Add("deleteDirection: " + deleteDirection);
+                    debugAddLine("deleteDirection: " + deleteDirection);
 
                     //Pro křižovatky
                     if (directionPoint[checkIndex].Substring(directionPoint[checkIndex].IndexOf("X") + 1, 1) == "1" || directionPoint[checkIndex].Substring(directionPoint[checkIndex].IndexOf("Y") + 1, 1) == "1")
@@ -787,7 +855,7 @@ namespace PixIt_0._3
                             directionPoint[checkIndex] = directionPoint[checkIndex].Remove(directionPoint[checkIndex].IndexOf(deleteDirection.Substring(0, 1)) + 1, 1);
                             directionPoint[checkIndex] = directionPoint[checkIndex].Insert(directionPoint[checkIndex].IndexOf(deleteDirection.Substring(0, 1)) + 1, reverseDir);
                             
-                            listBoxRes.Items.Add("Upraven index " + checkIndex + " na: " + directionPoint[checkIndex] + " (Lrozcestí)");
+                            debugAddLine("Upraven index " + checkIndex + " na: " + directionPoint[checkIndex] + " (Lrozcestí)");
                         }else{
                             //Pokud je -Rozcestí
 
@@ -795,23 +863,23 @@ namespace PixIt_0._3
                             directionPoint[checkIndex] = directionPoint[checkIndex].Remove(directionPoint[checkIndex].IndexOf(deleteDirection.Substring(0, 1)) + 1, 1);
                             directionPoint[checkIndex] = directionPoint[checkIndex].Insert(directionPoint[checkIndex].IndexOf(deleteDirection.Substring(0, 1)) + 1, "0");
 
-                            listBoxRes.Items.Add("Upraven index " + checkIndex + " na: " + directionPoint[checkIndex] + " (-rozcestí)");
+                            debugAddLine("Upraven index " + checkIndex + " na: " + directionPoint[checkIndex] + " (-rozcestí)");
                         }
 
-                        listBoxRes.Items.Add("Upraveno deleteDirection (křižovatka)");
+                        debugAddLine("Upraveno deleteDirection (křižovatka)");
                     }else{
                     //Pro směry
                         directionPoint[checkIndex] = directionPoint[checkIndex].Replace(deleteDirection, deleteDirection.Substring(0, 1) + "0");
-                        listBoxRes.Items.Add("Upraven index " + checkIndex + " na: " + directionPoint[checkIndex] + " (smer)");
-                        listBoxRes.Items.Add("Upraveno deleteDirection (směr)");
+                        debugAddLine("Upraven index " + checkIndex + " na: " + directionPoint[checkIndex] + " (smer)");
+                        debugAddLine("Upraveno deleteDirection (směr)");
                     }
                 }
 
 
-               listBoxRes.Items.Add("Bod: [" + pointX[checkIndex] + "," + pointY[checkIndex] + "]" + "Index: " + checkIndex);
+               debugAddLine("Bod: [" + pointX[checkIndex] + "," + pointY[checkIndex] + "]" + "Index: " + checkIndex);
                XDir = directionPoint[checkIndex].Substring(directionPoint[checkIndex].IndexOf("X") + 1, 1);
                YDir = directionPoint[checkIndex].Substring(directionPoint[checkIndex].IndexOf("Y") + 1, 1);
-               listBoxRes.Items.Add(" XDir: " + XDir + " / YDir: " + YDir);
+               debugAddLine(" XDir: " + XDir + " / YDir: " + YDir);
 
                 //4 základní směry
                 if (XDir == "0" && YDir == "p")
@@ -821,7 +889,7 @@ namespace PixIt_0._3
                         processVector(checkIndex, pointFindIndex, deleteDirection, true);
                         checkIndex = pointFindIndex;
                         deleteDirection = "Yn";
-                    } else { listBoxRes.Items.Add("ForceBreak! (X0Yp)"); break; }
+                    } else { debugAddLine("ForceBreak! (X0Yp)"); break; }
                 }
                 else if (XDir == "0" && YDir == "n")
                 {
@@ -831,7 +899,7 @@ namespace PixIt_0._3
                         processVector(checkIndex, pointFindIndex, deleteDirection, true);
                         checkIndex = pointFindIndex;
                         deleteDirection = "Yp";
-                    }else { listBoxRes.Items.Add("ForceBreak! (X0Yn)"); break; }
+                    }else { debugAddLine("ForceBreak! (X0Yn)"); break; }
                 }
                 else if (XDir == "p" && YDir == "0")
                 {
@@ -841,7 +909,7 @@ namespace PixIt_0._3
                         processVector(checkIndex, pointFindIndex, deleteDirection, true);
                         checkIndex = pointFindIndex;
                         deleteDirection = "Xn";
-                    }else { listBoxRes.Items.Add("ForceBreak! (XpY0)"); break; }
+                    }else { debugAddLine("ForceBreak! (XpY0)"); break; }
                 }
                 else if (XDir == "n" && YDir == "0")
                 {
@@ -852,7 +920,7 @@ namespace PixIt_0._3
                         checkIndex = pointFindIndex;
                         deleteDirection = "Xp";
                     }
-                    else { listBoxRes.Items.Add("ForceBreak! (XnY0)"); break; }
+                    else { debugAddLine("ForceBreak! (XnY0)"); break; }
                 }
                 //Pro T-Rozcestí
                 else if(XDir == "p" && YDir == "n"){
@@ -864,7 +932,7 @@ namespace PixIt_0._3
                     else { reverseDir = "9"; }
                         
                     checkVal = deleteDirection.Substring(0, 1) + reverseDir;
-                    listBoxRes.Items.Add(checkVal);
+                    debugAddLine(checkVal);
 
 
                     int pointFindIndex = copmarePoints(checkIndex, checkVal);
@@ -873,7 +941,7 @@ namespace PixIt_0._3
                         processVector(checkIndex, pointFindIndex, deleteDirection, false);
 
                     }
-                    else { listBoxRes.Items.Add("ForceBreak!"); break; }
+                    else { debugAddLine("ForceBreak!"); break; }
 
                     //Smaže cestu, kterou lze pokračovat 
                     directionPoint[checkIndex] = directionPoint[checkIndex].Remove(directionPoint[checkIndex].IndexOf(deleteDirection.Substring(0, 1)) + 1, 1);
@@ -891,7 +959,7 @@ namespace PixIt_0._3
                     else { reverseDir = "9"; }
 
                     checkVal = deleteDirection.Substring(0, 1) + reverseDir;
-                    listBoxRes.Items.Add(checkVal);
+                    debugAddLine(checkVal);
 
 
                     int pointFindIndex = copmarePoints(checkIndex, checkVal);
@@ -900,7 +968,7 @@ namespace PixIt_0._3
                         processVector(checkIndex, pointFindIndex, deleteDirection, false);
 
                     }
-                    else { listBoxRes.Items.Add("ForceBreak!"); break; }
+                    else { debugAddLine("ForceBreak!"); break; }
 
                     //Smaže cestu, kterou lze pokračovat 
                     directionPoint[checkIndex] = directionPoint[checkIndex].Remove(directionPoint[checkIndex].IndexOf(deleteDirection.Substring(0, 1)) + 1, 1);
@@ -919,7 +987,7 @@ namespace PixIt_0._3
                     else { reverseDir = "9"; }
 
                     checkVal = deleteDirection.Substring(0, 1) + reverseDir;
-                    listBoxRes.Items.Add(checkVal);
+                    debugAddLine(checkVal);
 
 
                     int pointFindIndex = copmarePoints(checkIndex, checkVal);
@@ -928,7 +996,7 @@ namespace PixIt_0._3
                         processVector(checkIndex, pointFindIndex, deleteDirection, false);
 
                     }
-                    else { listBoxRes.Items.Add("ForceBreak!"); break; }
+                    else { debugAddLine("ForceBreak!"); break; }
 
                     //Smaže cestu, kterou lze pokračovat 
                     directionPoint[checkIndex] = directionPoint[checkIndex].Remove(directionPoint[checkIndex].IndexOf(deleteDirection.Substring(0, 1)) + 1, 1);
@@ -946,7 +1014,7 @@ namespace PixIt_0._3
                     else { reverseDir = "9"; }
 
                     checkVal = deleteDirection.Substring(0, 1) + reverseDir;
-                    listBoxRes.Items.Add(checkVal);
+                    debugAddLine(checkVal);
 
 
                     int pointFindIndex = copmarePoints(checkIndex, checkVal);
@@ -954,7 +1022,7 @@ namespace PixIt_0._3
                     {
                         processVector(checkIndex, pointFindIndex, deleteDirection, false);
                     }
-                    else { listBoxRes.Items.Add("ForceBreak!"); break; }
+                    else { debugAddLine("ForceBreak!"); break; }
 
                     //Smaže cestu, kterou lze pokračovat 
                     directionPoint[checkIndex] = directionPoint[checkIndex].Remove(directionPoint[checkIndex].IndexOf(deleteDirection.Substring(0, 1)) + 1, 1);
@@ -974,12 +1042,12 @@ namespace PixIt_0._3
                     {
                         processVector(checkIndex, pointFindIndex, deleteDirection, false);
                     }
-                    else { listBoxRes.Items.Add("ForceBreak!"); break; }
+                    else { debugAddLine("ForceBreak!"); break; }
 
                     //Přepíše bod aby zůstal pouze platný směr (ten kterým tento cyklus nepojedeme)
                     directionPoint[checkIndex] = directionPoint[checkIndex].Remove(directionPoint[checkIndex].IndexOf("X") + 1, 1);
                     directionPoint[checkIndex] = directionPoint[checkIndex].Insert(directionPoint[checkIndex].IndexOf("X") + 1, "n");
-                    listBoxRes.Items.Add("Upraven index " + checkIndex + " na " + directionPoint[checkIndex]);
+                    debugAddLine("Upraven index " + checkIndex + " na " + directionPoint[checkIndex]);
 
                     YDir = "0";
 
@@ -998,9 +1066,9 @@ namespace PixIt_0._3
                     {
                         processVector(checkIndex, pointFindIndex, deleteDirection, false);
                     }
-                    else { listBoxRes.Items.Add("ForceBreak!"); break; }
+                    else { debugAddLine("ForceBreak!"); break; }
 
-                    listBoxRes.Items.Add("Hodnota po po provedení: " + directionPoint[checkIndex] + "(" + pointX[checkIndex] + "," + pointY[checkIndex] + ") I: " + checkIndex);
+                    debugAddLine("Hodnota po po provedení: " + directionPoint[checkIndex] + "(" + pointX[checkIndex] + "," + pointY[checkIndex] + ") I: " + checkIndex);
 
                     //Přepíše bod aby zůstal pouze platný směr (ten kterým tento cyklus nepojedeme)
                     directionPoint[checkIndex] = directionPoint[checkIndex].Remove(directionPoint[checkIndex].IndexOf("Y") + 1, 1);
@@ -1043,69 +1111,94 @@ namespace PixIt_0._3
 
         private void listBoxVectors_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ShowVectors.Dispose();
-            ShowVectors = new Bitmap(LoadedImage.Width, LoadedImage.Height);
-            ShowVectors.SetPixel(pointX_duplicate[listBoxPoints.SelectedIndex], pointY_duplicate[listBoxPoints.SelectedIndex], Color.DarkBlue);
-            //ShowVectors.SetPixel(decodeVectorPointStartX[listBoxVectors.SelectedIndex], decodeVectorPointStartY[listBoxVectors.SelectedIndex], Color.Blue);
-            //ShowVectors.SetPixel(decodeVectorPointEndX[listBoxVectors.SelectedIndex], decodeVectorPointEndY[listBoxVectors.SelectedIndex], Color.Red);
-            ReloadPictureBoxs();
+            if (listBoxPoints.SelectedIndex >= 0){
+                listBoxPointsDrill.SelectedIndex = -1;
+                listBoxVectors.SelectedIndex = -1;
+                showBitmap.Dispose();
+                showBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+                showBitmap.SetPixel(pointX_duplicate[listBoxPoints.SelectedIndex], pointY_duplicate[listBoxPoints.SelectedIndex], Color.DarkBlue);
+                ReloadPictureBoxs();
+            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void listBoxPointsDrill_SelectedIndexChanged(object sender, EventArgs e)
         {
-            label1.Text = vectorCount.ToString();
+            if (listBoxPointsDrill.SelectedIndex >= 0){
+                listBoxPoints.SelectedIndex = -1;
+                listBoxVectors.SelectedIndex = -1;
+                showBitmap.Dispose();
+                showBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+                showBitmap.SetPixel(drillPointX[listBoxPointsDrill.SelectedIndex], drillPointY[listBoxPointsDrill.SelectedIndex], Color.DarkBlue);
+                ReloadPictureBoxs();
+            }
+        }
 
-            ShowVectors.Dispose();
-            ShowVectors = new Bitmap(LoadedImage.Width, LoadedImage.Height);
-
-            for (int ii = 0; ii < vectorCount ; ii++)
+        private void listBoxVectors_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (listBoxVectors.SelectedIndex >= 0)
             {
-
-            int x = vectorEndX[ii] - vectorStartX[ii];
-            int y = vectorEndY[ii] - vectorStartY[ii];
+                listBoxPoints.SelectedIndex = -1;
+                listBoxPointsDrill.SelectedIndex = -1;
+                showBitmap.Dispose();
+                showBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+                showBitmap.SetPixel(vectorStartX[listBoxVectors.SelectedIndex], vectorStartY[listBoxVectors.SelectedIndex], Color.Blue);
+                showBitmap.SetPixel(vectorEndX[listBoxVectors.SelectedIndex], vectorEndY[listBoxVectors.SelectedIndex], Color.Red);
+                ReloadPictureBoxs();
+            }
             
-
-            if (x != 0)
-            {
-                for (int i = 0; i <= Math.Abs(x); i++)
-                {
-                    if (x > 0)
-                    {
-                        ShowVectors.SetPixel(vectorStartX[ii] + i, vectorStartY[ii], Color.Green);
-                    }
-
-                    if (x < 0)
-                    {
-                        ShowVectors.SetPixel(vectorStartX[ii] - i, vectorStartY[ii], Color.Green);
-                    }
-                }
-            }
-
-            if (y != 0)
-            {
-                for (int i = 0; i <= Math.Abs(y); i++)
-                {
-                    if (y > 0)
-                    {
-                        ShowVectors.SetPixel(vectorStartX[ii], vectorStartY[ii] + i, Color.Green);
-                    }
-
-                    if (y < 0)
-                    {
-                        ShowVectors.SetPixel(vectorStartX[ii], vectorStartY[ii] - i, Color.Green);
-                        
-                    }
-                }
-            }
-
-            }
-
-            ReloadPictureBoxs();
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        private void buttonDrawVectors_Click(object sender, EventArgs e)
         {
-            listBoxPoints.SelectedIndex = (int)numericUpDown1.Value;
+            if (isPictureLoaded == true)
+            {
+                showBitmap.Dispose();
+                showBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+
+                for (int ii = 0; ii < vectorCount; ii++)
+                {
+
+                    int x = vectorEndX[ii] - vectorStartX[ii];
+                    int y = vectorEndY[ii] - vectorStartY[ii];
+
+
+                    if (x != 0)
+                    {
+                        for (int i = 0; i <= Math.Abs(x); i++)
+                        {
+                            if (x > 0)
+                            {
+                                showBitmap.SetPixel(vectorStartX[ii] + i, vectorStartY[ii], Color.Green);
+                            }
+
+                            if (x < 0)
+                            {
+                                showBitmap.SetPixel(vectorStartX[ii] - i, vectorStartY[ii], Color.Green);
+                            }
+                        }
+                    }
+
+                    if (y != 0)
+                    {
+                        for (int i = 0; i <= Math.Abs(y); i++)
+                        {
+                            if (y > 0)
+                            {
+                                showBitmap.SetPixel(vectorStartX[ii], vectorStartY[ii] + i, Color.Green);
+                            }
+
+                            if (y < 0)
+                            {
+                                showBitmap.SetPixel(vectorStartX[ii], vectorStartY[ii] - i, Color.Green);
+
+                            }
+                        }
+                    }
+
+                }
+
+                ReloadPictureBoxs();
+            }
         }
 
         private int getRouteIStart(int routeI)
@@ -1124,72 +1217,85 @@ namespace PixIt_0._3
 
         private void buttonPrint_Click(object sender, EventArgs e)
         {
-            PrinterControl.defaultPosPen();
-
-            decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
-            decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
-
-            int lastI = 0; int currectDrawingRouteI = 1;
-            for (int routeI = 1; routeI < vectorRoutesCount; routeI++)
+            if (isPictureDrawed == true)
             {
-                int endPointX, endPointY;
-                if (lastI != 0){
-                    endPointX = vectorEndX[lastI - 1];
-                    endPointY = vectorEndY[lastI - 1];
-                } else { endPointX = 0; endPointY = 0; }
+                if (mainSerialPort.IsOpen == true)
+                {
+                    PrinterControl.defaultPosPen();
 
-                int moveX = endPointX - vectorStartX[getRouteIStart(routeI)];
-                int moveY = endPointY - vectorStartY[getRouteIStart(routeI)];
+                    decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
+                    decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
 
-                int stepsStartX = (int)Math.Round((Math.Abs(moveX) * DpiXRadio), 0);
-                int stepsStartY = (int)Math.Round((Math.Abs(moveY) * DpiYRadio), 0);
-                listBox1.Items.Add(stepsStartX + "/" + stepsStartY);
+                    int lastI = 0; int currectDrawingRouteI = 1;
+                    for (int routeI = 1; routeI < vectorRoutesCount; routeI++)
+                    {
+                        int endPointX, endPointY;
+                        if (lastI != 0)
+                        {
+                            endPointX = vectorEndX[lastI - 1];
+                            endPointY = vectorEndY[lastI - 1];
+                        }
+                        else { endPointX = 0; endPointY = 0; }
+
+                        int moveX = endPointX - vectorStartX[getRouteIStart(routeI)];
+                        int moveY = endPointY - vectorStartY[getRouteIStart(routeI)];
+
+                        int stepsStartX = (int)Math.Round((Math.Abs(moveX) * DpiXRadio), 0);
+                        int stepsStartY = (int)Math.Round((Math.Abs(moveY) * DpiYRadio), 0);
 
 
-                Thread.Sleep(500);
-                Application.DoEvents();
+                        Thread.Sleep(500);
+                        Application.DoEvents();
 
-                PrinterControl.penUp_SetAndWait();
-                    string xDir, yDir;
-                    if (moveX < 0) { xDir = "Xp"; } else { xDir = "Xn"; }
-                    if (moveY < 0) { yDir = "Yp"; } else { yDir = "Yn"; }
-                    PrinterControl.movePen(stepsStartX, xDir);
-                    Thread.Sleep(100);
-                    Application.DoEvents();
-                    PrinterControl.movePen(stepsStartY, yDir);
-                PrinterControl.penDown_SetAndWait();
+                        PrinterControl.penUp_SetAndWait();
+                        string xDir, yDir;
+                        if (moveX < 0) { xDir = "Xp"; } else { xDir = "Xn"; }
+                        if (moveY < 0) { yDir = "Yp"; } else { yDir = "Yn"; }
+                        PrinterControl.movePen(stepsStartX, xDir);
+                        Thread.Sleep(100);
+                        Application.DoEvents();
+                        PrinterControl.movePen(stepsStartY, yDir);
+                        PrinterControl.penDown_SetAndWait();
 
-                listBox1.Items.Add(moveX + "/" + moveY + " (" + xDir + "/" + yDir + ")");
 
-                int i = lastI;
-                float stepsRestEnd = 0;
-                while (vectorRouteI[i] == currectDrawingRouteI){
-                    listBoxVectors.SelectedIndex = i;
+                        int i = lastI;
+                        float stepsRestEnd = 0;
+                        while (vectorRouteI[i] == currectDrawingRouteI)
+                        {
+                            listBoxVectors.SelectedIndex = i;
 
-                    int stepsEnd = 0;
-                    if (vectorDirection[i].Substring(0, 1) == "X"){
-                        stepsEnd = (int)Math.Round((vectorLength[i] * DpiXRadio) + (decimal)stepsRestEnd, 0);
-                        stepsRestEnd = (float)(vectorLength[i] * DpiXRadio - stepsEnd);
+                            int stepsEnd = 0;
+                            if (vectorDirection[i].Substring(0, 1) == "X")
+                            {
+                                stepsEnd = (int)Math.Round((vectorLength[i] * DpiXRadio) + (decimal)stepsRestEnd, 0);
+                                stepsRestEnd = (float)(vectorLength[i] * DpiXRadio - stepsEnd);
+                            }
+                            else if (vectorDirection[i].Substring(0, 1) == "Y")
+                            {
+                                stepsEnd = (int)Math.Round((vectorLength[i] * DpiYRadio) + (decimal)stepsRestEnd, 0);
+                                stepsRestEnd = (float)(vectorLength[i] * DpiYRadio - stepsEnd);
+                            }
+
+                            PrinterControl.movePen(stepsEnd, vectorDirection[i]);
+
+                            Thread.Sleep(1000);
+                            Application.DoEvents();
+                            i++;
+                        }
+
+                        lastI = i;
+                        currectDrawingRouteI++;
                     }
-                    else if (vectorDirection[i].Substring(0, 1) == "Y"){
-                        stepsEnd = (int)Math.Round((vectorLength[i] * DpiYRadio) + (decimal)stepsRestEnd, 0);
-                        stepsRestEnd = (float)(vectorLength[i] * DpiYRadio - stepsEnd);
-                    }
-
-                    listBox1.Items.Add(stepsEnd + "(" + stepsRestEnd + ")");
-
-                    PrinterControl.movePen(stepsEnd, vectorDirection[i]);
-
-                    Thread.Sleep(1000);
-                    Application.DoEvents();
-                    i++;
                 }
-
-                lastI = i;
-                currectDrawingRouteI++;
             }
+            else { debugAddLine("Nelze tiskout pokud není vykreslen obrázek!"); }
 
         }
+
+
+
+
+
 
 
 
