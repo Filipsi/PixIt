@@ -1314,6 +1314,10 @@ namespace PixIt_0._3
                         currectDrawingRouteI++;
                     }
                 }
+
+                Thread.Sleep(50);
+                Application.DoEvents();
+                PrinterControl.defaultPosDrill();
             }
             else { debugAddLine("Nelze tiskout pokud není vykreslen obrázek!"); }
 
@@ -1452,7 +1456,9 @@ namespace PixIt_0._3
 
             }
 
-
+            Thread.Sleep(50);
+            Application.DoEvents();
+            PrinterControl.defaultPosDrill();
         }
 
         private void buttonPrintAndDraw_Click(object sender, EventArgs e)
@@ -1462,6 +1468,9 @@ namespace PixIt_0._3
                 Thread.Sleep(500);
                 Application.DoEvents();
                 buttonDrill.PerformClick();
+                Thread.Sleep(50);
+                Application.DoEvents();
+                PrinterControl.defaultPosDrill();
             }
         }
 

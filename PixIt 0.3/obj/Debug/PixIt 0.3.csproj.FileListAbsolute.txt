@@ -32,3 +32,6 @@ C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formManua
 C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formSettings.resources
 C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.Properties.Resources.resources
 C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.csproj.GenerateResource.Cache
+C:\Users\sjanas\Documents\GitHub\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.exe.config
+C:\Users\sjanas\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.exe
+C:\Users\sjanas\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.pdb
