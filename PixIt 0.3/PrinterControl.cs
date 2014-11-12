@@ -220,8 +220,7 @@ namespace PixIt_0._3
 
             serialSend(moveXleft);
 
-            while (retVal == false)
-            {
+            while (retVal == false) {
                 serialSend(moveXleft);
                 Application.DoEvents();
                 Thread.Sleep(5);
@@ -242,8 +241,7 @@ namespace PixIt_0._3
             }
 
             //Posunutí
-            for (int i = 1; i <= drillXDefPos; i++)
-            {
+            for (int i = 1; i <= drillXDefPos; i++) {
                 serialSend(moveXright);
                 Thread.Sleep(1);
                 serialSend(moveXright + 16);

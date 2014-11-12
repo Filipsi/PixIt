@@ -35,3 +35,8 @@ C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.csproj.Gen
 C:\Users\sjanas\Documents\GitHub\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.exe.config
 C:\Users\sjanas\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.exe
 C:\Users\sjanas\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.pdb
+C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.exe.manifest
+C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.application
+C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.TrustInfo.xml
+C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.exe.manifest
+C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.application
