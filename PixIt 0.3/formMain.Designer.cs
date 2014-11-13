@@ -40,7 +40,7 @@
             this.labelDraw = new System.Windows.Forms.Label();
             this.picOpenPort = new System.Windows.Forms.PictureBox();
             this.dialogOpenFile = new System.Windows.Forms.OpenFileDialog();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.toolPortStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolWidth = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolHeight = new System.Windows.Forms.ToolStripStatusLabel();
@@ -60,7 +60,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picOriginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDraw)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).BeginInit();
-            this.statusStrip1.SuspendLayout();
+            this.StatusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabRoutes.SuspendLayout();
             this.tabDrill.SuspendLayout();
@@ -71,9 +71,10 @@
             // 
             this.btnLoad.BackColor = System.Drawing.Color.White;
             this.btnLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoad.Location = new System.Drawing.Point(10, 195);
+            this.btnLoad.Location = new System.Drawing.Point(13, 240);
+            this.btnLoad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(80, 23);
+            this.btnLoad.Size = new System.Drawing.Size(107, 28);
             this.btnLoad.TabIndex = 0;
             this.btnLoad.Text = "Načíst obrázek";
             this.btnLoad.UseVisualStyleBackColor = false;
@@ -83,9 +84,10 @@
             // 
             this.btnSetttings.BackColor = System.Drawing.Color.White;
             this.btnSetttings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSetttings.Location = new System.Drawing.Point(10, 25);
+            this.btnSetttings.Location = new System.Drawing.Point(13, 31);
+            this.btnSetttings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSetttings.Name = "btnSetttings";
-            this.btnSetttings.Size = new System.Drawing.Size(80, 23);
+            this.btnSetttings.Size = new System.Drawing.Size(107, 28);
             this.btnSetttings.TabIndex = 1;
             this.btnSetttings.Text = "Nastavení";
             this.btnSetttings.UseVisualStyleBackColor = false;
@@ -97,9 +99,10 @@
             this.btnPort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnPort.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnPort.Location = new System.Drawing.Point(10, 96);
+            this.btnPort.Location = new System.Drawing.Point(13, 118);
+            this.btnPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnPort.Name = "btnPort";
-            this.btnPort.Size = new System.Drawing.Size(80, 33);
+            this.btnPort.Size = new System.Drawing.Size(107, 41);
             this.btnPort.TabIndex = 2;
             this.btnPort.Text = "Otevřít port";
             this.btnPort.UseVisualStyleBackColor = false;
@@ -109,9 +112,10 @@
             // 
             this.btnManual.BackColor = System.Drawing.Color.White;
             this.btnManual.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnManual.Location = new System.Drawing.Point(10, 136);
+            this.btnManual.Location = new System.Drawing.Point(13, 167);
+            this.btnManual.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnManual.Name = "btnManual";
-            this.btnManual.Size = new System.Drawing.Size(80, 39);
+            this.btnManual.Size = new System.Drawing.Size(107, 48);
             this.btnManual.TabIndex = 3;
             this.btnManual.Text = "Manuální ovládání";
             this.btnManual.UseVisualStyleBackColor = false;
@@ -121,9 +125,10 @@
             // 
             this.picOriginal.BackColor = System.Drawing.SystemColors.ControlLight;
             this.picOriginal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picOriginal.Location = new System.Drawing.Point(95, 25);
+            this.picOriginal.Location = new System.Drawing.Point(127, 31);
+            this.picOriginal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picOriginal.Name = "picOriginal";
-            this.picOriginal.Size = new System.Drawing.Size(350, 303);
+            this.picOriginal.Size = new System.Drawing.Size(466, 372);
             this.picOriginal.TabIndex = 5;
             this.picOriginal.TabStop = false;
             this.picOriginal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picOriginal_MouseClick);
@@ -133,36 +138,41 @@
             // 
             this.picDraw.BackColor = System.Drawing.SystemColors.ControlLight;
             this.picDraw.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picDraw.Location = new System.Drawing.Point(448, 25);
+            this.picDraw.Location = new System.Drawing.Point(597, 31);
+            this.picDraw.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picDraw.Name = "picDraw";
-            this.picDraw.Size = new System.Drawing.Size(350, 303);
+            this.picDraw.Size = new System.Drawing.Size(466, 372);
             this.picDraw.TabIndex = 6;
             this.picDraw.TabStop = false;
             // 
             // listBoxPoints
             // 
             this.listBoxPoints.FormattingEnabled = true;
-            this.listBoxPoints.Location = new System.Drawing.Point(6, 6);
+            this.listBoxPoints.ItemHeight = 16;
+            this.listBoxPoints.Location = new System.Drawing.Point(8, 7);
+            this.listBoxPoints.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listBoxPoints.Name = "listBoxPoints";
-            this.listBoxPoints.Size = new System.Drawing.Size(203, 264);
+            this.listBoxPoints.Size = new System.Drawing.Size(269, 324);
             this.listBoxPoints.TabIndex = 7;
             this.listBoxPoints.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged);
             // 
             // labelOriginal
             // 
             this.labelOriginal.AutoSize = true;
-            this.labelOriginal.Location = new System.Drawing.Point(101, 9);
+            this.labelOriginal.Location = new System.Drawing.Point(135, 11);
+            this.labelOriginal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelOriginal.Name = "labelOriginal";
-            this.labelOriginal.Size = new System.Drawing.Size(42, 13);
+            this.labelOriginal.Size = new System.Drawing.Size(57, 17);
             this.labelOriginal.TabIndex = 9;
             this.labelOriginal.Text = "Originál";
             // 
             // labelDraw
             // 
             this.labelDraw.AutoSize = true;
-            this.labelDraw.Location = new System.Drawing.Point(458, 9);
+            this.labelDraw.Location = new System.Drawing.Point(611, 11);
+            this.labelDraw.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelDraw.Name = "labelDraw";
-            this.labelDraw.Size = new System.Drawing.Size(56, 13);
+            this.labelDraw.Size = new System.Drawing.Size(72, 17);
             this.labelDraw.TabIndex = 10;
             this.labelDraw.Text = "Zobrazení";
             // 
@@ -171,9 +181,10 @@
             this.picOpenPort.BackColor = System.Drawing.Color.Maroon;
             this.picOpenPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.picOpenPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picOpenPort.Location = new System.Drawing.Point(10, 96);
+            this.picOpenPort.Location = new System.Drawing.Point(13, 118);
+            this.picOpenPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picOpenPort.Name = "picOpenPort";
-            this.picOpenPort.Size = new System.Drawing.Size(8, 34);
+            this.picOpenPort.Size = new System.Drawing.Size(10, 41);
             this.picOpenPort.TabIndex = 14;
             this.picOpenPort.TabStop = false;
             // 
@@ -181,54 +192,56 @@
             // 
             this.dialogOpenFile.FileName = "openFileDialog1";
             // 
-            // statusStrip1
+            // StatusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolPortStatus,
             this.toolWidth,
             this.toolHeight,
             this.toolVectorCount});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 338);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1033, 22);
-            this.statusStrip1.SizingGrip = false;
-            this.statusStrip1.TabIndex = 20;
-            this.statusStrip1.Text = "statusStrip1";
+            this.StatusStrip.Location = new System.Drawing.Point(0, 418);
+            this.StatusStrip.Name = "StatusStrip";
+            this.StatusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.StatusStrip.Size = new System.Drawing.Size(1377, 25);
+            this.StatusStrip.SizingGrip = false;
+            this.StatusStrip.TabIndex = 20;
+            this.StatusStrip.Text = "StatusStrip";
             // 
             // toolPortStatus
             // 
             this.toolPortStatus.Name = "toolPortStatus";
-            this.toolPortStatus.Size = new System.Drawing.Size(148, 17);
+            this.toolPortStatus.Size = new System.Drawing.Size(186, 20);
             this.toolPortStatus.Text = "Stav portu: Port je uzavřen!";
             // 
             // toolWidth
             // 
             this.toolWidth.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
             this.toolWidth.Name = "toolWidth";
-            this.toolWidth.Size = new System.Drawing.Size(51, 17);
+            this.toolWidth.Size = new System.Drawing.Size(64, 20);
             this.toolWidth.Text = "Width: 0";
             // 
             // toolHeight
             // 
             this.toolHeight.Margin = new System.Windows.Forms.Padding(5, 3, 0, 2);
             this.toolHeight.Name = "toolHeight";
-            this.toolHeight.Size = new System.Drawing.Size(55, 17);
+            this.toolHeight.Size = new System.Drawing.Size(69, 20);
             this.toolHeight.Text = "Height: 0";
             // 
             // toolVectorCount
             // 
             this.toolVectorCount.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
             this.toolVectorCount.Name = "toolVectorCount";
-            this.toolVectorCount.Size = new System.Drawing.Size(71, 17);
+            this.toolVectorCount.Size = new System.Drawing.Size(89, 20);
             this.toolVectorCount.Text = "Počet tras: 0";
             // 
             // buttonDebug
             // 
             this.buttonDebug.BackColor = System.Drawing.Color.White;
             this.buttonDebug.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDebug.Location = new System.Drawing.Point(10, 54);
+            this.buttonDebug.Location = new System.Drawing.Point(13, 66);
+            this.buttonDebug.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonDebug.Name = "buttonDebug";
-            this.buttonDebug.Size = new System.Drawing.Size(80, 23);
+            this.buttonDebug.Size = new System.Drawing.Size(107, 28);
             this.buttonDebug.TabIndex = 21;
             this.buttonDebug.Text = "Debug";
             this.buttonDebug.UseVisualStyleBackColor = false;
@@ -239,10 +252,10 @@
             this.buttonDrawVectors.BackColor = System.Drawing.Color.Silver;
             this.buttonDrawVectors.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDrawVectors.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonDrawVectors.Location = new System.Drawing.Point(5, 249);
-            this.buttonDrawVectors.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonDrawVectors.Location = new System.Drawing.Point(7, 306);
+            this.buttonDrawVectors.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonDrawVectors.Name = "buttonDrawVectors";
-            this.buttonDrawVectors.Size = new System.Drawing.Size(204, 26);
+            this.buttonDrawVectors.Size = new System.Drawing.Size(272, 32);
             this.buttonDrawVectors.TabIndex = 23;
             this.buttonDrawVectors.Text = "Zobraz všechny vektory";
             this.buttonDrawVectors.UseVisualStyleBackColor = false;
@@ -251,9 +264,11 @@
             // listBoxVectors
             // 
             this.listBoxVectors.FormattingEnabled = true;
-            this.listBoxVectors.Location = new System.Drawing.Point(6, 6);
+            this.listBoxVectors.ItemHeight = 16;
+            this.listBoxVectors.Location = new System.Drawing.Point(8, 7);
+            this.listBoxVectors.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listBoxVectors.Name = "listBoxVectors";
-            this.listBoxVectors.Size = new System.Drawing.Size(203, 238);
+            this.listBoxVectors.Size = new System.Drawing.Size(269, 292);
             this.listBoxVectors.TabIndex = 25;
             this.listBoxVectors.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged_1);
             // 
@@ -263,9 +278,10 @@
             this.buttonPrint.Cursor = System.Windows.Forms.Cursors.Default;
             this.buttonPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonPrint.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonPrint.Location = new System.Drawing.Point(10, 224);
+            this.buttonPrint.Location = new System.Drawing.Point(13, 276);
+            this.buttonPrint.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonPrint.Name = "buttonPrint";
-            this.buttonPrint.Size = new System.Drawing.Size(80, 23);
+            this.buttonPrint.Size = new System.Drawing.Size(107, 28);
             this.buttonPrint.TabIndex = 30;
             this.buttonPrint.Text = "Tisk";
             this.buttonPrint.UseVisualStyleBackColor = false;
@@ -274,9 +290,11 @@
             // listBoxPointsDrill
             // 
             this.listBoxPointsDrill.FormattingEnabled = true;
-            this.listBoxPointsDrill.Location = new System.Drawing.Point(6, 6);
+            this.listBoxPointsDrill.ItemHeight = 16;
+            this.listBoxPointsDrill.Location = new System.Drawing.Point(8, 7);
+            this.listBoxPointsDrill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listBoxPointsDrill.Name = "listBoxPointsDrill";
-            this.listBoxPointsDrill.Size = new System.Drawing.Size(203, 264);
+            this.listBoxPointsDrill.Size = new System.Drawing.Size(269, 324);
             this.listBoxPointsDrill.TabIndex = 34;
             this.listBoxPointsDrill.SelectedIndexChanged += new System.EventHandler(this.listBoxPointsDrill_SelectedIndexChanged);
             // 
@@ -286,9 +304,10 @@
             this.buttonDrill.Cursor = System.Windows.Forms.Cursors.Default;
             this.buttonDrill.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDrill.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonDrill.Location = new System.Drawing.Point(10, 254);
+            this.buttonDrill.Location = new System.Drawing.Point(13, 313);
+            this.buttonDrill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonDrill.Name = "buttonDrill";
-            this.buttonDrill.Size = new System.Drawing.Size(80, 23);
+            this.buttonDrill.Size = new System.Drawing.Size(107, 28);
             this.buttonDrill.TabIndex = 37;
             this.buttonDrill.Text = "Vrtat";
             this.buttonDrill.UseVisualStyleBackColor = false;
@@ -300,19 +319,21 @@
             this.tabControl.Controls.Add(this.tabDrill);
             this.tabControl.Controls.Add(this.tabVectors);
             this.tabControl.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.tabControl.Location = new System.Drawing.Point(804, 25);
+            this.tabControl.Location = new System.Drawing.Point(1072, 31);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(223, 303);
+            this.tabControl.Size = new System.Drawing.Size(297, 373);
             this.tabControl.TabIndex = 38;
             // 
             // tabRoutes
             // 
             this.tabRoutes.Controls.Add(this.listBoxPoints);
-            this.tabRoutes.Location = new System.Drawing.Point(4, 22);
+            this.tabRoutes.Location = new System.Drawing.Point(4, 25);
+            this.tabRoutes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabRoutes.Name = "tabRoutes";
-            this.tabRoutes.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabRoutes.Size = new System.Drawing.Size(215, 277);
+            this.tabRoutes.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabRoutes.Size = new System.Drawing.Size(289, 344);
             this.tabRoutes.TabIndex = 0;
             this.tabRoutes.Text = "Body cest";
             this.tabRoutes.UseVisualStyleBackColor = true;
@@ -320,10 +341,11 @@
             // tabDrill
             // 
             this.tabDrill.Controls.Add(this.listBoxPointsDrill);
-            this.tabDrill.Location = new System.Drawing.Point(4, 22);
+            this.tabDrill.Location = new System.Drawing.Point(4, 25);
+            this.tabDrill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabDrill.Name = "tabDrill";
-            this.tabDrill.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabDrill.Size = new System.Drawing.Size(215, 277);
+            this.tabDrill.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabDrill.Size = new System.Drawing.Size(289, 344);
             this.tabDrill.TabIndex = 1;
             this.tabDrill.Text = "Body vrtání";
             this.tabDrill.UseVisualStyleBackColor = true;
@@ -333,10 +355,11 @@
             this.tabVectors.BackColor = System.Drawing.Color.White;
             this.tabVectors.Controls.Add(this.listBoxVectors);
             this.tabVectors.Controls.Add(this.buttonDrawVectors);
-            this.tabVectors.Location = new System.Drawing.Point(4, 22);
+            this.tabVectors.Location = new System.Drawing.Point(4, 25);
+            this.tabVectors.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabVectors.Name = "tabVectors";
-            this.tabVectors.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabVectors.Size = new System.Drawing.Size(215, 277);
+            this.tabVectors.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabVectors.Size = new System.Drawing.Size(289, 344);
             this.tabVectors.TabIndex = 2;
             this.tabVectors.Text = "Vektory";
             // 
@@ -346,9 +369,10 @@
             this.buttonPrintAndDraw.Cursor = System.Windows.Forms.Cursors.Default;
             this.buttonPrintAndDraw.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonPrintAndDraw.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonPrintAndDraw.Location = new System.Drawing.Point(10, 283);
+            this.buttonPrintAndDraw.Location = new System.Drawing.Point(13, 348);
+            this.buttonPrintAndDraw.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonPrintAndDraw.Name = "buttonPrintAndDraw";
-            this.buttonPrintAndDraw.Size = new System.Drawing.Size(80, 46);
+            this.buttonPrintAndDraw.Size = new System.Drawing.Size(107, 57);
             this.buttonPrintAndDraw.TabIndex = 39;
             this.buttonPrintAndDraw.Text = "Vytiskout a vyvrtat";
             this.buttonPrintAndDraw.UseVisualStyleBackColor = false;
@@ -361,15 +385,15 @@
             // 
             // formMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1033, 360);
+            this.ClientSize = new System.Drawing.Size(1377, 443);
             this.Controls.Add(this.buttonPrintAndDraw);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.buttonDrill);
             this.Controls.Add(this.buttonPrint);
             this.Controls.Add(this.buttonDebug);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.StatusStrip);
             this.Controls.Add(this.picOpenPort);
             this.Controls.Add(this.labelDraw);
             this.Controls.Add(this.labelOriginal);
@@ -380,14 +404,15 @@
             this.Controls.Add(this.btnSetttings);
             this.Controls.Add(this.btnLoad);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "formMain";
             this.Text = "PixIt 0.3";
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picOriginal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDraw)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).EndInit();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.StatusStrip.ResumeLayout(false);
+            this.StatusStrip.PerformLayout();
             this.tabControl.ResumeLayout(false);
             this.tabRoutes.ResumeLayout(false);
             this.tabDrill.ResumeLayout(false);
@@ -410,7 +435,6 @@
         private System.Windows.Forms.Label labelDraw;
         private System.Windows.Forms.PictureBox picOpenPort;
         private System.Windows.Forms.OpenFileDialog dialogOpenFile;
-        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolWidth;
         private System.Windows.Forms.ToolStripStatusLabel toolHeight;
         private System.Windows.Forms.Button buttonDebug;
@@ -427,6 +451,7 @@
         private System.Windows.Forms.TabPage tabVectors;
         private System.Windows.Forms.Button buttonPrintAndDraw;
         private System.Windows.Forms.Timer timerPrinterCheck;
+        public System.Windows.Forms.StatusStrip StatusStrip;
     }
 }
 

@@ -6,15 +6,14 @@ namespace PixIt_0._3
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+
+        public static formMain Form = new formMain();
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new formMain());
+            Application.Run(Form);
         }
     }
 }
