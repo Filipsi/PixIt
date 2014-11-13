@@ -30,7 +30,6 @@
         {
             this.buttonRIGHT = new System.Windows.Forms.Button();
             this.buttonLEFT = new System.Windows.Forms.Button();
-            this.checkBoxFastMode = new System.Windows.Forms.CheckBox();
             this.buttonDefValXYZ = new System.Windows.Forms.Button();
             this.buttonUP = new System.Windows.Forms.Button();
             this.buttonDOWN = new System.Windows.Forms.Button();
@@ -69,17 +68,6 @@
             this.buttonLEFT.UseVisualStyleBackColor = true;
             this.buttonLEFT.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonLEFT_MouseDown);
             this.buttonLEFT.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonLEFT_MouseUp);
-            // 
-            // checkBoxFastMode
-            // 
-            this.checkBoxFastMode.AutoSize = true;
-            this.checkBoxFastMode.Location = new System.Drawing.Point(13, 117);
-            this.checkBoxFastMode.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBoxFastMode.Name = "checkBoxFastMode";
-            this.checkBoxFastMode.Size = new System.Drawing.Size(103, 21);
-            this.checkBoxFastMode.TabIndex = 6;
-            this.checkBoxFastMode.Text = "Rychlý mód";
-            this.checkBoxFastMode.UseVisualStyleBackColor = true;
             // 
             // buttonDefValXYZ
             // 
@@ -211,7 +199,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(581, 149);
+            this.ClientSize = new System.Drawing.Size(581, 120);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonDrillOff);
             this.Controls.Add(this.buttonDrillOnRight);
@@ -221,7 +209,6 @@
             this.Controls.Add(this.buttonZdown);
             this.Controls.Add(this.buttonZup);
             this.Controls.Add(this.buttonDefValXYZ);
-            this.Controls.Add(this.checkBoxFastMode);
             this.Controls.Add(this.buttonLEFT);
             this.Controls.Add(this.buttonDOWN);
             this.Controls.Add(this.buttonUP);
@@ -230,7 +217,6 @@
             this.Name = "formManual";
             this.Text = "Manuální ovládání";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -238,7 +224,6 @@
 
         private System.Windows.Forms.Button buttonRIGHT;
         private System.Windows.Forms.Button buttonLEFT;
-        private System.Windows.Forms.CheckBox checkBoxFastMode;
         private System.Windows.Forms.Button buttonDefValXYZ;
         private System.Windows.Forms.Button buttonUP;
         private System.Windows.Forms.Button buttonDOWN;

@@ -1166,7 +1166,6 @@ namespace PixIt_0._3
 
         private void buttonDrill_Click(object sender, EventArgs e) {
             tabControl.SelectedIndex = 1;
-            PrinterQuery.AddCommand("MZD(140)");
 
             decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
             decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
@@ -1174,6 +1173,7 @@ namespace PixIt_0._3
             for (int modeI = 1; modeI <= 2; modeI++ ) {
                 if (modeI == 1) {
                     PrinterControl.SetDefaultPosDrill();
+                    PrinterQuery.AddCommand("MZD(140)");
                 } else if (modeI == 2) {
                     PrinterControl.SetDefaultPosPen();
                 }
