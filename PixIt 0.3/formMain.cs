@@ -22,7 +22,7 @@ namespace PixIt_0._3
 
         // Vytvoření bitmap
         Bitmap LoadedImage;
-        Bitmap showBitmap;
+        Bitmap ShowBitmap;
 
         // Načtení ostatních formů
         formSettings settings;
@@ -73,21 +73,18 @@ namespace PixIt_0._3
         public static Color colorTranslation = Color.White;
         public static int numPort = 3;
 
-        public formMain()
-        {
+        public formMain() {
             InitializeComponent();
         }
 
         // Zapisování do souboru
-        public void IniWriteValue(string path, string Section, string Key, string Value)
-        {
+        public void IniWriteValue(string path, string Section, string Key, string Value) {
             var totalPath = Path.Combine(Application.StartupPath, path);
             WritePrivateProfileString(Section, Key, Value, totalPath);
         }
 
         // Čtení ze souboru
-        public string IniReadValue(string path, string Section, string Key)
-        {
+        public string IniReadValue(string path, string Section, string Key) {
             var totalPath = Path.Combine(Application.StartupPath, path);
             StringBuilder temp = new StringBuilder(255);
             int i = GetPrivateProfileString(Section, Key, "", temp, 255, totalPath);
@@ -95,15 +92,13 @@ namespace PixIt_0._3
         }
 
         // Obnovení Originálního obrázku
-        private void ReloadPictureBoxs()
-        {
+        private void ReloadPictureBoxs() {
             picOriginal.Image = (Image)LoadedImage;
-            picDraw.Image = (Image)showBitmap;
+            picDraw.Image = (Image)ShowBitmap;
         }
 
         // Funkce pro načtení nastavení
-        private void Main_Load(object sender, EventArgs e)
-        {
+        private void Main_Load(object sender, EventArgs e) {
             dialogOpenFile.Filter = "All Files (*.*)|*.*";
             dialogOpenFile.FilterIndex = 1;
 
@@ -120,10 +115,8 @@ namespace PixIt_0._3
         }
 
         // Otevře formulář settings
-        private void btnSetttings_Click(object sender, EventArgs e)
-        {
-            if (settingsFormOpen == false)
-            {
+        private void btnSetttings_Click(object sender, EventArgs e) {
+            if (settingsFormOpen == false) {
                 settingsFormOpen = true;
                 settings = new formSettings();
                 settings.FormClosed += new FormClosedEventHandler(settings_close);
@@ -132,8 +125,7 @@ namespace PixIt_0._3
         }
 
         //Uložení nastavení při zavřeni settings
-        private void settings_close(object sender, FormClosedEventArgs e)
-        {
+        private void settings_close(object sender, FormClosedEventArgs e) {
             //Zapsání nastavení do INI
             settingsFormOpen = false;
             IniWriteValue("settings.ini", "Colors", "path", colorPath.ToArgb().ToString());
@@ -146,15 +138,12 @@ namespace PixIt_0._3
         }
 
         // Načtení obrázku
-        private void btnLoad_Click(object sender, EventArgs e)
-        {
-            if (isPictureLoaded == false)
-            {
+        private void btnLoad_Click(object sender, EventArgs e) {
+            if (isPictureLoaded == false) {
                 DialogResult result = dialogOpenFile.ShowDialog();
-                if (result == DialogResult.OK)
-                {
+                if (result == DialogResult.OK) {
                     LoadedImage = new Bitmap(dialogOpenFile.FileName);
-                    showBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+                    ShowBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
                     toolWidth.Text = "Width: " + LoadedImage.Width.ToString();
                     toolHeight.Text = "Height: " + LoadedImage.Height.ToString();
                     isPictureLoaded = true;
@@ -167,24 +156,18 @@ namespace PixIt_0._3
         }
 
         // Zobrazení barvy na kterou najede myš
-        private void picOriginal_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isPictureLoaded == true)
-            {
-                if (settingsFormOpen == true && e.X < LoadedImage.Width && e.X > 0 && e.Y < LoadedImage.Height && e.Y > 0)
-                {
+        private void picOriginal_MouseMove(object sender, MouseEventArgs e) {
+            if (isPictureLoaded == true) {
+                if (settingsFormOpen == true && e.X < LoadedImage.Width && e.X > 0 && e.Y < LoadedImage.Height && e.Y > 0) {
                     settings.picCursorColor.BackColor = LoadedImage.GetPixel(e.X, e.Y);
                 }
             }
         }
 
         // Nastavení barvy pro určitou věc
-        private void picOriginal_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (settingsFormOpen == true)
-            {
-                switch (settingColor)
-                {
+        private void picOriginal_MouseClick(object sender, MouseEventArgs e) {
+            if (settingsFormOpen == true) {
+                switch (settingColor) {
                     case "path":
                         colorPath = LoadedImage.GetPixel(e.X, e.Y);
                         debugAddLine("Číslo portu změněno na: " + formMain.numPort);
@@ -206,11 +189,9 @@ namespace PixIt_0._3
         }
 
         // Když se klikne na button otevření portu
-        private void btnPort_Click(object sender, EventArgs e)
-        {
+        private void btnPort_Click(object sender, EventArgs e) {
             // Pokud port ješte není otevřen
-            if (Serial.IsOpen() == false)
-            {
+            if (Serial.IsOpen() == false) {
                 // Nastavení otevření portu
                 Serial.Init("COM" + numPort.ToString(), 115200);
 
@@ -246,10 +227,8 @@ namespace PixIt_0._3
         }
 
         //Funkce pro tevření Debug okna
-        private void openDebug()
-        {
-            if (debugFormOpenedID == null)
-            {
+        private void openDebug() {
+            if (debugFormOpenedID == null) {
                 debugFormOpenedID = new formDebug();
                 debugFormOpenedID.FormClosed += new FormClosedEventHandler(debug_close);
                 debugFormOpenedID.Show();
@@ -257,8 +236,7 @@ namespace PixIt_0._3
         }
 
         //Otevře form manuálního ovládání
-        private void btnManual_Click(object sender, EventArgs e)
-        {
+        private void btnManual_Click(object sender, EventArgs e) {
             if (manualControlFormOpen == false && Serial.IsOpen() == true){
                 manualControlFormOpen = true;
                 manualControl = new formManual();
@@ -268,29 +246,24 @@ namespace PixIt_0._3
         }
 
         // Když se form manuálního ovládání uzavře tak změní kontrolní proměnnou
-        private void manualControl_close(object sender, FormClosedEventArgs e)
-        {
+        private void manualControl_close(object sender, FormClosedEventArgs e) {
             manualControlFormOpen = false;
             debugAddLine("Manuální ovládání bylo uzavřeno");
 
         }
 
         // Otevře form Debugu
-        private void buttonDebug_Click(object sender, EventArgs e)
-        {
+        private void buttonDebug_Click(object sender, EventArgs e) {
             openDebug();
         }
 
         //Když se form debugu uzavře tak změní kontrolní proměnnou
-        private void debug_close(object sender, FormClosedEventArgs e)
-        {
+        private void debug_close(object sender, FormClosedEventArgs e) {
             debugFormOpenedID = null;
         }
 
-        private void drawPicture()
-        {
-            if (isPictureLoaded == true)
-            {
+        private void drawPicture() {
+            if (isPictureLoaded == true) {
                 tabControl.SelectedIndex = 2;
 
                 getRoutes();
@@ -298,22 +271,21 @@ namespace PixIt_0._3
                 getDrills();
 
 
-                for (int i = 0; i < pointCount; i++)
-                {
+                for (int i = 0; i < pointCount; i++) {
                     listBoxPoints.Items.Add("[" + pointX[i] + "," + pointY[i] + "] " + directionPoint[i]);
                 }
 
-                for (int i = 0; i < pointCount; i++)
-                {
+                for (int i = 0; i < pointCount; i++) {
                     pointX_duplicate[i] = pointX[i];
                     pointY_duplicate[i] = pointY[i];
                     directionPoint_duplicate[i] = directionPoint[i];
                 }
 
+                //Přidá body vrtání do ListBoxu
                 debugAddLine(drillPointCount.ToString());
-                for (int i = 0; i < drillPointCount; i++)
-                {
-                    listBoxPointsDrill.Items.Add("[" + drillPointX[i] + "," + drillPointY[i] + "] ");
+                for (int i = 0; i < drillPointCount; i++) {
+                    Size area = GetSolderingArea(drillPointX[i], drillPointY[i]);
+                    listBoxPointsDrill.Items.Add("Bod: [" + drillPointX[i] + "," + drillPointY[i] + "], (" + area.Width.ToString() + "," + area.Height.ToString() + ")");
                 }
 
 
@@ -329,14 +301,15 @@ namespace PixIt_0._3
 
                 //Vypočítá cesty
                 int startPointIndex = 0;
-                while (startPointIndex != -1)
-                {
+                while (startPointIndex != -1) {
                     startPointIndex = getStartPoint();
                     debugAddLine("----------------------------");
-                    if (startPointIndex != -1){
+                    if (startPointIndex != -1) {
                         convertToVectorAndRoute(startPointIndex);
                     }
                 }
+
+
 
                 buttonDrawVectors.PerformClick();
                 isPictureDrawed = true;
@@ -347,19 +320,15 @@ namespace PixIt_0._3
         private int getStartPoint(){
             int retVal = -1;
 
-            for (int i = 0; i < pointCount; i++){
-                if (pointX[i] != 0 && pointY[i] != 0)
-                {
+            for (int i = 0; i < pointCount; i++) {
+                if (pointX[i] != 0 && pointY[i] != 0) {
                     string XDir = directionPoint[i].Substring(directionPoint[i].IndexOf("X") + 1, 1);
                     string YDir = directionPoint[i].Substring(directionPoint[i].IndexOf("Y") + 1, 1);
 
-                    if (XDir == "0" && (YDir == "p" || YDir == "n"))
-                    {
+                    if (XDir == "0" && (YDir == "p" || YDir == "n")) {
                         retVal = i;
                         break;
-                    }
-                    else if (YDir == "0" && (XDir == "p" || XDir == "n"))
-                    {
+                    } else if (YDir == "0" && (XDir == "p" || XDir == "n"))  {
                         retVal = i;
                         break;
                     }
@@ -370,58 +339,44 @@ namespace PixIt_0._3
         }
 
         //Zjistí trasy v obrázku
-        private void getRoutes()
-        {
+        private void getRoutes() {
             int citac = 0;
             int citac2 = 0;
             Color thisPixel = LoadedImage.GetPixel(x, y);
 
-            while (x < LoadedImage.Width - 1 || y < LoadedImage.Height - 1)
-            {
+            while (x < LoadedImage.Width - 1 || y < LoadedImage.Height - 1) {
                 thisPixel = LoadedImage.GetPixel(x, y);
-                if (thisPixel == colorPath || thisPixel == colorTranslation)
-                {
+                if (thisPixel == colorPath || thisPixel == colorTranslation) {
                     point[x, y, 0] = "ROUTE";
                     citac++;
-                }
-                else
-                {
+                } else {
                     point[x, y, 0] = "NULL";
                 }
-                if (thisPixel == colorDrill || thisPixel == colorTranslation)
-                {
+
+                if (thisPixel == colorDrill || thisPixel == colorTranslation) {
                     point[x, y, 10] = "DRILL";
                     citac2++;
-                }
-                else
-                {
+                } else {
                     point[x, y, 10] = "NULL";
                 }
-                if (x < LoadedImage.Width - 1)
-                {
+
+                if (x < LoadedImage.Width - 1) {
                     x++;
-                }
-                else
-                {
+                } else {
                     x = 0; y++;
                 }
             }
+
             debugAddLine("V obrázku je " + citac + " pixelů trasy");
             debugAddLine("V obrázku je " + citac2 + " pixelů vrtani");
-
         }
 
         //Zjistí body
-        private void getPoints()
-        {
-            for (int i = 2; i < 398; i++)
-            {
-                for (int u = 2; u < 398; u++)
-                {
-                    if (point[i, u, 0] == "ROUTE")
-                    {
-                        if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i, u + 3, 0] == "NULL" && point[i, u - 1, 0] == "ROUTE" && point[i + 2, u + 1, 0] == "ROUTE")
-                        {
+        private void getPoints() {
+            for (int i = 2; i < 398; i++) {
+                for (int u = 2; u < 398; u++) {
+                    if (point[i, u, 0] == "ROUTE") {
+                        if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i, u + 3, 0] == "NULL" && point[i, u - 1, 0] == "ROUTE" && point[i + 2, u + 1, 0] == "ROUTE") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XpY0";
 
@@ -430,9 +385,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "XpY0";
 
                             pointCount++;
-                        }
-                        else if (point[i + 2, u, 0] == "ROUTE" && point[i - 1, u, 0] == "NULL" && point[i, u + 1, 0] == "NULL" && point[i, u - 2, 0] == "ROUTE" && point[i + 3, u, 0] == "NULL" && point[i, u - 3, 0] == "NULL")
-                        {
+                        } else if (point[i + 2, u, 0] == "ROUTE" && point[i - 1, u, 0] == "NULL" && point[i, u + 1, 0] == "NULL" && point[i, u - 2, 0] == "ROUTE" && point[i + 3, u, 0] == "NULL" && point[i, u - 3, 0] == "NULL") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XpYn";
 
@@ -441,9 +394,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "XpYn";
 
                             pointCount++;
-                        }
-                        else if (point[i + 2, u, 0] == "ROUTE" && point[i - 1, u, 0] == "NULL" && point[i, u + 2, 0] == "NULL" && point[i, u - 2, 0] == "NULL")
-                        {
+                        } else if (point[i + 2, u, 0] == "ROUTE" && point[i - 1, u, 0] == "NULL" && point[i, u + 2, 0] == "NULL" && point[i, u - 2, 0] == "NULL") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XpY0";
 
@@ -452,9 +403,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "XpY0";
 
                             pointCount++;
-                        }
-                        else if (point[i + 1, u, 0] == "NULL" && point[i - 2, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 2, 0] == "NULL")
-                        {
+                        } else if (point[i + 1, u, 0] == "NULL" && point[i - 2, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 2, 0] == "NULL") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XnY0";
 
@@ -463,9 +412,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "XnY0";
 
                             pointCount++;
-                        }
-                        else if (point[i + 2, u, 0] == "NULL" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "ROUTE" && point[i, u - 1, 0] == "NULL")
-                        {
+                        } else if (point[i + 2, u, 0] == "NULL" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "ROUTE" && point[i, u - 1, 0] == "NULL") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "X0Yp";
 
@@ -474,9 +421,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "X0Yp";
 
                             pointCount++;
-                        }
-                        else if (point[i + 2, u, 0] == "NULL" && point[i - 2, u, 0] == "NULL" && point[i, u + 1, 0] == "NULL" && point[i, u - 2, 0] == "ROUTE")
-                        {
+                        } else if (point[i + 2, u, 0] == "NULL" && point[i - 2, u, 0] == "NULL" && point[i, u + 1, 0] == "NULL" && point[i, u - 2, 0] == "ROUTE") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "X0Yn";
 
@@ -485,9 +430,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "X0Yn";
 
                             pointCount++;
-                        }
-                        else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL" && point[i + 2, u + 2, 0] == "NULL")
-                        {
+                        } else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL" && point[i + 2, u + 2, 0] == "NULL") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XpY1";
 
@@ -496,9 +439,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "XpY1";
 
                             pointCount++;
-                        }
-                        else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE" && point[i - 2, u - 2, 0] == "NULL" && point[i - 2, u + 2, 0] == "NULL")
-                        {
+                        } else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE" && point[i - 2, u - 2, 0] == "NULL" && point[i - 2, u + 2, 0] == "NULL") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XnY1";
 
@@ -518,9 +459,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "X1Yp";
 
                             pointCount++;
-                        }
-                        else if (point[i + 3, u, 0] == "ROUTE" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL" && point[i - 2, u - 2, 0] == "NULL")
-                        {
+                        } else if (point[i + 3, u, 0] == "ROUTE" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL" && point[i - 2, u - 2, 0] == "NULL") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "X1Yn";
 
@@ -529,9 +468,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "X1Yn";
 
                             pointCount++;
-                        }
-                        else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i + 2, u + 2, 0] == "NULL")
-                        {
+                        } else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i + 2, u + 2, 0] == "NULL") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XpYp";
 
@@ -540,9 +477,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "XpYp";
 
                             pointCount++;
-                        }
-                        else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i - 2, u + 2, 0] == "NULL")
-                        {
+                        } else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i - 2, u + 2, 0] == "NULL") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XnYp";
 
@@ -551,9 +486,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "XnYp";
 
                             pointCount++;
-                        }
-                        else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL")
-                        {
+                        } else if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i + 2, u - 2, 0] == "NULL") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XpYn";
 
@@ -562,9 +495,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "XpYn";
 
                             pointCount++;
-                        }
-                        else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i - 2, u - 2, 0] == "NULL")
-                        {
+                        } else if (point[i + 2, u, 0] == "NULL" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 2, 0] == "NULL" && point[i, u - 3, 0] == "ROUTE" && point[i - 2, u - 2, 0] == "NULL") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "XnYn";
 
@@ -573,9 +504,7 @@ namespace PixIt_0._3
                             directionPoint[pointCount] = "XnYn";
 
                             pointCount++;
-                        }
-                        else if (point[i + 3, u, 0] == "ROUTE" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE")
-                        {
+                        } else if (point[i + 3, u, 0] == "ROUTE" && point[i - 3, u, 0] == "ROUTE" && point[i, u + 3, 0] == "ROUTE" && point[i, u - 3, 0] == "ROUTE") {
                             LoadedImage.SetPixel(i, u, Color.Red);
                             point[i, u, 1] = "X1Y1";
 
@@ -592,26 +521,20 @@ namespace PixIt_0._3
             ReloadPictureBoxs();
         }
 
-       private void getDrills()
-        {
+       private void getDrills(){
             int citac = 0;
-            for (int i = 2; i < 398; i++)
-            {
-                for (int u = 2; u < 398; u++)
-                {
+
+            for (int i = 2; i < 398; i++) {
+                for (int u = 2; u < 398; u++) {
                     int v = 1;
-                    if (point[i, u, 10] == "NULL")
-                    {
-                        while (v <= 2)
-                        {
-                            if (point[i - v, u - v, 10] == "DRILL")
-                            {
-                                if (point[i + v, u + v, 10] != "DRILL" || point[i + v, u - v, 10] != "DRILL" || point[i - v, u + v, 10] != "DRILL" || point[i + 1, u, 10] == "DRILL" || point[i - 1, u, 10] == "DRILL" || point[i, u + 1, 10] == "DRILL" || point[i, u - 1, 10] == "DRILL")
-                                {
+
+                    if (point[i, u, 10] == "NULL") {
+                        while (v <= 2){
+
+                            if (point[i - v, u - v, 10] == "DRILL"){
+                                if (point[i + v, u + v, 10] != "DRILL" || point[i + v, u - v, 10] != "DRILL" || point[i - v, u + v, 10] != "DRILL" || point[i + 1, u, 10] == "DRILL" || point[i - 1, u, 10] == "DRILL" || point[i, u + 1, 10] == "DRILL" || point[i, u - 1, 10] == "DRILL") {
                                     v = 2;
-                                }
-                                else
-                                {
+                                } else {
                                     point[i, u, 10] = "VRT";
                                     LoadedImage.SetPixel(i, u, Color.White);
                                     v = 2;
@@ -624,9 +547,12 @@ namespace PixIt_0._3
                             }
                             v++;
                         }
+
                     }
+
                 }
             }
+
             debugAddLine("V obrázku je " + citac + " pixelů vrtů");
         }
 
@@ -650,6 +576,7 @@ namespace PixIt_0._3
             else if (pointY[checkIndex] < pointY[i]) { direction += "Yp"; }
 
             vectorDirection[vectorCount] = direction;
+
             //Uloží délku
             if (vectorDirection[vectorCount].Substring(0, 1) == "X") { vectorLength[vectorCount] = vectorEndX[vectorCount] - vectorStartX[vectorCount]; }
             else if (vectorDirection[vectorCount].Substring(0, 1) == "Y") { vectorLength[vectorCount] = vectorEndY[vectorCount] - vectorStartY[vectorCount]; }
@@ -992,9 +919,9 @@ namespace PixIt_0._3
             if (listBoxPoints.SelectedIndex >= 0) {
                 listBoxPointsDrill.SelectedIndex = -1;
                 listBoxVectors.SelectedIndex = -1;
-                showBitmap.Dispose();
-                showBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
-                showBitmap.SetPixel(pointX_duplicate[listBoxPoints.SelectedIndex], pointY_duplicate[listBoxPoints.SelectedIndex], Color.DarkBlue);
+                ShowBitmap.Dispose();
+                ShowBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+                ShowBitmap.SetPixel(pointX_duplicate[listBoxPoints.SelectedIndex], pointY_duplicate[listBoxPoints.SelectedIndex], Color.DarkBlue);
                 ReloadPictureBoxs();
             }
         }
@@ -1003,9 +930,9 @@ namespace PixIt_0._3
             if (listBoxPointsDrill.SelectedIndex >= 0) {
                 listBoxPoints.SelectedIndex = -1;
                 listBoxVectors.SelectedIndex = -1;
-                showBitmap.Dispose();
-                showBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
-                showBitmap.SetPixel(drillPointX[listBoxPointsDrill.SelectedIndex], drillPointY[listBoxPointsDrill.SelectedIndex], Color.DarkBlue);
+                ShowBitmap.Dispose();
+                ShowBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+                ShowBitmap.SetPixel(drillPointX[listBoxPointsDrill.SelectedIndex], drillPointY[listBoxPointsDrill.SelectedIndex], Color.DarkBlue);
                 ReloadPictureBoxs();
             }
         }
@@ -1014,18 +941,18 @@ namespace PixIt_0._3
             if (listBoxVectors.SelectedIndex >= 0) {
                 listBoxPoints.SelectedIndex = -1;
                 listBoxPointsDrill.SelectedIndex = -1;
-                showBitmap.Dispose();
-                showBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
-                showBitmap.SetPixel(vectorStartX[listBoxVectors.SelectedIndex], vectorStartY[listBoxVectors.SelectedIndex], Color.Blue);
-                showBitmap.SetPixel(vectorEndX[listBoxVectors.SelectedIndex], vectorEndY[listBoxVectors.SelectedIndex], Color.Red);
+                ShowBitmap.Dispose();
+                ShowBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+                ShowBitmap.SetPixel(vectorStartX[listBoxVectors.SelectedIndex], vectorStartY[listBoxVectors.SelectedIndex], Color.Blue);
+                ShowBitmap.SetPixel(vectorEndX[listBoxVectors.SelectedIndex], vectorEndY[listBoxVectors.SelectedIndex], Color.Red);
                 ReloadPictureBoxs();
             } 
         }
 
         private void buttonDrawVectors_Click(object sender, EventArgs e) {
             if (isPictureLoaded == true) {
-                showBitmap.Dispose();
-                showBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
+                ShowBitmap.Dispose();
+                ShowBitmap = new Bitmap(LoadedImage.Width, LoadedImage.Height);
 
                 for (int ii = 0; ii < vectorCount; ii++) {
                     int x = vectorEndX[ii] - vectorStartX[ii];
@@ -1035,11 +962,11 @@ namespace PixIt_0._3
                     if (x != 0) {
                         for (int i = 0; i <= Math.Abs(x); i++) {
                             if (x > 0) {
-                                showBitmap.SetPixel(vectorStartX[ii] + i, vectorStartY[ii], Color.Green);
+                                ShowBitmap.SetPixel(vectorStartX[ii] + i, vectorStartY[ii], Color.Green);
                             }
 
                             if (x < 0) {
-                                showBitmap.SetPixel(vectorStartX[ii] - i, vectorStartY[ii], Color.Green);
+                                ShowBitmap.SetPixel(vectorStartX[ii] - i, vectorStartY[ii], Color.Green);
                             }
                         }
                     }
@@ -1047,14 +974,15 @@ namespace PixIt_0._3
                     if (y != 0) {
                         for (int i = 0; i <= Math.Abs(y); i++) {
                             if (y > 0) {
-                                showBitmap.SetPixel(vectorStartX[ii], vectorStartY[ii] + i, Color.Green);
+                                ShowBitmap.SetPixel(vectorStartX[ii], vectorStartY[ii] + i, Color.Green);
                             }
 
                             if (y < 0) {
-                                showBitmap.SetPixel(vectorStartX[ii], vectorStartY[ii] - i, Color.Green);
+                                ShowBitmap.SetPixel(vectorStartX[ii], vectorStartY[ii] - i, Color.Green);
                             }
                         }
                     }
+
                 }
 
                 ReloadPictureBoxs();
@@ -1073,15 +1001,78 @@ namespace PixIt_0._3
             return retVal;
         }
 
+        //Vrátí true, pokud je okolo daného bodu pájecí oblast
+        private bool HasSolderingArea(int _drillPointX, int _drillPointY) {
+            int range = 5;
+
+            for(int x = -range; x <= range; x++) {
+                for(int y = -range; y <= range; y++) {
+                    //Zjistí jestli jsme nevyjeli z obrázku
+                    if((_drillPointX - x) >= 0 && (_drillPointY - y) >= 0 && (_drillPointX + x) <= LoadedImage.Width && (_drillPointY + y) <= LoadedImage.Height) {
+                        //Zkontzroluje barvu pixelu na souřadnicích
+                        Color pixel = LoadedImage.GetPixel(_drillPointX + x, _drillPointY + y);
+                        if(pixel == colorDrill || pixel == colorTranslation) {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private Size GetSolderingArea(int _drillPointX, int _drillPointY) {
+            if(HasSolderingArea(_drillPointX, _drillPointY)) {
+                int lengthX = 1;
+                int lengthY = 1;
+
+                bool OnSolderingArea = false;
+                while(true) {
+                    Color pixel = LoadedImage.GetPixel(_drillPointX + lengthX, _drillPointY);
+                    if(pixel == colorDrill || pixel == colorTranslation) {
+                        if(OnSolderingArea == false) {
+                            OnSolderingArea = true;
+                        }
+                    } else {
+                        if(OnSolderingArea == true) {
+                            break;
+                        }
+                    }
+
+                    lengthX++;
+                }
+
+                OnSolderingArea = false;
+                while(true) {
+                    Color pixel = LoadedImage.GetPixel(_drillPointX, _drillPointY + lengthY);
+                    if(pixel == colorDrill || pixel == colorTranslation) {
+                        if(OnSolderingArea == false) {
+                            OnSolderingArea = true;
+                        }
+                    } else {
+                        if(OnSolderingArea == true) {
+                            break;
+                        }
+                    }
+
+                    lengthY++;
+                }
+
+                return new Size(lengthX*2, lengthY*2);
+            } else {
+                return new Size(0, 0);
+            }
+        }
+
         private void buttonPrint_Click(object sender, EventArgs e) {
             if (isPictureDrawed == true) {
                 if (Serial.IsOpen() == true) {
 
-                    PrinterControl.SetDefaultPosPen();
-
                     decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
                     decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
 
+                    PrinterControl.SetDefaultPosPen();
+                    //Tisk tras
                     int lastI = 0; int currectDrawingRouteI = 1; string lastYDir = "";
                     for (int routeI = 1; routeI < vectorRoutesCount; routeI++) {
                         int endPointX, endPointY;
@@ -1101,8 +1092,8 @@ namespace PixIt_0._3
                         if (moveX < 0) { xDir = "XR"; } else { xDir = "XL"; }
                         if (moveY < 0) { yDir = "YU"; } else { yDir = "YD"; }
 
-                        if (yDir == "YU" && lastYDir == "YD") { stepsStartY += 12; }
-                        if (yDir == "YL" && lastYDir == "YR") { stepsStartY += 12; }
+                        if (yDir == "YU" && lastYDir == "YD") { stepsStartY += 0; }
+                        if (yDir == "YL" && lastYDir == "YR") { stepsStartY += 0; }
                         lastYDir = yDir;
 
                         PrinterQuery.AddCommand("M" + xDir + "(" + stepsStartX + ")");
@@ -1159,6 +1150,52 @@ namespace PixIt_0._3
                         lastI = i;
                         currectDrawingRouteI++;
                     }
+
+                    //Vykreslení pájecích ploch
+                    PrinterControl.SetDefaultPosPen();
+                    for(int holeI = 0; holeI < drillPointCount; holeI++) {
+                        int moveX, moveY;
+                        if(holeI != 0) {
+                            moveX = drillPointX[holeI] - drillPointX[holeI - 1];
+                            moveY = drillPointY[holeI] - drillPointY[holeI - 1];
+                        } else { moveX = drillPointX[holeI]; moveY = drillPointY[holeI]; }
+
+                        int stepsStartX = (int)Math.Round((Math.Abs(moveX) * DpiXRadio), 0);
+                        int stepsStartY = (int)Math.Round((Math.Abs(moveY) * DpiYRadio), 0);
+
+                        string xDir, yDir;
+                        if(moveX < 0) { xDir = "XL"; } else { xDir = "XR"; }
+                        if(moveY < 0) { yDir = "YD"; } else { yDir = "YU"; }
+
+                        //Přesun na souřadnice
+                        PrinterQuery.AddCommand("M" + xDir + "(" + stepsStartX + ")");
+                        PrinterQuery.AddCommand("M" + yDir + "(" + stepsStartY + ")");
+                        
+                        //Výpočet pájecí plochy
+                        Size area = GetSolderingArea(drillPointX[holeI], drillPointY[holeI]);
+
+                        //Přesun na 0,0 pájecí plochy
+                        PrinterQuery.AddCommand("MXL" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) / 2 + ")");
+                        PrinterQuery.AddCommand("MYD" + "(" + (int)Math.Round((Math.Abs(area.Height) * DpiYRadio), 0) / 2 + ")");
+                        PrinterQuery.AddCommand("SPD");
+
+                        //Vykreslení samotné plochy
+                        for(int y = 0; y <= area.Height; y += 2) {
+                            PrinterQuery.AddCommand("MXR" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) + ")");
+                            PrinterQuery.AddCommand("MYU" + "(" + "1" + ")");
+                            PrinterQuery.AddCommand("MXL" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) + ")");
+                            PrinterQuery.AddCommand("MYU" + "(" + "1" + ")");
+                        }
+                        PrinterQuery.AddCommand("SPU");
+                        
+                        //Přesun
+                        PrinterQuery.AddCommand("MXR" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) / 2 + ")");
+                        PrinterQuery.AddCommand("MYD" + "(" + (int)Math.Round((Math.Abs(area.Height) * DpiYRadio), 0) / 2 + ")");
+                        
+                    }
+
+                    PrinterControl.SetDefaultPosPen();
+
                     PrinterQuery.Start();
                 }
             }
@@ -1218,7 +1255,7 @@ namespace PixIt_0._3
         private void buttonPrintAndDraw_Click(object sender, EventArgs e) {
             if (Serial.IsOpen() == true) {
                 buttonPrint.PerformClick();
-                Thread.Sleep(500);
+                Thread.Sleep(50);
                 Application.DoEvents();
                 buttonDrill.PerformClick();
                 Thread.Sleep(50);
