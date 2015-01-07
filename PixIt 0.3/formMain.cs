@@ -62,8 +62,6 @@ namespace PixIt_0._3
         bool isPictureLoaded = false;
         bool isPictureDrawed = false;
 
-        int testTimerTicks = 3;
-
         int x = 0;
         int y = 0;
 
@@ -202,7 +200,6 @@ namespace PixIt_0._3
                     toolPortStatus.Text = "Stav portu: Port je otevřen!";
                     debugAddLine("Port byl otevřen");
 
-                    testTimerTicks = 3;
                     timerPrinterCheck.Enabled = true;
                 }
             }else{
@@ -373,8 +370,10 @@ namespace PixIt_0._3
 
         //Zjistí body
         private void getPoints() {
-            for (int i = 2; i < 398; i++) {
-                for (int u = 2; u < 398; u++) {
+            for (int u = 2; u < LoadedImage.Height; u++) 
+                {
+                    for (int i = 2; i < LoadedImage.Width; i++)
+                {
                     if (point[i, u, 0] == "ROUTE") {
                         if (point[i + 3, u, 0] == "ROUTE" && point[i - 2, u, 0] == "NULL" && point[i, u + 2, 0] == "ROUTE" && point[i, u - 2, 0] == "NULL" && point[i, u + 3, 0] == "NULL" && point[i, u - 1, 0] == "ROUTE" && point[i + 2, u + 1, 0] == "ROUTE") {
                             LoadedImage.SetPixel(i, u, Color.Red);
@@ -524,17 +523,25 @@ namespace PixIt_0._3
        private void getDrills(){
             int citac = 0;
 
-            for (int i = 2; i < 398; i++) {
-                for (int u = 2; u < 398; u++) {
+            for (int u = 2; u < LoadedImage.Height; u++)
+            {
+                for (int i = 2; i < LoadedImage.Width; i++) 
+                {
                     int v = 1;
 
-                    if (point[i, u, 10] == "NULL") {
-                        while (v <= 2){
+                    if (point[i, u, 10] == "NULL")
+                    {
+                        while (v <= 2)
+                        {
 
-                            if (point[i - v, u - v, 10] == "DRILL"){
-                                if (point[i + v, u + v, 10] != "DRILL" || point[i + v, u - v, 10] != "DRILL" || point[i - v, u + v, 10] != "DRILL" || point[i + 1, u, 10] == "DRILL" || point[i - 1, u, 10] == "DRILL" || point[i, u + 1, 10] == "DRILL" || point[i, u - 1, 10] == "DRILL") {
+                            if (point[i - v, u - v, 10] == "DRILL")
+                            {
+                                if (point[i + v, u + v, 10] != "DRILL" || point[i + v, u - v, 10] != "DRILL" || point[i - v, u + v, 10] != "DRILL" || point[i + 1, u, 10] == "DRILL" || point[i - 1, u, 10] == "DRILL" || point[i, u + 1, 10] == "DRILL" || point[i, u - 1, 10] == "DRILL")
+                                {
                                     v = 2;
-                                } else {
+                                }
+                                else
+                                {
                                     point[i, u, 10] = "VRT";
                                     LoadedImage.SetPixel(i, u, Color.White);
                                     v = 2;
@@ -1170,6 +1177,7 @@ namespace PixIt_0._3
                         //Přesun na souřadnice
                         PrinterQuery.AddCommand("M" + xDir + "(" + stepsStartX + ")");
                         PrinterQuery.AddCommand("M" + yDir + "(" + stepsStartY + ")");
+                        
                         
                         //Výpočet pájecí plochy
                         Size area = GetSolderingArea(drillPointX[holeI], drillPointY[holeI]);

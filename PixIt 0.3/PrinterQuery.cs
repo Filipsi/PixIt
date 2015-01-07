@@ -23,6 +23,7 @@ namespace PixIt_0._3 {
                 }
 
                 ListCommands.RemoveAt(0);
+                Program.Form.debugAddLine("Příkaz prop tiskárnu: " + command);
                 return command;
             } else {
                 return "";

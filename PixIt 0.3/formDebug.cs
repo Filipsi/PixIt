@@ -14,13 +14,19 @@ namespace PixIt_0._3
     public partial class formDebug : Form
     {
         public void addLineDebug(string text){
-            listBoxDebug.Items.Add(text);
-            listBoxDebug.SelectedIndex = listBoxDebug.Items.Count - 1;
+            if (listBoxDebug.InvokeRequired) {
+                listBoxDebug.Invoke((MethodInvoker) delegate {
+                    AddLine(text);
+                });
+            } else {
+                AddLine(text);
+            }
+
         }
 
-        public void addLineSerial(string text){
-            listBoxSerialPort.Items.Add(text);
-            listBoxSerialPort.SelectedIndex = listBoxSerialPort.Items.Count - 1;
+        private void AddLine(string _text) {
+            listBoxDebug.Items.Add(_text);
+            listBoxDebug.SelectedIndex = listBoxDebug.Items.Count - 1;
         }
 
         public formDebug()

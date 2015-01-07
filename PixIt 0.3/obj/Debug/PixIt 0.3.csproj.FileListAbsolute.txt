@@ -40,3 +40,20 @@ C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.applicatio
 C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.TrustInfo.xml
 C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.exe.manifest
 C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.application
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.exe.config
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.exe
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.pdb
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.exe.manifest
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.application
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.exe
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\bin\Debug\PixIt 0.3.pdb
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.csprojResolveAssemblyReference.cache
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formDebug.resources
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formMain.resources
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formManual.resources
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formSettings.resources
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.Properties.Resources.resources
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.csproj.GenerateResource.Cache
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.TrustInfo.xml
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.exe.manifest
+C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.application

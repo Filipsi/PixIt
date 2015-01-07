@@ -25,6 +25,8 @@ namespace PixIt_0._3 {
 
             MainSerialPort.DataReceived += (sender, e) => {
                 string data = MainSerialPort.ReadLine();
+                Program.Form.debugAddLine("Přijatá data: " + data);
+
 
                 if(data.Contains("A")) {
                     WaitForCommandComplete(null, new EventArgs());

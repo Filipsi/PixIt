@@ -11,15 +11,10 @@ using System.Windows.Forms;
 namespace PixIt_0._3 {
     public partial class formManual : Form {
 
-        public void DebugAddLine(string text)  {
-            if (System.Windows.Forms.Application.OpenForms["formDebug"] != null) {
-                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLineDebug(text);
-            }
-        }
 
         public formManual() {
             InitializeComponent();
-            DebugAddLine("Manuální ovládání bylo otevřeno");
+            Program.Form.debugAddLine("Manuální ovládání bylo otevřeno");
         }
 
         private void buttonDrillOnLeft_Click(object sender, EventArgs e) {
