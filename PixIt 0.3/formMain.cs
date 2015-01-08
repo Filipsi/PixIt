@@ -10,10 +10,10 @@ using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
 
-namespace PixIt_0._3
-{
-    public partial class formMain : Form
-    {
+namespace PixIt_0._3 {
+
+    public partial class formMain : Form {
+
         // Dll knihovna pro čtení a zapisování do souboru
         [DllImport("kernel32")]
         private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
@@ -54,8 +54,6 @@ namespace PixIt_0._3
         int vectorCount = 0;
         int vectorRoutesCount = 1;
 
-        public static string serialLastReadedValue = "";
-
         bool settingsFormOpen = false;
         bool manualControlFormOpen = false;
         Form debugFormOpenedID = null;
@@ -70,6 +68,7 @@ namespace PixIt_0._3
         public static Color colorDrill = Color.White;
         public static Color colorTranslation = Color.White;
         public static int numPort = 3;
+        public static string EthernetIP = "";
 
         public formMain() {
             InitializeComponent();
@@ -92,7 +91,7 @@ namespace PixIt_0._3
         // Obnovení Originálního obrázku
         private void ReloadPictureBoxs() {
             picOriginal.Image = (Image)LoadedImage;
-            picDraw.Image = (Image)ShowBitmap;
+            picEthernetConnected.Image = (Image)ShowBitmap;
         }
 
         // Funkce pro načtení nastavení
@@ -101,14 +100,13 @@ namespace PixIt_0._3
             dialogOpenFile.FilterIndex = 1;
 
             //Načtení nastavení z INI
-            if (File.Exists(Path.Combine(Application.StartupPath, "settings.ini")) == true)
-            {
+            if (File.Exists(Path.Combine(Application.StartupPath, "settings.ini")) == true) {
                 colorPath = Color.FromArgb(Convert.ToInt32(IniReadValue("settings.ini", "Colors", "path")));
                 colorDrill = Color.FromArgb(Convert.ToInt32(IniReadValue("settings.ini", "Colors", "drill")));
                 colorTranslation = Color.FromArgb(Convert.ToInt32(IniReadValue("settings.ini", "Colors", "translation")));
                 numPort = Convert.ToInt32(IniReadValue("settings.ini", "COM", "port"));
                 PrinterControl.Dpi = Convert.ToInt32(IniReadValue("settings.ini", "PrintSettings", "dpi"));
-                PrinterControl.drillTouchNum = Convert.ToInt32(IniReadValue("settings.ini", "PrintSettings", "drillTouch"));
+                EthernetIP = IniReadValue("settings.ini", "PrintSettings", "EthernetIP");
             }
         }
 
@@ -131,7 +129,7 @@ namespace PixIt_0._3
             IniWriteValue("settings.ini", "Colors", "translation", colorTranslation.ToArgb().ToString());
             IniWriteValue("settings.ini", "COM", "port", numPort.ToString());
             IniWriteValue("settings.ini", "PrintSettings", "dpi", PrinterControl.Dpi.ToString());
-            IniWriteValue("settings.ini", "PrintSettings", "drillTouch", PrinterControl.drillTouchNum.ToString());
+            IniWriteValue("settings.ini", "PrintSettings", "EthernetIP", EthernetIP);
             debugAddLine("Okno nastavení bylo uzavřeno");
         }
 
@@ -182,7 +180,7 @@ namespace PixIt_0._3
                         break;
 
                 }
-                settingColor = ""; settings.loadColors();
+                settingColor = ""; settings.loadData();
             }
         }
 
@@ -197,28 +195,24 @@ namespace PixIt_0._3
                 if (Serial.IsOpen() == true) {
                     picOpenPort.BackColor = Color.Green;
                     btnPort.Text = "Zavřít port";
-                    toolPortStatus.Text = "Stav portu: Port je otevřen!";
                     debugAddLine("Port byl otevřen");
-
-                    timerPrinterCheck.Enabled = true;
+                    ButtonEthernet.Enabled = false;
                 }
             }else{
                 try {
                     Serial.Close();
                 } catch (Exception ex) {
                     // Pokud se port nepodaří zavřít vypíše patřičnou chybovou hlášku
-                    toolPortStatus.Text = "Stav portu: Port je otevřen! Chyba chyba při uzavření - " + ex.GetType().ToString(); 
                     debugAddLine("Chyba při uzavření portu" + ex.GetType().ToString());
+                    Program.ShowMessageForm("Chyba při uzavření portu", ex.GetType().ToString());
                 }
                 
                 if (Serial.IsOpen() == false) {
                     // Pokud se port uzavřel změní stav ve statusu a zapíše do debugu
                     picOpenPort.BackColor = Color.Maroon;
                     btnPort.Text = "Otevřít port";
-                    toolPortStatus.Text = "Stav portu: Port je uzavřen!";
                     debugAddLine("Port byl uzavřen");
-
-                    timerPrinterCheck.Enabled = false;
+                    ButtonEthernet.Enabled = true;
                 }
             }
         }
@@ -234,7 +228,7 @@ namespace PixIt_0._3
 
         //Otevře form manuálního ovládání
         private void btnManual_Click(object sender, EventArgs e) {
-            if (manualControlFormOpen == false && Serial.IsOpen() == true){
+            if (manualControlFormOpen == false && (Serial.IsOpen() || Tcp.IsConnected()) ){
                 manualControlFormOpen = true;
                 manualControl = new formManual();
                 manualControl.FormClosed += new FormClosedEventHandler(manualControl_close);
@@ -261,8 +255,6 @@ namespace PixIt_0._3
 
         private void drawPicture() {
             if (isPictureLoaded == true) {
-                tabControl.SelectedIndex = 2;
-
                 getRoutes();
                 getPoints();
                 getDrills();
@@ -1073,7 +1065,7 @@ namespace PixIt_0._3
 
         private void buttonPrint_Click(object sender, EventArgs e) {
             if (isPictureDrawed == true) {
-                if (Serial.IsOpen() == true) {
+                if (Serial.IsOpen() || Tcp.IsConnected()) {
 
                     decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
                     decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
@@ -1157,7 +1149,7 @@ namespace PixIt_0._3
                         lastI = i;
                         currectDrawingRouteI++;
                     }
-
+                    /*
                     //Vykreslení pájecích ploch
                     PrinterControl.SetDefaultPosPen();
                     for(int holeI = 0; holeI < drillPointCount; holeI++) {
@@ -1201,67 +1193,76 @@ namespace PixIt_0._3
                         PrinterQuery.AddCommand("MYD" + "(" + (int)Math.Round((Math.Abs(area.Height) * DpiYRadio), 0) / 2 + ")");
                         
                     }
-
+                    */
                     PrinterControl.SetDefaultPosPen();
 
-                    PrinterQuery.Start();
+                    if(Serial.IsOpen()) {
+                        PrinterQuery.StartSerial();
+                    } else if(Tcp.IsConnected()) {
+                        PrinterQuery.StartTcp();
+                    }
                 }
             }
         }
 
         private void buttonDrill_Click(object sender, EventArgs e) {
-            tabControl.SelectedIndex = 1;
+            if(isPictureDrawed == true) {
+                if(Serial.IsOpen() || Tcp.IsConnected()) {
+                    decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
+                    decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
 
-            decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
-            decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
+                    for(int modeI = 1; modeI <= 2; modeI++) {
+                        if(modeI == 1) {
+                            PrinterControl.SetDefaultPosDrill();
+                            PrinterQuery.AddCommand("MZD(140)");
+                        } else if(modeI == 2) {
+                            PrinterControl.SetDefaultPosPen();
+                        }
+                        Thread.Sleep(50);
+                        Application.DoEvents();
 
-            for (int modeI = 1; modeI <= 2; modeI++ ) {
-                if (modeI == 1) {
-                    PrinterControl.SetDefaultPosDrill();
-                    PrinterQuery.AddCommand("MZD(140)");
-                } else if (modeI == 2) {
-                    PrinterControl.SetDefaultPosPen();
-                }
-                Thread.Sleep(50);
-                Application.DoEvents();
+                        for(int holeI = 0; holeI < drillPointCount; holeI++) {
+                            listBoxPointsDrill.SelectedIndex = holeI;
 
-                for (int holeI = 0; holeI < drillPointCount; holeI++) {
-                    listBoxPointsDrill.SelectedIndex = holeI;
+                            int moveX, moveY;
+                            if(holeI != 0) {
+                                moveX = drillPointX[holeI] - drillPointX[holeI - 1];
+                                moveY = drillPointY[holeI] - drillPointY[holeI - 1];
+                            } else { moveX = drillPointX[holeI]; moveY = drillPointY[holeI]; }
 
-                    int moveX, moveY;
-                    if (holeI != 0){
-                        moveX = drillPointX[holeI] - drillPointX[holeI - 1];
-                        moveY = drillPointY[holeI] - drillPointY[holeI - 1];
-                    } else { moveX = drillPointX[holeI]; moveY = drillPointY[holeI]; }
+                            int stepsStartX = (int)Math.Round((Math.Abs(moveX) * DpiXRadio), 0);
+                            int stepsStartY = (int)Math.Round((Math.Abs(moveY) * DpiYRadio), 0);
 
-                    int stepsStartX = (int)Math.Round((Math.Abs(moveX) * DpiXRadio), 0);
-                    int stepsStartY = (int)Math.Round((Math.Abs(moveY) * DpiYRadio), 0);
+                            string xDir, yDir;
+                            if(moveX < 0) { xDir = "XL"; } else { xDir = "XR"; }
+                            if(moveY < 0) { yDir = "YD"; } else { yDir = "YU"; }
 
-                    string xDir, yDir;
-                    if (moveX < 0) { xDir = "XL"; } else { xDir = "XR"; }
-                    if (moveY < 0) { yDir = "YD"; } else { yDir = "YU"; }
+                            PrinterQuery.AddCommand("M" + xDir + "(" + stepsStartX + ")");
+                            PrinterQuery.AddCommand("M" + yDir + "(" + stepsStartY + ")");
 
-                    PrinterQuery.AddCommand("M" + xDir + "(" + stepsStartX + ")");
-                    PrinterQuery.AddCommand("M" + yDir + "(" + stepsStartY + ")");
-                    
-                    if (modeI == 1){
-                        //Mod vrtačky
-                        PrinterQuery.AddCommand("SDR");
-                        PrinterQuery.AddCommand("SDD");
-                    }else if (modeI == 2) {
-                        //Mod tužky
-                        PrinterQuery.AddCommand("SPD");
-                        PrinterQuery.AddCommand("SPU");
+                            if(modeI == 1) {
+                                //Mod vrtačky
+                                PrinterQuery.AddCommand("SDR");
+                                PrinterQuery.AddCommand("SDD");
+                            } else if(modeI == 2) {
+                                //Mod tužky
+                                PrinterQuery.AddCommand("SPD");
+                                PrinterQuery.AddCommand("SPU");
+                            }
+                        }
+                    }
+
+                    if(Serial.IsOpen()) {
+                        PrinterQuery.StartSerial();
+                    } else if(Tcp.IsConnected()) {
+                        PrinterQuery.StartTcp();
                     }
                 }
             }
-
-            PrinterQuery.Start();
-
         }
 
         private void buttonPrintAndDraw_Click(object sender, EventArgs e) {
-            if (Serial.IsOpen() == true) {
+            if(Serial.IsOpen() || Tcp.IsConnected()) {
                 buttonPrint.PerformClick();
                 Thread.Sleep(50);
                 Application.DoEvents();
@@ -1272,22 +1273,15 @@ namespace PixIt_0._3
             }
         }
 
-        private void timerPrinterCheck_Tick(object sender, EventArgs e) {
-            /*
-            if (testTimerTicks == 0) { timerPrinterCheck.Enabled = false; }
+        private void ButtonEthernet_Click(object sender, EventArgs e) { 
+            if(!Tcp.IsConnected()) {
+                Tcp.Init(EthernetIP, 25567);
+                if(Tcp.IsConnected()) { Tcp.StartListening(); picEthernet.BackColor = Color.Green; btnPort.Enabled = false; }
+            } else {
+                Tcp.Disconnect();
+                if(!Tcp.IsConnected()) { picEthernet.BackColor = Color.Maroon; btnPort.Enabled = true; }
+            }
 
-            bool status = PrinterControl.GetSenstorState(128);
-            if (testTimerTicks == 0 && status == true){
-                try { 
-                    Serial.Close();
-                } catch (Exception) { }
-                picOpenPort.BackColor = Color.Maroon;
-                btnPort.Text = "Otevřít port";
-                toolPortStatus.Text = "Stav portu: Port je uzavřen!";
-                debugAddLine("Tiskárna není připojena!");
-                debugAddLine("Port byl uzavřen");
-            } else { testTimerTicks--; }
-            */
         }
 
     }

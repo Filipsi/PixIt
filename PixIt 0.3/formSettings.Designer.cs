@@ -39,11 +39,12 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.numPort = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkBoxDebugModePrint = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numericDpi = new System.Windows.Forms.NumericUpDown();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.TextBoxIP = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.numericDrillTouchNum = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.picCursorColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDrillColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPathColor)).BeginInit();
@@ -53,7 +54,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericDpi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericDrillTouchNum)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnRoute
@@ -124,7 +125,7 @@
             this.groupSetColor.Margin = new System.Windows.Forms.Padding(4);
             this.groupSetColor.Name = "groupSetColor";
             this.groupSetColor.Padding = new System.Windows.Forms.Padding(4);
-            this.groupSetColor.Size = new System.Drawing.Size(196, 212);
+            this.groupSetColor.Size = new System.Drawing.Size(196, 245);
             this.groupSetColor.TabIndex = 7;
             this.groupSetColor.TabStop = false;
             this.groupSetColor.Text = "Nastavení barev";
@@ -175,19 +176,28 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.numericDrillTouchNum);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.checkBoxDebugModePrint);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.numericDpi);
-            this.groupBox2.Location = new System.Drawing.Point(220, 86);
+            this.groupBox2.Location = new System.Drawing.Point(221, 170);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(231, 133);
+            this.groupBox2.Size = new System.Drawing.Size(231, 90);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Nastavení tisku a vrtání";
+            // 
+            // checkBoxDebugModePrint
+            // 
+            this.checkBoxDebugModePrint.AutoSize = true;
+            this.checkBoxDebugModePrint.Location = new System.Drawing.Point(11, 55);
+            this.checkBoxDebugModePrint.Name = "checkBoxDebugModePrint";
+            this.checkBoxDebugModePrint.Size = new System.Drawing.Size(150, 21);
+            this.checkBoxDebugModePrint.TabIndex = 2;
+            this.checkBoxDebugModePrint.Text = "Tisk v debug modu";
+            this.checkBoxDebugModePrint.UseVisualStyleBackColor = true;
+            this.checkBoxDebugModePrint.CheckedChanged += new System.EventHandler(this.checkBoxDebugModePrint_CheckedChanged);
             // 
             // label1
             // 
@@ -212,43 +222,42 @@
             this.numericDpi.TabIndex = 0;
             this.numericDpi.ValueChanged += new System.EventHandler(this.numericDpi_ValueChanged);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.TextBoxIP);
+            this.groupBox3.Location = new System.Drawing.Point(220, 86);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox3.Size = new System.Drawing.Size(230, 73);
+            this.groupBox3.TabIndex = 10;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Nastavení Ethernetu";
+            // 
+            // TextBoxIP
+            // 
+            this.TextBoxIP.Location = new System.Drawing.Point(7, 42);
+            this.TextBoxIP.Name = "TextBoxIP";
+            this.TextBoxIP.Size = new System.Drawing.Size(213, 22);
+            this.TextBoxIP.TabIndex = 0;
+            this.TextBoxIP.TextChanged += new System.EventHandler(this.TextBoxIP_TextChanged);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 73);
+            this.label2.Location = new System.Drawing.Point(8, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(190, 17);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Při dotiku plochy zvednout o:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 56);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(49, 17);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Vrtání:";
-            // 
-            // numericDrillTouchNum
-            // 
-            this.numericDrillTouchNum.Location = new System.Drawing.Point(11, 94);
-            this.numericDrillTouchNum.Margin = new System.Windows.Forms.Padding(4);
-            this.numericDrillTouchNum.Maximum = new decimal(new int[] {
-            150,
-            0,
-            0,
-            0});
-            this.numericDrillTouchNum.Name = "numericDrillTouchNum";
-            this.numericDrillTouchNum.Size = new System.Drawing.Size(212, 22);
-            this.numericDrillTouchNum.TabIndex = 12;
-            this.numericDrillTouchNum.ValueChanged += new System.EventHandler(this.numericDrillTouchNum_ValueChanged);
+            this.label2.Size = new System.Drawing.Size(69, 17);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "IP Adresa";
             // 
             // formSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 240);
+            this.ClientSize = new System.Drawing.Size(463, 267);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupSetColor);
@@ -266,7 +275,8 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericDpi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericDrillTouchNum)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -286,8 +296,9 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericDpi;
-        private System.Windows.Forms.NumericUpDown numericDrillTouchNum;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox checkBoxDebugModePrint;
+        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox TextBoxIP;
     }
 }

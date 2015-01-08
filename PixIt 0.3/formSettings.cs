@@ -7,20 +7,17 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace PixIt_0._3
-{
-    public partial class formSettings : Form
-    {
-        public void debugAddLine(string text)
-        {
-            if (System.Windows.Forms.Application.OpenForms["formDebug"] != null)
-            {
+namespace PixIt_0._3 {
+
+    public partial class formSettings : Form {
+
+        public void debugAddLine(string text) {
+            if (System.Windows.Forms.Application.OpenForms["formDebug"] != null) {
                 (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLineDebug(text);
             }
         }
 
-        public formSettings()
-        {
+        public formSettings() {
             InitializeComponent();
             this.TopMost = true;
             this.Focus();
@@ -28,54 +25,49 @@ namespace PixIt_0._3
             debugAddLine("Bylo otevřeno okno nastavení");
         }
 
-        public void Settings_Load(object sender, EventArgs e)
-        {
-            loadColors();
+        public void Settings_Load(object sender, EventArgs e) {
+            loadData();
         }
 
-        internal void loadColors()
-        {
+        internal void loadData() {
             picPathColor.BackColor = formMain.colorPath;
             picDrillColor.BackColor = formMain.colorDrill;
             picTranslationColor.BackColor = formMain.colorTranslation;
             numPort.Value = formMain.numPort;
             numericDpi.Value = (decimal)PrinterControl.Dpi;
-            numericDrillTouchNum.Value = (decimal)PrinterControl.drillTouchNum;
+            TextBoxIP.Text = formMain.EthernetIP;
         }
 
-        private void btnRoute_Click(object sender, EventArgs e)
-        {
+        private void btnRoute_Click(object sender, EventArgs e) {
             formMain.settingColor = "path";
         }
 
-        private void btnDrill_Click(object sender, EventArgs e)
-        {
+        private void btnDrill_Click(object sender, EventArgs e) {
             formMain.settingColor = "drill";
         }
 
-        private void btnTransition_Click(object sender, EventArgs e)
-        {
+        private void btnTransition_Click(object sender, EventArgs e)  {
             formMain.settingColor = "translation";
         }
 
-        private void numPort_Click(object sender, EventArgs e)
-        {
+        private void numPort_Click(object sender, EventArgs e) {
             debugAddLine("Číslo portu změněno na COM" + numPort.Value);
         }
 
-        private void numPort_ValueChanged(object sender, EventArgs e)
-        {
+        private void numPort_ValueChanged(object sender, EventArgs e) {
             formMain.numPort = Convert.ToInt32(numPort.Value);
         }
 
-        private void numericDpi_ValueChanged(object sender, EventArgs e)
-        {
+        private void numericDpi_ValueChanged(object sender, EventArgs e) {
             PrinterControl.Dpi = Convert.ToInt32(numericDpi.Value);
         }
 
-        private void numericDrillTouchNum_ValueChanged(object sender, EventArgs e)
-        {
-            PrinterControl.drillTouchNum = (int)numericDrillTouchNum.Value;
-        }     
+        private void checkBoxDebugModePrint_CheckedChanged(object sender, EventArgs e) {
+            PrinterControl.PrinterDebugMode = checkBoxDebugModePrint.Checked;
+        }
+
+        private void TextBoxIP_TextChanged(object sender, EventArgs e) {
+            formMain.EthernetIP = TextBoxIP.Text;
+        }  
     }
 }

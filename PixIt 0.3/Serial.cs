@@ -10,7 +10,6 @@ namespace PixIt_0._3 {
     static class Serial{
         
         private static SerialPort MainSerialPort = new SerialPort();
-        public static event EventHandler WaitForCommandComplete = delegate { };
 
         public static void Init(string _PortName, int _BoundRate) {
             MainSerialPort.PortName = _PortName;
@@ -27,9 +26,8 @@ namespace PixIt_0._3 {
                 string data = MainSerialPort.ReadLine();
                 Program.Form.debugAddLine("Přijatá data: " + data);
 
-
                 if(data.Contains("A")) {
-                    WaitForCommandComplete(null, new EventArgs());
+                    PrinterQuery.TriggerCommandCompleteEvent();
                     string command = PrinterQuery.GetCommand();
                     if(command != ""){
                         Thread.Sleep(5);
@@ -41,7 +39,7 @@ namespace PixIt_0._3 {
             try {
                 MainSerialPort.Open();
             } catch (Exception ex) {
-                Program.Form.toolPortStatus.Text = "Stav portu: Port je uzavřen! Chyba při otevření - " + ex.GetType().ToString();
+                Program.ShowMessageForm("Chyba při otevření portu", ex.Message.ToString());
                 DebugAddLine("Chyba při otevření portu: " + ex.GetType().ToString());
             }
         }

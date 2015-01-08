@@ -9,46 +9,62 @@ using System.Threading;
 using System.Windows.Forms;
 
 namespace PixIt_0._3 {
-    public partial class formManual : Form {
 
+    public partial class formManual : Form {
 
         public formManual() {
             InitializeComponent();
             Program.Form.debugAddLine("Manuální ovládání bylo otevřeno");
         }
 
+        private void SendCommand(string _command) {
+            if(Serial.IsOpen()) {
+                Serial.Send(_command);
+            } else if(Tcp.IsConnected()) {
+                Tcp.Send(_command);
+            }
+        }
+
+        private void StartCommand() {
+            if(Serial.IsOpen()) {
+                PrinterQuery.StartSerial();
+            } else if(Tcp.IsConnected()) {
+                PrinterQuery.StartTcp();
+            }
+        }
+
         private void buttonDrillOnLeft_Click(object sender, EventArgs e) {
-            Serial.Send("SDL");
+            SendCommand("SDL");
         }
 
         private void buttonDrillOnRight_Click(object sender, EventArgs e) {
-            Serial.Send("SDR");
+            SendCommand("SDR");
         }
 
         private void buttonDrillOff_Click(object sender, EventArgs e) {
-            Serial.Send("SD0");
+            SendCommand("SD0");
         }
 
         private void buttonPenUp_Click(object sender, EventArgs e) {
-            Serial.Send("SPU");
+            SendCommand("SPU");
         }
 
         private void buttonPenDown_Click(object sender, EventArgs e) {
-            Serial.Send("SPD");
+            SendCommand("SPD");
         }
 
         private void buttonDefValXYZ_Click(object sender, EventArgs e) {
             PrinterQuery.AddCommand("SPU");
             PrinterQuery.AddCommand("SDU");
             PrinterControl.SetDefaultPosDrill();
-            PrinterQuery.Start();
+            StartCommand();
         }
 
         private void button1_Click(object sender, EventArgs e) {
             PrinterQuery.AddCommand("SPU");
             PrinterQuery.AddCommand("SDU");
             PrinterControl.SetDefaultPosPen();
-            PrinterQuery.Start();
+            StartCommand();
         }
 
         //Actions
@@ -78,63 +94,63 @@ namespace PixIt_0._3 {
 
         //Move
         private void buttonZdown_MouseDown(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete += ActionMoveZDown;
+            PrinterQuery.WaitForCommandComplete += ActionMoveZDown;
             PrinterQuery.AddCommand("MZD(" + 1 + ")");
-            PrinterQuery.Start();
+            StartCommand();
         }
 
         private void buttonZdown_MouseUp(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete -= ActionMoveZDown;
+            PrinterQuery.WaitForCommandComplete -= ActionMoveZDown;
         }
 
         private void buttonZup_MouseDown(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete += ActionMoveZUp;
+            PrinterQuery.WaitForCommandComplete += ActionMoveZUp;
             PrinterQuery.AddCommand("MZU(" + 1 + ")");
-            PrinterQuery.Start();
+            StartCommand();
         }
 
         private void buttonZup_MouseUp(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete -= ActionMoveZUp;
+            PrinterQuery.WaitForCommandComplete -= ActionMoveZUp;
         }
 
         private void buttonLEFT_MouseDown(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete += ActionMoveXLeft;
+            PrinterQuery.WaitForCommandComplete += ActionMoveXLeft;
             PrinterQuery.AddCommand("MXL(" + 1 + ")");
-            PrinterQuery.Start();
+            StartCommand();
         }
 
         private void buttonLEFT_MouseUp(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete -= ActionMoveXLeft;
+            PrinterQuery.WaitForCommandComplete -= ActionMoveXLeft;
         }
 
         private void buttonRIGHT_MouseDown(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete += ActionMoveXRight;
+            PrinterQuery.WaitForCommandComplete += ActionMoveXRight;
             PrinterQuery.AddCommand("MXR(" + 1 + ")");
-            PrinterQuery.Start();
+            StartCommand();
         }
 
         private void buttonRIGHT_MouseUp(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete -= ActionMoveXRight;
+            PrinterQuery.WaitForCommandComplete -= ActionMoveXRight;
         }
 
         private void buttonUP_MouseDown(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete += ActionMoveYUp;
+            PrinterQuery.WaitForCommandComplete += ActionMoveYUp;
             PrinterQuery.AddCommand("MYU(" + 1 + ")");
-            PrinterQuery.Start();
+            StartCommand();
         }
 
         private void buttonUP_MouseUp(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete -= ActionMoveYUp;
+            PrinterQuery.WaitForCommandComplete -= ActionMoveYUp;
         }
 
         private void buttonDOWN_MouseDown(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete += ActionMoveYDown;
+            PrinterQuery.WaitForCommandComplete += ActionMoveYDown;
             PrinterQuery.AddCommand("MYD(" + 1 + ")");
-            PrinterQuery.Start();
+            StartCommand();
         }
 
         private void buttonDOWN_MouseUp(object sender, MouseEventArgs e) {
-            Serial.WaitForCommandComplete -= ActionMoveYDown;
+            PrinterQuery.WaitForCommandComplete -= ActionMoveYDown;
         }
 
     }
