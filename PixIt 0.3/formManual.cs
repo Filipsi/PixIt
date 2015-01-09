@@ -18,18 +18,22 @@ namespace PixIt_0._3 {
         }
 
         private void SendCommand(string _command) {
-            if(Serial.IsOpen()) {
-                Serial.Send(_command);
-            } else if(Tcp.IsConnected()) {
-                Tcp.Send(_command);
+            if(!PrinterQuery.IsInUse()) {
+                if(Serial.IsOpen()) {
+                    Serial.Send(_command);
+                } else if(Tcp.IsConnected()) {
+                    Tcp.Send(_command);
+                }
             }
         }
 
         private void StartCommand() {
-            if(Serial.IsOpen()) {
-                PrinterQuery.StartSerial();
-            } else if(Tcp.IsConnected()) {
-                PrinterQuery.StartTcp();
+            if(!PrinterQuery.IsInUse()) {
+                if(Serial.IsOpen()) {
+                    PrinterQuery.StartSerial();
+                } else if(Tcp.IsConnected()) {
+                    PrinterQuery.StartTcp();
+                }
             }
         }
 

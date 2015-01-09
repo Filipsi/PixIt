@@ -36,6 +36,7 @@ namespace PixIt_0._3 {
             numPort.Value = formMain.numPort;
             numericDpi.Value = (decimal)PrinterControl.Dpi;
             TextBoxIP.Text = formMain.EthernetIP;
+            checkBoxDrawSolderingAreas.Checked = formMain.drawSolderingAreas;
         }
 
         private void btnRoute_Click(object sender, EventArgs e) {
@@ -68,6 +69,10 @@ namespace PixIt_0._3 {
 
         private void TextBoxIP_TextChanged(object sender, EventArgs e) {
             formMain.EthernetIP = TextBoxIP.Text;
+        }
+
+        private void checkBoxDrawSolderingAreas_CheckedChanged(object sender, EventArgs e) {
+            formMain.drawSolderingAreas = checkBoxDrawSolderingAreas.Checked;
         }  
     }
 }

@@ -82,6 +82,12 @@
     <Compile Include="formMessage.Designer.cs">
       <DependentUpon>formMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="formPrintProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formPrintProgress.Designer.cs">
+      <DependentUpon>formPrintProgress.cs</DependentUpon>
+    </Compile>
     <Compile Include="PrinterQuery.cs" />
     <Compile Include="formDebug.cs">
       <SubType>Form</SubType>
@@ -123,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="formMessage.resx">
       <DependentUpon>formMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formPrintProgress.resx">
+      <DependentUpon>formPrintProgress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="formSettings.resx">
       <DependentUpon>formSettings.cs</DependentUpon>

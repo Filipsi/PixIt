@@ -34,7 +34,6 @@
             this.btnManual = new System.Windows.Forms.Button();
             this.picOriginal = new System.Windows.Forms.PictureBox();
             this.picEthernetConnected = new System.Windows.Forms.PictureBox();
-            this.listBoxPoints = new System.Windows.Forms.ListBox();
             this.labelOriginal = new System.Windows.Forms.Label();
             this.labelDraw = new System.Windows.Forms.Label();
             this.picOpenPort = new System.Windows.Forms.PictureBox();
@@ -44,30 +43,28 @@
             this.toolHeight = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolVectorCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.buttonDebug = new System.Windows.Forms.Button();
-            this.buttonDrawVectors = new System.Windows.Forms.Button();
-            this.listBoxVectors = new System.Windows.Forms.ListBox();
             this.buttonPrint = new System.Windows.Forms.Button();
-            this.listBoxPointsDrill = new System.Windows.Forms.ListBox();
             this.buttonDrill = new System.Windows.Forms.Button();
-            this.tabControl = new System.Windows.Forms.TabControl();
-            this.tabRoutes = new System.Windows.Forms.TabPage();
-            this.tabDrill = new System.Windows.Forms.TabPage();
-            this.tabVectors = new System.Windows.Forms.TabPage();
-            this.tabCommands = new System.Windows.Forms.TabPage();
-            this.listBoxCommands = new System.Windows.Forms.ListBox();
             this.buttonPrintAndDraw = new System.Windows.Forms.Button();
             this.ButtonEthernet = new System.Windows.Forms.Button();
             this.picEthernet = new System.Windows.Forms.PictureBox();
+            this.tabVectors = new System.Windows.Forms.TabPage();
+            this.buttonDrawVectors = new System.Windows.Forms.Button();
+            this.listBoxVectors = new System.Windows.Forms.ListBox();
+            this.tabDrill = new System.Windows.Forms.TabPage();
+            this.listBoxPointsDrill = new System.Windows.Forms.ListBox();
+            this.tabRoutes = new System.Windows.Forms.TabPage();
+            this.listBoxPoints = new System.Windows.Forms.ListBox();
+            this.tabControl = new System.Windows.Forms.TabControl();
             ((System.ComponentModel.ISupportInitialize)(this.picOriginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEthernetConnected)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).BeginInit();
             this.StatusStrip.SuspendLayout();
-            this.tabControl.SuspendLayout();
-            this.tabRoutes.SuspendLayout();
-            this.tabDrill.SuspendLayout();
-            this.tabVectors.SuspendLayout();
-            this.tabCommands.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picEthernet)).BeginInit();
+            this.tabVectors.SuspendLayout();
+            this.tabDrill.SuspendLayout();
+            this.tabRoutes.SuspendLayout();
+            this.tabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -148,17 +145,6 @@
             this.picEthernetConnected.TabIndex = 6;
             this.picEthernetConnected.TabStop = false;
             // 
-            // listBoxPoints
-            // 
-            this.listBoxPoints.FormattingEnabled = true;
-            this.listBoxPoints.ItemHeight = 16;
-            this.listBoxPoints.Location = new System.Drawing.Point(8, 7);
-            this.listBoxPoints.Margin = new System.Windows.Forms.Padding(4);
-            this.listBoxPoints.Name = "listBoxPoints";
-            this.listBoxPoints.Size = new System.Drawing.Size(269, 324);
-            this.listBoxPoints.TabIndex = 7;
-            this.listBoxPoints.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged);
-            // 
             // labelOriginal
             // 
             this.labelOriginal.AutoSize = true;
@@ -201,7 +187,7 @@
             this.toolWidth,
             this.toolHeight,
             this.toolVectorCount});
-            this.StatusStrip.Location = new System.Drawing.Point(0, 409);
+            this.StatusStrip.Location = new System.Drawing.Point(0, 414);
             this.StatusStrip.Name = "StatusStrip";
             this.StatusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
             this.StatusStrip.Size = new System.Drawing.Size(1377, 25);
@@ -243,31 +229,6 @@
             this.buttonDebug.UseVisualStyleBackColor = false;
             this.buttonDebug.Click += new System.EventHandler(this.buttonDebug_Click);
             // 
-            // buttonDrawVectors
-            // 
-            this.buttonDrawVectors.BackColor = System.Drawing.Color.Silver;
-            this.buttonDrawVectors.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDrawVectors.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonDrawVectors.Location = new System.Drawing.Point(7, 306);
-            this.buttonDrawVectors.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonDrawVectors.Name = "buttonDrawVectors";
-            this.buttonDrawVectors.Size = new System.Drawing.Size(272, 32);
-            this.buttonDrawVectors.TabIndex = 23;
-            this.buttonDrawVectors.Text = "Zobraz všechny vektory";
-            this.buttonDrawVectors.UseVisualStyleBackColor = false;
-            this.buttonDrawVectors.Click += new System.EventHandler(this.buttonDrawVectors_Click);
-            // 
-            // listBoxVectors
-            // 
-            this.listBoxVectors.FormattingEnabled = true;
-            this.listBoxVectors.ItemHeight = 16;
-            this.listBoxVectors.Location = new System.Drawing.Point(8, 7);
-            this.listBoxVectors.Margin = new System.Windows.Forms.Padding(4);
-            this.listBoxVectors.Name = "listBoxVectors";
-            this.listBoxVectors.Size = new System.Drawing.Size(269, 292);
-            this.listBoxVectors.TabIndex = 25;
-            this.listBoxVectors.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged_1);
-            // 
             // buttonPrint
             // 
             this.buttonPrint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -283,17 +244,6 @@
             this.buttonPrint.UseVisualStyleBackColor = false;
             this.buttonPrint.Click += new System.EventHandler(this.buttonPrint_Click);
             // 
-            // listBoxPointsDrill
-            // 
-            this.listBoxPointsDrill.FormattingEnabled = true;
-            this.listBoxPointsDrill.ItemHeight = 16;
-            this.listBoxPointsDrill.Location = new System.Drawing.Point(8, 7);
-            this.listBoxPointsDrill.Margin = new System.Windows.Forms.Padding(4);
-            this.listBoxPointsDrill.Name = "listBoxPointsDrill";
-            this.listBoxPointsDrill.Size = new System.Drawing.Size(269, 324);
-            this.listBoxPointsDrill.TabIndex = 34;
-            this.listBoxPointsDrill.SelectedIndexChanged += new System.EventHandler(this.listBoxPointsDrill_SelectedIndexChanged);
-            // 
             // buttonDrill
             // 
             this.buttonDrill.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -308,79 +258,6 @@
             this.buttonDrill.Text = "Vrtat";
             this.buttonDrill.UseVisualStyleBackColor = false;
             this.buttonDrill.Click += new System.EventHandler(this.buttonDrill_Click);
-            // 
-            // tabControl
-            // 
-            this.tabControl.Controls.Add(this.tabRoutes);
-            this.tabControl.Controls.Add(this.tabDrill);
-            this.tabControl.Controls.Add(this.tabVectors);
-            this.tabControl.Controls.Add(this.tabCommands);
-            this.tabControl.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.tabControl.Location = new System.Drawing.Point(1072, 31);
-            this.tabControl.Margin = new System.Windows.Forms.Padding(4);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(297, 373);
-            this.tabControl.TabIndex = 38;
-            // 
-            // tabRoutes
-            // 
-            this.tabRoutes.Controls.Add(this.listBoxPoints);
-            this.tabRoutes.Location = new System.Drawing.Point(4, 25);
-            this.tabRoutes.Margin = new System.Windows.Forms.Padding(4);
-            this.tabRoutes.Name = "tabRoutes";
-            this.tabRoutes.Padding = new System.Windows.Forms.Padding(4);
-            this.tabRoutes.Size = new System.Drawing.Size(289, 344);
-            this.tabRoutes.TabIndex = 0;
-            this.tabRoutes.Text = "Body cest";
-            this.tabRoutes.UseVisualStyleBackColor = true;
-            // 
-            // tabDrill
-            // 
-            this.tabDrill.Controls.Add(this.listBoxPointsDrill);
-            this.tabDrill.Location = new System.Drawing.Point(4, 25);
-            this.tabDrill.Margin = new System.Windows.Forms.Padding(4);
-            this.tabDrill.Name = "tabDrill";
-            this.tabDrill.Padding = new System.Windows.Forms.Padding(4);
-            this.tabDrill.Size = new System.Drawing.Size(289, 344);
-            this.tabDrill.TabIndex = 1;
-            this.tabDrill.Text = "Body vrtání";
-            this.tabDrill.UseVisualStyleBackColor = true;
-            // 
-            // tabVectors
-            // 
-            this.tabVectors.BackColor = System.Drawing.Color.White;
-            this.tabVectors.Controls.Add(this.listBoxVectors);
-            this.tabVectors.Controls.Add(this.buttonDrawVectors);
-            this.tabVectors.Location = new System.Drawing.Point(4, 25);
-            this.tabVectors.Margin = new System.Windows.Forms.Padding(4);
-            this.tabVectors.Name = "tabVectors";
-            this.tabVectors.Padding = new System.Windows.Forms.Padding(4);
-            this.tabVectors.Size = new System.Drawing.Size(289, 344);
-            this.tabVectors.TabIndex = 2;
-            this.tabVectors.Text = "Vektory";
-            // 
-            // tabCommands
-            // 
-            this.tabCommands.Controls.Add(this.listBoxCommands);
-            this.tabCommands.Location = new System.Drawing.Point(4, 25);
-            this.tabCommands.Name = "tabCommands";
-            this.tabCommands.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCommands.Size = new System.Drawing.Size(289, 344);
-            this.tabCommands.TabIndex = 3;
-            this.tabCommands.Text = "Příkazy";
-            this.tabCommands.UseVisualStyleBackColor = true;
-            // 
-            // listBoxCommands
-            // 
-            this.listBoxCommands.Enabled = false;
-            this.listBoxCommands.FormattingEnabled = true;
-            this.listBoxCommands.ItemHeight = 16;
-            this.listBoxCommands.Location = new System.Drawing.Point(7, 7);
-            this.listBoxCommands.Margin = new System.Windows.Forms.Padding(4);
-            this.listBoxCommands.Name = "listBoxCommands";
-            this.listBoxCommands.Size = new System.Drawing.Size(275, 324);
-            this.listBoxCommands.TabIndex = 26;
             // 
             // buttonPrintAndDraw
             // 
@@ -424,11 +301,108 @@
             this.picEthernet.TabIndex = 41;
             this.picEthernet.TabStop = false;
             // 
+            // tabVectors
+            // 
+            this.tabVectors.BackColor = System.Drawing.Color.White;
+            this.tabVectors.Controls.Add(this.listBoxVectors);
+            this.tabVectors.Controls.Add(this.buttonDrawVectors);
+            this.tabVectors.Location = new System.Drawing.Point(4, 25);
+            this.tabVectors.Margin = new System.Windows.Forms.Padding(4);
+            this.tabVectors.Name = "tabVectors";
+            this.tabVectors.Padding = new System.Windows.Forms.Padding(4);
+            this.tabVectors.Size = new System.Drawing.Size(289, 344);
+            this.tabVectors.TabIndex = 2;
+            this.tabVectors.Text = "Vektory";
+            // 
+            // buttonDrawVectors
+            // 
+            this.buttonDrawVectors.BackColor = System.Drawing.Color.Silver;
+            this.buttonDrawVectors.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDrawVectors.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonDrawVectors.Location = new System.Drawing.Point(7, 306);
+            this.buttonDrawVectors.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonDrawVectors.Name = "buttonDrawVectors";
+            this.buttonDrawVectors.Size = new System.Drawing.Size(272, 32);
+            this.buttonDrawVectors.TabIndex = 23;
+            this.buttonDrawVectors.Text = "Zobraz všechny vektory";
+            this.buttonDrawVectors.UseVisualStyleBackColor = false;
+            this.buttonDrawVectors.Click += new System.EventHandler(this.buttonDrawVectors_Click);
+            // 
+            // listBoxVectors
+            // 
+            this.listBoxVectors.FormattingEnabled = true;
+            this.listBoxVectors.ItemHeight = 16;
+            this.listBoxVectors.Location = new System.Drawing.Point(8, 7);
+            this.listBoxVectors.Margin = new System.Windows.Forms.Padding(4);
+            this.listBoxVectors.Name = "listBoxVectors";
+            this.listBoxVectors.Size = new System.Drawing.Size(269, 292);
+            this.listBoxVectors.TabIndex = 25;
+            this.listBoxVectors.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged_1);
+            // 
+            // tabDrill
+            // 
+            this.tabDrill.Controls.Add(this.listBoxPointsDrill);
+            this.tabDrill.Location = new System.Drawing.Point(4, 25);
+            this.tabDrill.Margin = new System.Windows.Forms.Padding(4);
+            this.tabDrill.Name = "tabDrill";
+            this.tabDrill.Padding = new System.Windows.Forms.Padding(4);
+            this.tabDrill.Size = new System.Drawing.Size(289, 344);
+            this.tabDrill.TabIndex = 1;
+            this.tabDrill.Text = "Body vrtání";
+            this.tabDrill.UseVisualStyleBackColor = true;
+            // 
+            // listBoxPointsDrill
+            // 
+            this.listBoxPointsDrill.FormattingEnabled = true;
+            this.listBoxPointsDrill.ItemHeight = 16;
+            this.listBoxPointsDrill.Location = new System.Drawing.Point(8, 7);
+            this.listBoxPointsDrill.Margin = new System.Windows.Forms.Padding(4);
+            this.listBoxPointsDrill.Name = "listBoxPointsDrill";
+            this.listBoxPointsDrill.Size = new System.Drawing.Size(269, 324);
+            this.listBoxPointsDrill.TabIndex = 34;
+            this.listBoxPointsDrill.SelectedIndexChanged += new System.EventHandler(this.listBoxPointsDrill_SelectedIndexChanged);
+            // 
+            // tabRoutes
+            // 
+            this.tabRoutes.Controls.Add(this.listBoxPoints);
+            this.tabRoutes.Location = new System.Drawing.Point(4, 25);
+            this.tabRoutes.Margin = new System.Windows.Forms.Padding(4);
+            this.tabRoutes.Name = "tabRoutes";
+            this.tabRoutes.Padding = new System.Windows.Forms.Padding(4);
+            this.tabRoutes.Size = new System.Drawing.Size(289, 344);
+            this.tabRoutes.TabIndex = 0;
+            this.tabRoutes.Text = "Body cest";
+            this.tabRoutes.UseVisualStyleBackColor = true;
+            // 
+            // listBoxPoints
+            // 
+            this.listBoxPoints.FormattingEnabled = true;
+            this.listBoxPoints.ItemHeight = 16;
+            this.listBoxPoints.Location = new System.Drawing.Point(8, 7);
+            this.listBoxPoints.Margin = new System.Windows.Forms.Padding(4);
+            this.listBoxPoints.Name = "listBoxPoints";
+            this.listBoxPoints.Size = new System.Drawing.Size(269, 324);
+            this.listBoxPoints.TabIndex = 7;
+            this.listBoxPoints.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged);
+            // 
+            // tabControl
+            // 
+            this.tabControl.Controls.Add(this.tabRoutes);
+            this.tabControl.Controls.Add(this.tabDrill);
+            this.tabControl.Controls.Add(this.tabVectors);
+            this.tabControl.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.tabControl.Location = new System.Drawing.Point(1072, 31);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(297, 373);
+            this.tabControl.TabIndex = 38;
+            // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1377, 434);
+            this.ClientSize = new System.Drawing.Size(1377, 439);
             this.Controls.Add(this.picEthernet);
             this.Controls.Add(this.ButtonEthernet);
             this.Controls.Add(this.buttonPrintAndDraw);
@@ -456,12 +430,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).EndInit();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
-            this.tabControl.ResumeLayout(false);
-            this.tabRoutes.ResumeLayout(false);
-            this.tabDrill.ResumeLayout(false);
-            this.tabVectors.ResumeLayout(false);
-            this.tabCommands.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picEthernet)).EndInit();
+            this.tabVectors.ResumeLayout(false);
+            this.tabDrill.ResumeLayout(false);
+            this.tabRoutes.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -475,7 +448,6 @@
         private System.Windows.Forms.Button btnManual;
         private System.Windows.Forms.PictureBox picOriginal;
         private System.Windows.Forms.PictureBox picEthernetConnected;
-        private System.Windows.Forms.ListBox listBoxPoints;
         private System.Windows.Forms.Label labelOriginal;
         private System.Windows.Forms.Label labelDraw;
         private System.Windows.Forms.PictureBox picOpenPort;
@@ -484,21 +456,20 @@
         private System.Windows.Forms.ToolStripStatusLabel toolHeight;
         private System.Windows.Forms.Button buttonDebug;
         private System.Windows.Forms.ToolStripStatusLabel toolVectorCount;
-        private System.Windows.Forms.Button buttonDrawVectors;
-        private System.Windows.Forms.ListBox listBoxVectors;
         private System.Windows.Forms.Button buttonPrint;
-        private System.Windows.Forms.ListBox listBoxPointsDrill;
         private System.Windows.Forms.Button buttonDrill;
-        private System.Windows.Forms.TabPage tabRoutes;
-        private System.Windows.Forms.TabPage tabDrill;
-        private System.Windows.Forms.TabPage tabVectors;
         private System.Windows.Forms.Button buttonPrintAndDraw;
         public System.Windows.Forms.StatusStrip StatusStrip;
-        private System.Windows.Forms.TabPage tabCommands;
-        public System.Windows.Forms.TabControl tabControl;
-        public System.Windows.Forms.ListBox listBoxCommands;
         private System.Windows.Forms.Button ButtonEthernet;
         public System.Windows.Forms.PictureBox picEthernet;
+        private System.Windows.Forms.TabPage tabVectors;
+        private System.Windows.Forms.ListBox listBoxVectors;
+        private System.Windows.Forms.Button buttonDrawVectors;
+        private System.Windows.Forms.TabPage tabDrill;
+        private System.Windows.Forms.ListBox listBoxPointsDrill;
+        private System.Windows.Forms.TabPage tabRoutes;
+        private System.Windows.Forms.ListBox listBoxPoints;
+        public System.Windows.Forms.TabControl tabControl;
     }
 }
 

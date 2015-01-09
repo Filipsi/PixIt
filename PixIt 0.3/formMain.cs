@@ -69,6 +69,7 @@ namespace PixIt_0._3 {
         public static Color colorTranslation = Color.White;
         public static int numPort = 3;
         public static string EthernetIP = "";
+        public static bool drawSolderingAreas = false;
 
         public formMain() {
             InitializeComponent();
@@ -107,6 +108,9 @@ namespace PixIt_0._3 {
                 numPort = Convert.ToInt32(IniReadValue("settings.ini", "COM", "port"));
                 PrinterControl.Dpi = Convert.ToInt32(IniReadValue("settings.ini", "PrintSettings", "dpi"));
                 EthernetIP = IniReadValue("settings.ini", "PrintSettings", "EthernetIP");
+
+                string soldering = IniReadValue("settings.ini", "PrintSettings", "SolderingAreas");
+                if(soldering != "") { drawSolderingAreas = Convert.ToBoolean(soldering ); }
             }
         }
 
@@ -130,6 +134,7 @@ namespace PixIt_0._3 {
             IniWriteValue("settings.ini", "COM", "port", numPort.ToString());
             IniWriteValue("settings.ini", "PrintSettings", "dpi", PrinterControl.Dpi.ToString());
             IniWriteValue("settings.ini", "PrintSettings", "EthernetIP", EthernetIP);
+            IniWriteValue("settings.ini", "PrintSettings", "SolderingAreas", drawSolderingAreas.ToString());
             debugAddLine("Okno nastavení bylo uzavřeno");
         }
 
@@ -1064,8 +1069,9 @@ namespace PixIt_0._3 {
         }
 
         private void buttonPrint_Click(object sender, EventArgs e) {
-            if (isPictureDrawed == true) {
+            if (isPictureDrawed == true && !PrinterQuery.IsInUse()) {
                 if (Serial.IsOpen() || Tcp.IsConnected()) {
+                    new formPrintProgress().Show();
 
                     decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
                     decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
@@ -1149,51 +1155,53 @@ namespace PixIt_0._3 {
                         lastI = i;
                         currectDrawingRouteI++;
                     }
-                    /*
-                    //Vykreslení pájecích ploch
-                    PrinterControl.SetDefaultPosPen();
-                    for(int holeI = 0; holeI < drillPointCount; holeI++) {
-                        int moveX, moveY;
-                        if(holeI != 0) {
-                            moveX = drillPointX[holeI] - drillPointX[holeI - 1];
-                            moveY = drillPointY[holeI] - drillPointY[holeI - 1];
-                        } else { moveX = drillPointX[holeI]; moveY = drillPointY[holeI]; }
 
-                        int stepsStartX = (int)Math.Round((Math.Abs(moveX) * DpiXRadio), 0);
-                        int stepsStartY = (int)Math.Round((Math.Abs(moveY) * DpiYRadio), 0);
+                    if(drawSolderingAreas) {
+                        //Vykreslení pájecích ploch
+                        PrinterControl.SetDefaultPosPen();
+                        for(int holeI = 0; holeI < drillPointCount; holeI++) {
+                            int moveX, moveY;
+                            if(holeI != 0) {
+                                moveX = drillPointX[holeI] - drillPointX[holeI - 1];
+                                moveY = drillPointY[holeI] - drillPointY[holeI - 1];
+                            } else { moveX = drillPointX[holeI]; moveY = drillPointY[holeI]; }
 
-                        string xDir, yDir;
-                        if(moveX < 0) { xDir = "XL"; } else { xDir = "XR"; }
-                        if(moveY < 0) { yDir = "YD"; } else { yDir = "YU"; }
+                            int stepsStartX = (int)Math.Round((Math.Abs(moveX) * DpiXRadio), 0);
+                            int stepsStartY = (int)Math.Round((Math.Abs(moveY) * DpiYRadio), 0);
 
-                        //Přesun na souřadnice
-                        PrinterQuery.AddCommand("M" + xDir + "(" + stepsStartX + ")");
-                        PrinterQuery.AddCommand("M" + yDir + "(" + stepsStartY + ")");
-                        
-                        
-                        //Výpočet pájecí plochy
-                        Size area = GetSolderingArea(drillPointX[holeI], drillPointY[holeI]);
+                            string xDir, yDir;
+                            if(moveX < 0) { xDir = "XL"; } else { xDir = "XR"; }
+                            if(moveY < 0) { yDir = "YD"; } else { yDir = "YU"; }
 
-                        //Přesun na 0,0 pájecí plochy
-                        PrinterQuery.AddCommand("MXL" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) / 2 + ")");
-                        PrinterQuery.AddCommand("MYD" + "(" + (int)Math.Round((Math.Abs(area.Height) * DpiYRadio), 0) / 2 + ")");
-                        PrinterQuery.AddCommand("SPD");
+                            //Přesun na souřadnice
+                            PrinterQuery.AddCommand("M" + xDir + "(" + stepsStartX + ")");
+                            PrinterQuery.AddCommand("M" + yDir + "(" + stepsStartY + ")");
 
-                        //Vykreslení samotné plochy
-                        for(int y = 0; y <= area.Height; y += 2) {
-                            PrinterQuery.AddCommand("MXR" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) + ")");
-                            PrinterQuery.AddCommand("MYU" + "(" + "1" + ")");
-                            PrinterQuery.AddCommand("MXL" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) + ")");
-                            PrinterQuery.AddCommand("MYU" + "(" + "1" + ")");
+
+                            //Výpočet pájecí plochy
+                            Size area = GetSolderingArea(drillPointX[holeI], drillPointY[holeI]);
+
+                            //Přesun na 0,0 pájecí plochy
+                            PrinterQuery.AddCommand("MXL" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) / 2 + ")");
+                            PrinterQuery.AddCommand("MYD" + "(" + (int)Math.Round((Math.Abs(area.Height) * DpiYRadio), 0) / 2 + ")");
+                            PrinterQuery.AddCommand("SPD");
+
+                            //Vykreslení samotné plochy
+                            for(int y = 0; y <= area.Height; y += 2) {
+                                PrinterQuery.AddCommand("MXR" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) + ")");
+                                PrinterQuery.AddCommand("MYU" + "(" + "1" + ")");
+                                PrinterQuery.AddCommand("MXL" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) + ")");
+                                PrinterQuery.AddCommand("MYU" + "(" + "1" + ")");
+                            }
+                            PrinterQuery.AddCommand("SPU");
+
+                            //Přesun
+                            PrinterQuery.AddCommand("MXR" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) / 2 + ")");
+                            PrinterQuery.AddCommand("MYD" + "(" + (int)Math.Round((Math.Abs(area.Height) * DpiYRadio), 0) / 2 + ")");
+
                         }
-                        PrinterQuery.AddCommand("SPU");
-                        
-                        //Přesun
-                        PrinterQuery.AddCommand("MXR" + "(" + (int)Math.Round((Math.Abs(area.Width) * DpiXRadio), 0) / 2 + ")");
-                        PrinterQuery.AddCommand("MYD" + "(" + (int)Math.Round((Math.Abs(area.Height) * DpiYRadio), 0) / 2 + ")");
-                        
                     }
-                    */
+
                     PrinterControl.SetDefaultPosPen();
 
                     if(Serial.IsOpen()) {
@@ -1206,7 +1214,7 @@ namespace PixIt_0._3 {
         }
 
         private void buttonDrill_Click(object sender, EventArgs e) {
-            if(isPictureDrawed == true) {
+            if(isPictureDrawed == true && !PrinterQuery.IsInUse()) {
                 if(Serial.IsOpen() || Tcp.IsConnected()) {
                     decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
                     decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);

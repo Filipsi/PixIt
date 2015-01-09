@@ -43,8 +43,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.numericDpi = new System.Windows.Forms.NumericUpDown();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.TextBoxIP = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.TextBoxIP = new System.Windows.Forms.TextBox();
+            this.checkBoxDrawSolderingAreas = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picCursorColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDrillColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPathColor)).BeginInit();
@@ -86,7 +87,7 @@
             this.picCursorColor.Location = new System.Drawing.Point(8, 23);
             this.picCursorColor.Margin = new System.Windows.Forms.Padding(4);
             this.picCursorColor.Name = "picCursorColor";
-            this.picCursorColor.Size = new System.Drawing.Size(70, 181);
+            this.picCursorColor.Size = new System.Drawing.Size(70, 242);
             this.picCursorColor.TabIndex = 3;
             this.picCursorColor.TabStop = false;
             // 
@@ -125,7 +126,7 @@
             this.groupSetColor.Margin = new System.Windows.Forms.Padding(4);
             this.groupSetColor.Name = "groupSetColor";
             this.groupSetColor.Padding = new System.Windows.Forms.Padding(4);
-            this.groupSetColor.Size = new System.Drawing.Size(196, 245);
+            this.groupSetColor.Size = new System.Drawing.Size(196, 273);
             this.groupSetColor.TabIndex = 7;
             this.groupSetColor.TabStop = false;
             this.groupSetColor.Text = "Nastavení barev";
@@ -176,6 +177,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkBoxDrawSolderingAreas);
             this.groupBox2.Controls.Add(this.checkBoxDebugModePrint);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.numericDpi);
@@ -183,7 +185,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(231, 90);
+            this.groupBox2.Size = new System.Drawing.Size(231, 118);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Nastavení tisku a vrtání";
@@ -235,14 +237,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Nastavení Ethernetu";
             // 
-            // TextBoxIP
-            // 
-            this.TextBoxIP.Location = new System.Drawing.Point(7, 42);
-            this.TextBoxIP.Name = "TextBoxIP";
-            this.TextBoxIP.Size = new System.Drawing.Size(213, 22);
-            this.TextBoxIP.TabIndex = 0;
-            this.TextBoxIP.TextChanged += new System.EventHandler(this.TextBoxIP_TextChanged);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -252,11 +246,30 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "IP Adresa";
             // 
+            // TextBoxIP
+            // 
+            this.TextBoxIP.Location = new System.Drawing.Point(7, 42);
+            this.TextBoxIP.Name = "TextBoxIP";
+            this.TextBoxIP.Size = new System.Drawing.Size(213, 22);
+            this.TextBoxIP.TabIndex = 0;
+            this.TextBoxIP.TextChanged += new System.EventHandler(this.TextBoxIP_TextChanged);
+            // 
+            // checkBoxDrawSolderingAreas
+            // 
+            this.checkBoxDrawSolderingAreas.AutoSize = true;
+            this.checkBoxDrawSolderingAreas.Location = new System.Drawing.Point(11, 82);
+            this.checkBoxDrawSolderingAreas.Name = "checkBoxDrawSolderingAreas";
+            this.checkBoxDrawSolderingAreas.Size = new System.Drawing.Size(189, 21);
+            this.checkBoxDrawSolderingAreas.TabIndex = 3;
+            this.checkBoxDrawSolderingAreas.Text = "Vykreslovat pájeci plochy";
+            this.checkBoxDrawSolderingAreas.UseVisualStyleBackColor = true;
+            this.checkBoxDrawSolderingAreas.CheckedChanged += new System.EventHandler(this.checkBoxDrawSolderingAreas_CheckedChanged);
+            // 
             // formSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 267);
+            this.ClientSize = new System.Drawing.Size(463, 290);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -300,5 +313,6 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox TextBoxIP;
+        private System.Windows.Forms.CheckBox checkBoxDrawSolderingAreas;
     }
 }
