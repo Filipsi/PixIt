@@ -41,7 +41,7 @@
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.toolWidth = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolHeight = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolVectorCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolQueryCommandsCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.buttonDebug = new System.Windows.Forms.Button();
             this.buttonPrint = new System.Windows.Forms.Button();
             this.buttonDrill = new System.Windows.Forms.Button();
@@ -49,8 +49,8 @@
             this.ButtonEthernet = new System.Windows.Forms.Button();
             this.picEthernet = new System.Windows.Forms.PictureBox();
             this.tabVectors = new System.Windows.Forms.TabPage();
-            this.buttonDrawVectors = new System.Windows.Forms.Button();
             this.listBoxVectors = new System.Windows.Forms.ListBox();
+            this.buttonDrawVectors = new System.Windows.Forms.Button();
             this.tabDrill = new System.Windows.Forms.TabPage();
             this.listBoxPointsDrill = new System.Windows.Forms.ListBox();
             this.tabRoutes = new System.Windows.Forms.TabPage();
@@ -125,7 +125,7 @@
             // 
             this.picOriginal.BackColor = System.Drawing.SystemColors.ControlLight;
             this.picOriginal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picOriginal.Location = new System.Drawing.Point(127, 31);
+            this.picOriginal.Location = new System.Drawing.Point(123, 28);
             this.picOriginal.Margin = new System.Windows.Forms.Padding(4);
             this.picOriginal.Name = "picOriginal";
             this.picOriginal.Size = new System.Drawing.Size(466, 372);
@@ -186,7 +186,7 @@
             this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolWidth,
             this.toolHeight,
-            this.toolVectorCount});
+            this.toolQueryCommandsCount});
             this.StatusStrip.Location = new System.Drawing.Point(0, 414);
             this.StatusStrip.Name = "StatusStrip";
             this.StatusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
@@ -209,12 +209,12 @@
             this.toolHeight.Size = new System.Drawing.Size(69, 20);
             this.toolHeight.Text = "Height: 0";
             // 
-            // toolVectorCount
+            // toolQueryCommandsCount
             // 
-            this.toolVectorCount.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
-            this.toolVectorCount.Name = "toolVectorCount";
-            this.toolVectorCount.Size = new System.Drawing.Size(89, 20);
-            this.toolVectorCount.Text = "Počet tras: 0";
+            this.toolQueryCommandsCount.Name = "toolQueryCommandsCount";
+            this.toolQueryCommandsCount.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.toolQueryCommandsCount.Size = new System.Drawing.Size(196, 20);
+            this.toolQueryCommandsCount.Text = "Počet příkazů ve frontě: 0";
             // 
             // buttonDebug
             // 
@@ -314,6 +314,17 @@
             this.tabVectors.TabIndex = 2;
             this.tabVectors.Text = "Vektory";
             // 
+            // listBoxVectors
+            // 
+            this.listBoxVectors.FormattingEnabled = true;
+            this.listBoxVectors.ItemHeight = 16;
+            this.listBoxVectors.Location = new System.Drawing.Point(8, 7);
+            this.listBoxVectors.Margin = new System.Windows.Forms.Padding(4);
+            this.listBoxVectors.Name = "listBoxVectors";
+            this.listBoxVectors.Size = new System.Drawing.Size(269, 292);
+            this.listBoxVectors.TabIndex = 25;
+            this.listBoxVectors.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged_1);
+            // 
             // buttonDrawVectors
             // 
             this.buttonDrawVectors.BackColor = System.Drawing.Color.Silver;
@@ -327,17 +338,6 @@
             this.buttonDrawVectors.Text = "Zobraz všechny vektory";
             this.buttonDrawVectors.UseVisualStyleBackColor = false;
             this.buttonDrawVectors.Click += new System.EventHandler(this.buttonDrawVectors_Click);
-            // 
-            // listBoxVectors
-            // 
-            this.listBoxVectors.FormattingEnabled = true;
-            this.listBoxVectors.ItemHeight = 16;
-            this.listBoxVectors.Location = new System.Drawing.Point(8, 7);
-            this.listBoxVectors.Margin = new System.Windows.Forms.Padding(4);
-            this.listBoxVectors.Name = "listBoxVectors";
-            this.listBoxVectors.Size = new System.Drawing.Size(269, 292);
-            this.listBoxVectors.TabIndex = 25;
-            this.listBoxVectors.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged_1);
             // 
             // tabDrill
             // 
@@ -455,7 +455,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolWidth;
         private System.Windows.Forms.ToolStripStatusLabel toolHeight;
         private System.Windows.Forms.Button buttonDebug;
-        private System.Windows.Forms.ToolStripStatusLabel toolVectorCount;
         private System.Windows.Forms.Button buttonPrint;
         private System.Windows.Forms.Button buttonDrill;
         private System.Windows.Forms.Button buttonPrintAndDraw;
@@ -463,13 +462,14 @@
         private System.Windows.Forms.Button ButtonEthernet;
         public System.Windows.Forms.PictureBox picEthernet;
         private System.Windows.Forms.TabPage tabVectors;
-        private System.Windows.Forms.ListBox listBoxVectors;
-        private System.Windows.Forms.Button buttonDrawVectors;
         private System.Windows.Forms.TabPage tabDrill;
-        private System.Windows.Forms.ListBox listBoxPointsDrill;
         private System.Windows.Forms.TabPage tabRoutes;
-        private System.Windows.Forms.ListBox listBoxPoints;
         public System.Windows.Forms.TabControl tabControl;
+        public System.Windows.Forms.ToolStripStatusLabel toolQueryCommandsCount;
+        public System.Windows.Forms.ListBox listBoxVectors;
+        public System.Windows.Forms.ListBox listBoxPointsDrill;
+        public System.Windows.Forms.ListBox listBoxPoints;
+        public System.Windows.Forms.Button buttonDrawVectors;
     }
 }
 

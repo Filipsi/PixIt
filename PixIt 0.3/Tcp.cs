@@ -12,7 +12,6 @@ using Microsoft.Win32;
 namespace PixIt_0._3 {
 
     static class Tcp {
-
         private static TcpClient client;
         private static byte[] byteBuffer = new byte[5120];
 
@@ -54,7 +53,7 @@ namespace PixIt_0._3 {
 
                 string decodedData = Encoding.ASCII.GetString(byteBuffer);
                 Program.Form.Invoke((MethodInvoker)delegate {
-                    Program.Form.debugAddLine(decodedData);
+                    Program.DebugAddLine(decodedData);
                 });
 
                 ProcessData(decodedData);
@@ -89,4 +88,5 @@ namespace PixIt_0._3 {
         }
 
     }
+
 }

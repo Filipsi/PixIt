@@ -88,6 +88,7 @@
     <Compile Include="formPrintProgress.Designer.cs">
       <DependentUpon>formPrintProgress.cs</DependentUpon>
     </Compile>
+    <Compile Include="PixItCore.cs" />
     <Compile Include="PrinterQuery.cs" />
     <Compile Include="formDebug.cs">
       <SubType>Form</SubType>

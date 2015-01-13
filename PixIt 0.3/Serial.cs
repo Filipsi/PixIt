@@ -24,7 +24,7 @@ namespace PixIt_0._3 {
 
             MainSerialPort.DataReceived += (sender, e) => {
                 string data = MainSerialPort.ReadLine();
-                Program.Form.debugAddLine("Přijatá data: " + data);
+                Program.DebugAddLine("Přijatá data: " + data);
 
                 if(data.Contains("A")) {
                     PrinterQuery.TriggerCommandCompleteEvent();
@@ -40,7 +40,7 @@ namespace PixIt_0._3 {
                 MainSerialPort.Open();
             } catch (Exception ex) {
                 Program.ShowMessageForm("Chyba při otevření portu", ex.Message.ToString());
-                DebugAddLine("Chyba při otevření portu: " + ex.GetType().ToString());
+                Program.DebugAddLine("Chyba při otevření portu: " + ex.GetType().ToString());
             }
         }
 
@@ -63,12 +63,5 @@ namespace PixIt_0._3 {
         public static void Dispose() {
             MainSerialPort.Dispose();
         }
-
-        public static void DebugAddLine(string _text) {
-            if (System.Windows.Forms.Application.OpenForms["formDebug"] != null) {
-                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLineDebug(_text);
-            }
-        }
-
     }
 }

@@ -34,5 +34,13 @@ namespace PixIt_0._3 {
             PrinterQuery.AddCommand("MYU(15)");
         }
 
+        public static void StartPrinting() {
+            if(Serial.IsOpen()) {
+                PrinterQuery.StartSerial();
+            } else if(Tcp.IsConnected()) {
+                PrinterQuery.StartTcp();
+            }
+        }
+
     }
 }

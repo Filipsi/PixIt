@@ -13,23 +13,31 @@ namespace PixIt_0._3 {
         }
 
         public string command { get; private set; }
+
     }
 
     static class PrinterQuery {
         
         private static List<string> ListCommands = new List<string>();
-        public static event EventHandler WaitForCommandComplete = delegate { };
-        public static event EventHandler<CommandEventArgs> SubscribeCommand = delegate { };
+        public static event EventHandler OnCommandCompleted = delegate { };
+        public static event EventHandler<CommandEventArgs> OnCommandExecuted = delegate { };
         private static int CommandCount = 0;
         private static bool InUse = false;
         private static bool StopExecution = false;
 
+        private static void UpdateMainFormToolTip() {
+            string s = Program.Form.toolQueryCommandsCount.Text;
+            Program.Form.toolQueryCommandsCount.Text = s.Substring(0, s.IndexOf(':') + 1) + ListCommands.Count;
+        }
+
         public static void AddCommand(string _command) {
             ListCommands.Add(_command);
+            UpdateMainFormToolTip();
         }
 
         public static void TriggerCommandCompleteEvent() {
-            WaitForCommandComplete(null, new EventArgs());
+            OnCommandCompleted(null, new EventArgs());
+            UpdateMainFormToolTip();
         }
 
         public static int GetCompleteProcentage() {
@@ -41,7 +49,7 @@ namespace PixIt_0._3 {
         }
 
         public static string GetCommand() {
-            if(ListCommands.Count > 0){
+            if(ListCommands.Count > 0) {
                 string command = "";
                 foreach(string s in ListCommands) {
                     command = s;
@@ -49,11 +57,11 @@ namespace PixIt_0._3 {
                 }
 
                 ListCommands.RemoveAt(0);
-                Program.Form.debugAddLine("Příkaz pro tiskárnu: " + command);
-                SubscribeCommand(null, new CommandEventArgs(command));
+                Program.DebugAddLine("Příkaz pro tiskárnu: " + command);
+                OnCommandExecuted(null, new CommandEventArgs(command));
 
                 if(PrinterControl.PrinterDebugMode) { Thread.Sleep(1000); }
-                if(StopExecution == true) { StopExecution = false; return ""; }
+                if(StopExecution) { StopExecution = false; return ""; }
 
                 return command;
             } else {
@@ -65,6 +73,7 @@ namespace PixIt_0._3 {
         public static void ClearQuery() {
             ListCommands.Clear();
             CommandCount = ListCommands.Count;
+            UpdateMainFormToolTip();
         }
 
         public static bool IsInUse() {

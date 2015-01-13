@@ -33,9 +33,9 @@ namespace PixIt_0._3
         {
             InitializeComponent();
             listBoxDebug.Items.Add("Debug byl úspěšně načten");
-            listBoxDebug.Items.Add("Barva cest: " + formMain.colorPath);
-            listBoxDebug.Items.Add("Barva vrtání: " + formMain.colorDrill);
-            listBoxDebug.Items.Add("Barva Přechodu: " + formMain.colorTranslation);
+            listBoxDebug.Items.Add("Barva cest: " + PixItCore.colorPath);
+            listBoxDebug.Items.Add("Barva vrtání: " + PixItCore.colorDrill);
+            listBoxDebug.Items.Add("Barva Přechodu: " + PixItCore.colorTranslation);
             listBoxDebug.Items.Add("Číslo portu: " + formMain.numPort);
             this.TopMost = true;
             this.Focus();

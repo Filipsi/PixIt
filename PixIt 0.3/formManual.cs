@@ -14,7 +14,7 @@ namespace PixIt_0._3 {
 
         public formManual() {
             InitializeComponent();
-            Program.Form.debugAddLine("Manuální ovládání bylo otevřeno");
+            Program.DebugAddLine("Manuální ovládání bylo otevřeno");
         }
 
         private void SendCommand(string _command) {
@@ -98,63 +98,63 @@ namespace PixIt_0._3 {
 
         //Move
         private void buttonZdown_MouseDown(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete += ActionMoveZDown;
+            PrinterQuery.OnCommandCompleted += ActionMoveZDown;
             PrinterQuery.AddCommand("MZD(" + 1 + ")");
             StartCommand();
         }
 
         private void buttonZdown_MouseUp(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete -= ActionMoveZDown;
+            PrinterQuery.OnCommandCompleted -= ActionMoveZDown;
         }
 
         private void buttonZup_MouseDown(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete += ActionMoveZUp;
+            PrinterQuery.OnCommandCompleted += ActionMoveZUp;
             PrinterQuery.AddCommand("MZU(" + 1 + ")");
             StartCommand();
         }
 
         private void buttonZup_MouseUp(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete -= ActionMoveZUp;
+            PrinterQuery.OnCommandCompleted -= ActionMoveZUp;
         }
 
         private void buttonLEFT_MouseDown(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete += ActionMoveXLeft;
+            PrinterQuery.OnCommandCompleted += ActionMoveXLeft;
             PrinterQuery.AddCommand("MXL(" + 1 + ")");
             StartCommand();
         }
 
         private void buttonLEFT_MouseUp(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete -= ActionMoveXLeft;
+            PrinterQuery.OnCommandCompleted -= ActionMoveXLeft;
         }
 
         private void buttonRIGHT_MouseDown(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete += ActionMoveXRight;
+            PrinterQuery.OnCommandCompleted += ActionMoveXRight;
             PrinterQuery.AddCommand("MXR(" + 1 + ")");
             StartCommand();
         }
 
         private void buttonRIGHT_MouseUp(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete -= ActionMoveXRight;
+            PrinterQuery.OnCommandCompleted -= ActionMoveXRight;
         }
 
         private void buttonUP_MouseDown(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete += ActionMoveYUp;
+            PrinterQuery.OnCommandCompleted += ActionMoveYUp;
             PrinterQuery.AddCommand("MYU(" + 1 + ")");
             StartCommand();
         }
 
         private void buttonUP_MouseUp(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete -= ActionMoveYUp;
+            PrinterQuery.OnCommandCompleted -= ActionMoveYUp;
         }
 
         private void buttonDOWN_MouseDown(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete += ActionMoveYDown;
+            PrinterQuery.OnCommandCompleted += ActionMoveYDown;
             PrinterQuery.AddCommand("MYD(" + 1 + ")");
             StartCommand();
         }
 
         private void buttonDOWN_MouseUp(object sender, MouseEventArgs e) {
-            PrinterQuery.WaitForCommandComplete -= ActionMoveYDown;
+            PrinterQuery.OnCommandCompleted -= ActionMoveYDown;
         }
 
     }

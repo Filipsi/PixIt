@@ -15,7 +15,7 @@ namespace PixIt_0._3 {
         }
 
         private void formPrintProgress_Load(object sender, EventArgs e) {
-            PrinterQuery.SubscribeCommand += (obj, args) => {
+            PrinterQuery.OnCommandExecuted += (obj, args) => {
                 if(this.InvokeRequired) {
                     this.Invoke((MethodInvoker)delegate {
                         AddCommandLabel(args.command);
