@@ -61,9 +61,8 @@ namespace PixIt_0._3 {
         }
 
         // Obnovení Originálního obrázku
-        public void ReloadPictureBoxs() {
-            picOriginal.Image = (Image)PixItCore.LoadedImage;
-            picEthernetConnected.Image = (Image)ShowBitmap;
+        public void ReloadPictureBox() {
+            picOriginal.Image = (Image)ShowBitmap;
         }
 
         // Funkce pro načtení nastavení
@@ -115,13 +114,11 @@ namespace PixIt_0._3 {
                 DialogResult result = dialogOpenFile.ShowDialog();
                 if (result == DialogResult.OK) {
                     PixItCore.LoadedImage = new Bitmap(dialogOpenFile.FileName);
-                    ShowBitmap = new Bitmap(PixItCore.LoadedImage.Width, PixItCore.LoadedImage.Height);
-                    toolWidth.Text = "Width: " + PixItCore.LoadedImage.Width.ToString();
-                    toolHeight.Text = "Height: " + PixItCore.LoadedImage.Height.ToString();
+                    ShowBitmap = new Bitmap(PixItCore.LoadedImage);
                     isPictureLoaded = true;
-                    ReloadPictureBoxs();
-                    Program.DebugAddLine("Byl načten obrázek - " + "Šířka obrázku: " + PixItCore.LoadedImage.Width.ToString() + "    Výška obrázku: " + PixItCore.LoadedImage.Height.ToString());
+                    ReloadPictureBox();
 
+                    Program.DebugAddLine("Byl načten obrázek - " + "Šířka obrázku: " + PixItCore.LoadedImage.Width.ToString() + "    Výška obrázku: " + PixItCore.LoadedImage.Height.ToString());
                     PixItCore.DrawPicture();
                 }
             }
@@ -163,12 +160,12 @@ namespace PixIt_0._3 {
         // Když se klikne na button otevření portu
         private void btnPort_Click(object sender, EventArgs e) {
             // Pokud port ješte není otevřen
-            if (Serial.IsOpen() == false) {
+            if (!Serial.IsOpen()) {
                 // Nastavení otevření portu
                 Serial.Init("COM" + numPort.ToString(), 115200);
 
                 // Pokud je port otevřen, změní stav ve statusu a zapíše do debugu
-                if (Serial.IsOpen() == true) {
+                if (Serial.IsOpen()) {
                     picOpenPort.BackColor = Color.Green;
                     btnPort.Text = "Zavřít port";
                     Program.DebugAddLine("Port byl otevřen");
@@ -179,8 +176,8 @@ namespace PixIt_0._3 {
                     Serial.Close();
                 } catch (Exception ex) {
                     // Pokud se port nepodaří zavřít vypíše patřičnou chybovou hlášku
-                    Program.DebugAddLine("Chyba při uzavření portu" + ex.GetType().ToString());
-                    Program.ShowMessageForm("Chyba při uzavření portu", ex.GetType().ToString());
+                    Program.DebugAddLine("Chyba při uzavření portu" + ex.Message.ToString());
+                    Program.ShowMessageForm("Chyba při uzavření portu", ex.Message.ToString());
                 }
                 
                 if (Serial.IsOpen() == false) {
@@ -229,85 +226,63 @@ namespace PixIt_0._3 {
             debugFormOpenedID = null;
         }
 
-        private void DrawPixelPointer(Bitmap _bitmap, int _x, int _y, Color _color) {
-            _bitmap.SetPixel(_x, _y, _color);
 
-            Color color = Color.OrangeRed;
-            try {
-                for(int move = 0; move < 3; move++) {
-                    _bitmap.SetPixel(_x - 5 - move, _y + move, color);
-                    _bitmap.SetPixel(_x - 5 - move, _y - move, color);
-                }
-
-                for(int move = 0; move < 3; move++) {
-                    _bitmap.SetPixel(_x + 5 + move, _y + move, color);
-                    _bitmap.SetPixel(_x + 5 + move, _y - move, color);
-                }
-
-                for(int move = 0; move < 3; move++) {
-                    _bitmap.SetPixel(_x + move, _y - 5 - move, color);
-                    _bitmap.SetPixel(_x - move, _y - 5 - move, color);
-                }
-
-                for(int move = 0; move < 3; move++) {
-                    _bitmap.SetPixel(_x + move, _y + 5 + move, color);
-                    _bitmap.SetPixel(_x - move, _y + 5 + move, color);
-                }
-            } catch { }
-        }
         
         private void listBoxVectors_SelectedIndexChanged(object sender, EventArgs e) {
             if (listBoxPoints.SelectedIndex >= 0) {
+                ShowBitmap = new Bitmap(PixItCore.LoadedImage);
+
+                BitmapPixelPointerControler.DisposeAll();
+                new BitmapPixelPointer(Program.Form, "ShowBitmap", pointX_duplicate[listBoxPoints.SelectedIndex], pointY_duplicate[listBoxPoints.SelectedIndex], Color.Blue);
+                
                 listBoxPointsDrill.SelectedIndex = -1;
                 listBoxVectors.SelectedIndex = -1;
-                ShowBitmap.Dispose();
-                ShowBitmap = new Bitmap(PixItCore.LoadedImage.Width, PixItCore.LoadedImage.Height);
-                DrawPixelPointer(ShowBitmap, pointX_duplicate[listBoxPoints.SelectedIndex], pointY_duplicate[listBoxPoints.SelectedIndex], Color.DarkBlue);
-                ReloadPictureBoxs();
             }
         }
 
         private void listBoxPointsDrill_SelectedIndexChanged(object sender, EventArgs e) {
             if (listBoxPointsDrill.SelectedIndex >= 0) {
+                ShowBitmap = new Bitmap(PixItCore.LoadedImage);
+
+                BitmapPixelPointerControler.DisposeAll();
+                new BitmapPixelPointer(Program.Form, "ShowBitmap", PixItCore.drillPointX[listBoxPointsDrill.SelectedIndex], PixItCore.drillPointY[listBoxPointsDrill.SelectedIndex], Color.DarkGreen);
+
                 listBoxPoints.SelectedIndex = -1;
                 listBoxVectors.SelectedIndex = -1;
-                ShowBitmap.Dispose();
-                ShowBitmap = new Bitmap(PixItCore.LoadedImage.Width, PixItCore.LoadedImage.Height);
-                DrawPixelPointer(ShowBitmap, PixItCore.drillPointX[listBoxPointsDrill.SelectedIndex], PixItCore.drillPointY[listBoxPointsDrill.SelectedIndex], Color.DarkBlue);
-                ReloadPictureBoxs();
             }
         }
 
         private void listBoxVectors_SelectedIndexChanged_1(object sender, EventArgs e) {
             if (listBoxVectors.SelectedIndex >= 0) {
+                ShowBitmap = new Bitmap(PixItCore.LoadedImage);
+
+                BitmapPixelPointerControler.DisposeAll();
+                new BitmapPixelPointer(Program.Form, "ShowBitmap", PixItCore.vectorStartX[listBoxVectors.SelectedIndex], PixItCore.vectorStartY[listBoxVectors.SelectedIndex], Color.Blue);
+                new BitmapPixelPointer(Program.Form, "ShowBitmap", PixItCore.vectorEndX[listBoxVectors.SelectedIndex], PixItCore.vectorEndY[listBoxVectors.SelectedIndex], Color.DarkBlue);
+
                 listBoxPoints.SelectedIndex = -1;
                 listBoxPointsDrill.SelectedIndex = -1;
-                ShowBitmap.Dispose();
-                ShowBitmap = new Bitmap(PixItCore.LoadedImage.Width, PixItCore.LoadedImage.Height);
-                DrawPixelPointer(ShowBitmap, PixItCore.vectorStartX[listBoxVectors.SelectedIndex], PixItCore.vectorStartY[listBoxVectors.SelectedIndex], Color.Blue);
-                DrawPixelPointer(ShowBitmap, PixItCore.vectorEndX[listBoxVectors.SelectedIndex], PixItCore.vectorEndY[listBoxVectors.SelectedIndex], Color.Red);
-                ReloadPictureBoxs();
             } 
         }
 
         private void buttonDrawVectors_Click(object sender, EventArgs e) {
             if (isPictureLoaded == true) {
-                ShowBitmap.Dispose();
-                ShowBitmap = new Bitmap(PixItCore.LoadedImage.Width, PixItCore.LoadedImage.Height);
+                BitmapPixelPointerControler.DisposeAll();
+                ShowBitmap = new Bitmap(PixItCore.LoadedImage);
 
+                Color color = Color.Red;
                 for(int ii = 0; ii < PixItCore.vectorCount; ii++) {
                     int x = PixItCore.vectorEndX[ii] - PixItCore.vectorStartX[ii];
                     int y = PixItCore.vectorEndY[ii] - PixItCore.vectorStartY[ii];
 
-
                     if (x != 0) {
                         for (int i = 0; i <= Math.Abs(x); i++) {
                             if (x > 0) {
-                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii] + i, PixItCore.vectorStartY[ii], Color.Green);
+                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii] + i, PixItCore.vectorStartY[ii], color);
                             }
 
                             if (x < 0) {
-                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii] - i, PixItCore.vectorStartY[ii], Color.Green);
+                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii] - i, PixItCore.vectorStartY[ii], color);
                             }
                         }
                     }
@@ -315,18 +290,18 @@ namespace PixIt_0._3 {
                     if (y != 0) {
                         for (int i = 0; i <= Math.Abs(y); i++) {
                             if (y > 0) {
-                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii], PixItCore.vectorStartY[ii] + i, Color.Green);
+                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii], PixItCore.vectorStartY[ii] + i, color);
                             }
 
                             if (y < 0) {
-                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii], PixItCore.vectorStartY[ii] - i, Color.Green);
+                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii], PixItCore.vectorStartY[ii] - i, color);
                             }
                         }
                     }
 
                 }
 
-                ReloadPictureBoxs();
+                ReloadPictureBox();
             }
         }
 
@@ -382,7 +357,7 @@ namespace PixIt_0._3 {
 
         private void ButtonEthernet_Click(object sender, EventArgs e) { 
             if(!Tcp.IsConnected()) {
-                Tcp.Init(EthernetIP, 25567);
+                Tcp.Connect(EthernetIP, 25567);
                 if(Tcp.IsConnected()) { Tcp.StartListening(); picEthernet.BackColor = Color.Green; btnPort.Enabled = false; }
             } else {
                 Tcp.Disconnect();

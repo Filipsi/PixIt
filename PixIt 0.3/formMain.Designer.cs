@@ -33,15 +33,9 @@
             this.btnPort = new System.Windows.Forms.Button();
             this.btnManual = new System.Windows.Forms.Button();
             this.picOriginal = new System.Windows.Forms.PictureBox();
-            this.picEthernetConnected = new System.Windows.Forms.PictureBox();
-            this.labelOriginal = new System.Windows.Forms.Label();
-            this.labelDraw = new System.Windows.Forms.Label();
+            this.labelBitmap = new System.Windows.Forms.Label();
             this.picOpenPort = new System.Windows.Forms.PictureBox();
             this.dialogOpenFile = new System.Windows.Forms.OpenFileDialog();
-            this.StatusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolWidth = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolHeight = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolQueryCommandsCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.buttonDebug = new System.Windows.Forms.Button();
             this.buttonPrint = new System.Windows.Forms.Button();
             this.buttonDrill = new System.Windows.Forms.Button();
@@ -57,9 +51,7 @@
             this.listBoxPoints = new System.Windows.Forms.ListBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             ((System.ComponentModel.ISupportInitialize)(this.picOriginal)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picEthernetConnected)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).BeginInit();
-            this.StatusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picEthernet)).BeginInit();
             this.tabVectors.SuspendLayout();
             this.tabDrill.SuspendLayout();
@@ -125,7 +117,7 @@
             // 
             this.picOriginal.BackColor = System.Drawing.SystemColors.ControlLight;
             this.picOriginal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picOriginal.Location = new System.Drawing.Point(123, 28);
+            this.picOriginal.Location = new System.Drawing.Point(127, 32);
             this.picOriginal.Margin = new System.Windows.Forms.Padding(4);
             this.picOriginal.Name = "picOriginal";
             this.picOriginal.Size = new System.Drawing.Size(466, 372);
@@ -134,36 +126,15 @@
             this.picOriginal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picOriginal_MouseClick);
             this.picOriginal.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picOriginal_MouseMove);
             // 
-            // picEthernetConnected
+            // labelBitmap
             // 
-            this.picEthernetConnected.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.picEthernetConnected.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picEthernetConnected.Location = new System.Drawing.Point(597, 31);
-            this.picEthernetConnected.Margin = new System.Windows.Forms.Padding(4);
-            this.picEthernetConnected.Name = "picEthernetConnected";
-            this.picEthernetConnected.Size = new System.Drawing.Size(466, 372);
-            this.picEthernetConnected.TabIndex = 6;
-            this.picEthernetConnected.TabStop = false;
-            // 
-            // labelOriginal
-            // 
-            this.labelOriginal.AutoSize = true;
-            this.labelOriginal.Location = new System.Drawing.Point(135, 11);
-            this.labelOriginal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelOriginal.Name = "labelOriginal";
-            this.labelOriginal.Size = new System.Drawing.Size(57, 17);
-            this.labelOriginal.TabIndex = 9;
-            this.labelOriginal.Text = "Originál";
-            // 
-            // labelDraw
-            // 
-            this.labelDraw.AutoSize = true;
-            this.labelDraw.Location = new System.Drawing.Point(611, 11);
-            this.labelDraw.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelDraw.Name = "labelDraw";
-            this.labelDraw.Size = new System.Drawing.Size(72, 17);
-            this.labelDraw.TabIndex = 10;
-            this.labelDraw.Text = "Zobrazení";
+            this.labelBitmap.AutoSize = true;
+            this.labelBitmap.Location = new System.Drawing.Point(124, 11);
+            this.labelBitmap.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelBitmap.Name = "labelBitmap";
+            this.labelBitmap.Size = new System.Drawing.Size(59, 17);
+            this.labelBitmap.TabIndex = 9;
+            this.labelBitmap.Text = "Bitmapa";
             // 
             // picOpenPort
             // 
@@ -180,41 +151,6 @@
             // dialogOpenFile
             // 
             this.dialogOpenFile.FileName = "openFileDialog1";
-            // 
-            // StatusStrip
-            // 
-            this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolWidth,
-            this.toolHeight,
-            this.toolQueryCommandsCount});
-            this.StatusStrip.Location = new System.Drawing.Point(0, 414);
-            this.StatusStrip.Name = "StatusStrip";
-            this.StatusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.StatusStrip.Size = new System.Drawing.Size(1377, 25);
-            this.StatusStrip.SizingGrip = false;
-            this.StatusStrip.TabIndex = 20;
-            this.StatusStrip.Text = "StatusStrip";
-            // 
-            // toolWidth
-            // 
-            this.toolWidth.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
-            this.toolWidth.Name = "toolWidth";
-            this.toolWidth.Size = new System.Drawing.Size(64, 20);
-            this.toolWidth.Text = "Width: 0";
-            // 
-            // toolHeight
-            // 
-            this.toolHeight.Margin = new System.Windows.Forms.Padding(5, 3, 0, 2);
-            this.toolHeight.Name = "toolHeight";
-            this.toolHeight.Size = new System.Drawing.Size(69, 20);
-            this.toolHeight.Text = "Height: 0";
-            // 
-            // toolQueryCommandsCount
-            // 
-            this.toolQueryCommandsCount.Name = "toolQueryCommandsCount";
-            this.toolQueryCommandsCount.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.toolQueryCommandsCount.Size = new System.Drawing.Size(196, 20);
-            this.toolQueryCommandsCount.Text = "Počet příkazů ve frontě: 0";
             // 
             // buttonDebug
             // 
@@ -391,7 +327,7 @@
             this.tabControl.Controls.Add(this.tabDrill);
             this.tabControl.Controls.Add(this.tabVectors);
             this.tabControl.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.tabControl.Location = new System.Drawing.Point(1072, 31);
+            this.tabControl.Location = new System.Drawing.Point(601, 32);
             this.tabControl.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -402,7 +338,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1377, 439);
+            this.ClientSize = new System.Drawing.Size(907, 411);
             this.Controls.Add(this.picEthernet);
             this.Controls.Add(this.ButtonEthernet);
             this.Controls.Add(this.buttonPrintAndDraw);
@@ -410,11 +346,8 @@
             this.Controls.Add(this.buttonDrill);
             this.Controls.Add(this.buttonPrint);
             this.Controls.Add(this.buttonDebug);
-            this.Controls.Add(this.StatusStrip);
             this.Controls.Add(this.picOpenPort);
-            this.Controls.Add(this.labelDraw);
-            this.Controls.Add(this.labelOriginal);
-            this.Controls.Add(this.picEthernetConnected);
+            this.Controls.Add(this.labelBitmap);
             this.Controls.Add(this.picOriginal);
             this.Controls.Add(this.btnManual);
             this.Controls.Add(this.btnPort);
@@ -426,10 +359,7 @@
             this.Text = "PixIt 0.3";
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picOriginal)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picEthernetConnected)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).EndInit();
-            this.StatusStrip.ResumeLayout(false);
-            this.StatusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picEthernet)).EndInit();
             this.tabVectors.ResumeLayout(false);
             this.tabDrill.ResumeLayout(false);
@@ -446,30 +376,24 @@
         private System.Windows.Forms.Button btnSetttings;
         private System.Windows.Forms.Button btnPort;
         private System.Windows.Forms.Button btnManual;
-        private System.Windows.Forms.PictureBox picOriginal;
-        private System.Windows.Forms.PictureBox picEthernetConnected;
-        private System.Windows.Forms.Label labelOriginal;
-        private System.Windows.Forms.Label labelDraw;
+        private System.Windows.Forms.Label labelBitmap;
         private System.Windows.Forms.PictureBox picOpenPort;
         private System.Windows.Forms.OpenFileDialog dialogOpenFile;
-        private System.Windows.Forms.ToolStripStatusLabel toolWidth;
-        private System.Windows.Forms.ToolStripStatusLabel toolHeight;
         private System.Windows.Forms.Button buttonDebug;
         private System.Windows.Forms.Button buttonPrint;
         private System.Windows.Forms.Button buttonDrill;
         private System.Windows.Forms.Button buttonPrintAndDraw;
-        public System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.Button ButtonEthernet;
         public System.Windows.Forms.PictureBox picEthernet;
         private System.Windows.Forms.TabPage tabVectors;
         private System.Windows.Forms.TabPage tabDrill;
         private System.Windows.Forms.TabPage tabRoutes;
         public System.Windows.Forms.TabControl tabControl;
-        public System.Windows.Forms.ToolStripStatusLabel toolQueryCommandsCount;
         public System.Windows.Forms.ListBox listBoxVectors;
         public System.Windows.Forms.ListBox listBoxPointsDrill;
         public System.Windows.Forms.ListBox listBoxPoints;
         public System.Windows.Forms.Button buttonDrawVectors;
+        public System.Windows.Forms.PictureBox picOriginal;
     }
 }
 

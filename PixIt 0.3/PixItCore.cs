@@ -253,7 +253,7 @@ namespace PixIt_0._3 {
                 }
             }
 
-            Program.Form.ReloadPictureBoxs();
+            Program.Form.ReloadPictureBox();
         }
 
         private static void GetDrills() {

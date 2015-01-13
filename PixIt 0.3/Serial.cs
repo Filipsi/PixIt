@@ -40,7 +40,7 @@ namespace PixIt_0._3 {
                 MainSerialPort.Open();
             } catch (Exception ex) {
                 Program.ShowMessageForm("Chyba při otevření portu", ex.Message.ToString());
-                Program.DebugAddLine("Chyba při otevření portu: " + ex.GetType().ToString());
+                Program.DebugAddLine("Chyba při otevření portu: " + ex.Message.ToString());
             }
         }
 

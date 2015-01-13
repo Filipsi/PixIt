@@ -23,7 +23,7 @@ namespace PixIt_0._3 {
 
         public static void DebugAddLine(string text) {
             if(System.Windows.Forms.Application.OpenForms["formDebug"] != null) {
-                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).addLineDebug(text);
+                (System.Windows.Forms.Application.OpenForms["formDebug"] as formDebug).AddLine(text);
             }
         }
 

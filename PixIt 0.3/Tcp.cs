@@ -15,7 +15,7 @@ namespace PixIt_0._3 {
         private static TcpClient client;
         private static byte[] byteBuffer = new byte[5120];
 
-        public static void Init(string _ip, int _port){
+        public static void Connect(string _ip, int _port){
             try{
                 client = new TcpClient();
                 client.Connect(_ip, _port);
@@ -71,7 +71,7 @@ namespace PixIt_0._3 {
 
         public static void Send(string _data) {
             if (client != null) {
-                client.Client.Send(Encoding.ASCII.GetBytes(_data + Environment.NewLine));
+                client.Client.Send(Encoding.ASCII.GetBytes(_data));
             }
         }
 

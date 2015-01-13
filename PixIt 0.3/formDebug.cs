@@ -9,37 +9,45 @@ using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
 
-namespace PixIt_0._3
-{
-    public partial class formDebug : Form
-    {
-        public void addLineDebug(string text){
+namespace PixIt_0._3 {
+
+    public partial class formDebug : Form {
+
+        public void AddLine(string _text){
             if (listBoxDebug.InvokeRequired) {
                 listBoxDebug.Invoke((MethodInvoker) delegate {
-                    AddLine(text);
+                    listBoxDebug.Items.Add(_text);
+                    listBoxDebug.SelectedIndex = listBoxDebug.Items.Count - 1;
                 });
             } else {
-                AddLine(text);
+                listBoxDebug.Items.Add(_text);
+                listBoxDebug.SelectedIndex = listBoxDebug.Items.Count - 1;
             }
-
-        }
-
-        private void AddLine(string _text) {
-            listBoxDebug.Items.Add(_text);
-            listBoxDebug.SelectedIndex = listBoxDebug.Items.Count - 1;
         }
 
         public formDebug()
         {
             InitializeComponent();
             listBoxDebug.Items.Add("Debug byl úspěšně načten");
-            listBoxDebug.Items.Add("Barva cest: " + PixItCore.colorPath);
-            listBoxDebug.Items.Add("Barva vrtání: " + PixItCore.colorDrill);
-            listBoxDebug.Items.Add("Barva Přechodu: " + PixItCore.colorTranslation);
-            listBoxDebug.Items.Add("Číslo portu: " + formMain.numPort);
             this.TopMost = true;
             this.Focus();
             this.BringToFront();
+        }
+
+        private void TextBoxCommandLine_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
+            if(e.KeyCode == Keys.Return && TextBoxCommandLine.Text != "") {
+                if(Serial.IsOpen()) {
+                    Serial.Send(TextBoxCommandLine.Text);
+                    AddLine("Příkaz '" + TextBoxCommandLine.Text + "' byl odeslán po sériové lince!");
+                } else if(Tcp.IsConnected()) {
+                    Tcp.Send(TextBoxCommandLine.Text);
+                    AddLine("Příkaz '" + TextBoxCommandLine.Text + "' byl odeslán Tcp socketem!");
+                } else {
+                    AddLine("Příkaz '" + TextBoxCommandLine.Text + "' nebylo možné odeslat, Sériová linka ani Tcp socket není aktivní!");
+                }
+
+                TextBoxCommandLine.Text = "";
+            }
         }
  
     }

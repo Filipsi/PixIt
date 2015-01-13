@@ -25,19 +25,12 @@ namespace PixIt_0._3 {
         private static bool InUse = false;
         private static bool StopExecution = false;
 
-        private static void UpdateMainFormToolTip() {
-            string s = Program.Form.toolQueryCommandsCount.Text;
-            Program.Form.toolQueryCommandsCount.Text = s.Substring(0, s.IndexOf(':') + 1) + ListCommands.Count;
-        }
-
         public static void AddCommand(string _command) {
             ListCommands.Add(_command);
-            UpdateMainFormToolTip();
         }
 
         public static void TriggerCommandCompleteEvent() {
             OnCommandCompleted(null, new EventArgs());
-            UpdateMainFormToolTip();
         }
 
         public static int GetCompleteProcentage() {
@@ -73,7 +66,6 @@ namespace PixIt_0._3 {
         public static void ClearQuery() {
             ListCommands.Clear();
             CommandCount = ListCommands.Count;
-            UpdateMainFormToolTip();
         }
 
         public static bool IsInUse() {
