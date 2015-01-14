@@ -36,8 +36,10 @@ namespace PixIt_0._3 {
 
         public static void StartPrinting() {
             if(Serial.IsOpen()) {
+                new formPrintProgress().Show();
                 PrinterQuery.StartSerial();
             } else if(Tcp.IsConnected()) {
+                new formPrintProgress().Show();
                 PrinterQuery.StartTcp();
             }
         }

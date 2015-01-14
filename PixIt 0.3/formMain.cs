@@ -32,6 +32,8 @@ namespace PixIt_0._3 {
         //Zobrazovaná Bitmapa
         public static Bitmap ShowBitmap;
 
+        private string PixtureFilename;
+
         public bool settingsFormOpen = false;
         public bool manualControlFormOpen = false;
         public Form debugFormOpenedID = null;
@@ -117,27 +119,36 @@ namespace PixIt_0._3 {
 
         // Načtení obrázku
         private void btnLoad_Click(object sender, EventArgs e) {
-            if (isPictureLoaded == false) {
-                DialogResult result = dialogOpenFile.ShowDialog();
-                if (result == DialogResult.OK) {
-                    PixItCore.LoadedImage = new Bitmap(dialogOpenFile.FileName);
-                    ShowBitmap = new Bitmap(PixItCore.LoadedImage);
-                    isPictureLoaded = true;
-                    ReloadPictureBox();
+            DialogResult result = dialogOpenFile.ShowDialog();
+            if (result == DialogResult.OK) {
+                PixItCore.ClearMemeory();
+                PixtureFilename = dialogOpenFile.FileName;
+                PixItCore.LoadedImage = new Bitmap(dialogOpenFile.FileName);
+                ShowBitmap = new Bitmap(PixItCore.LoadedImage);
+                isPictureLoaded = true;
+                ReloadPictureBox();
 
-                    Program.DebugAddLine("Byl načten obrázek - " + "Šířka obrázku: " + PixItCore.LoadedImage.Width.ToString() + "    Výška obrázku: " + PixItCore.LoadedImage.Height.ToString());
-                    PixItCore.DrawPicture();
+                Program.DebugAddLine("Byl načten obrázek - " + "Šířka obrázku: " + PixItCore.LoadedImage.Width.ToString() + "    Výška obrázku: " + PixItCore.LoadedImage.Height.ToString());
+                PixItCore.DrawPicture();
 
-                    if(ShowFileInfo) {
-                        new formImageInfo(dialogOpenFile.FileName.Substring(dialogOpenFile.FileName.LastIndexOf(@"\") + 1), PixItCore.LoadedImage.Width, PixItCore.LoadedImage.Height, listBoxPoints.Items.Count, listBoxPointsDrill.Items.Count, listBoxVectors.Items.Count).Show();
-                    }
+                if(ShowFileInfo) {
+                    new formImageInfo(PixtureFilename.Substring(PixtureFilename.LastIndexOf(@"\") + 1), PixItCore.LoadedImage.Width, PixItCore.LoadedImage.Height, listBoxPoints.Items.Count, listBoxPointsDrill.Items.Count, listBoxVectors.Items.Count).Show();
                 }
+                dialogOpenFile.Dispose();
+            }
+        }
+
+        private void ButtonPixtureInfo_Click(object sender, EventArgs e) {
+            if(isPictureLoaded) {
+                new formImageInfo(PixtureFilename.Substring(PixtureFilename.LastIndexOf(@"\") + 1), PixItCore.LoadedImage.Width, PixItCore.LoadedImage.Height, listBoxPoints.Items.Count, listBoxPointsDrill.Items.Count, listBoxVectors.Items.Count).Show();
+            } else {
+                new formMessage("Chyba", "Nelze zobrazit informace o obrázku pokud není žádný načten!").Show();
             }
         }
 
         // Zobrazení barvy na kterou najede myš
         private void picOriginal_MouseMove(object sender, MouseEventArgs e) {
-            if (isPictureLoaded == true) {
+            if (isPictureLoaded) {
                 if(settingsFormOpen == true && e.X < PixItCore.LoadedImage.Width && e.X > 0 && e.Y < PixItCore.LoadedImage.Height && e.Y > 0) {
                     settings.picCursorColor.BackColor = PixItCore.LoadedImage.GetPixel(e.X, e.Y);
                 }
@@ -178,7 +189,6 @@ namespace PixIt_0._3 {
                 // Pokud je port otevřen, změní stav ve statusu a zapíše do debugu
                 if (Serial.IsOpen()) {
                     picOpenPort.BackColor = Color.Green;
-                    btnPort.Text = "Zavřít port";
                     Program.DebugAddLine("Port byl otevřen");
                     ButtonEthernet.Enabled = false;
                 }
@@ -191,10 +201,9 @@ namespace PixIt_0._3 {
                     Program.ShowMessageForm("Chyba při uzavření portu", ex.Message.ToString());
                 }
                 
-                if (Serial.IsOpen() == false) {
+                if (!Serial.IsOpen()) {
                     // Pokud se port uzavřel změní stav ve statusu a zapíše do debugu
                     picOpenPort.BackColor = Color.Maroon;
-                    btnPort.Text = "Otevřít port";
                     Program.DebugAddLine("Port byl uzavřen");
                     ButtonEthernet.Enabled = true;
                 }
@@ -212,11 +221,15 @@ namespace PixIt_0._3 {
 
         //Otevře form manuálního ovládání
         private void btnManual_Click(object sender, EventArgs e) {
-            if (manualControlFormOpen == false && (Serial.IsOpen() || Tcp.IsConnected()) ){
-                manualControlFormOpen = true;
-                manualControl = new formManual();
-                manualControl.FormClosed += new FormClosedEventHandler(manualControl_close);
-                manualControl.Show();
+            if (!manualControlFormOpen) {
+                if(Serial.IsOpen() || Tcp.IsConnected()) {
+                    manualControlFormOpen = true;
+                    manualControl = new formManual();
+                    manualControl.FormClosed += new FormClosedEventHandler(manualControl_close);
+                    manualControl.Show();
+                } else {
+                    new formMessage("Chyba", "Nelze otevřít manuální ovládání pokud není navázána komunikace s tiskárnou!").Show();
+                }
             }
         }
 
@@ -277,9 +290,9 @@ namespace PixIt_0._3 {
         }
 
         private void buttonDrawVectors_Click(object sender, EventArgs e) {
-            if (isPictureLoaded == true) {
+            if (isPictureLoaded) {
                 BitmapPixelPointer.DisposeAll();
-                ShowBitmap = new Bitmap(PixItCore.LoadedImage);
+                Bitmap BitCopy = new Bitmap(PixItCore.LoadedImage);
 
                 Color color = Color.Red;
                 for(int ii = 0; ii < PixItCore.vectorCount; ii++) {
@@ -289,11 +302,11 @@ namespace PixIt_0._3 {
                     if (x != 0) {
                         for (int i = 0; i <= Math.Abs(x); i++) {
                             if (x > 0) {
-                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii] + i, PixItCore.vectorStartY[ii], color);
+                                BitCopy.SetPixel(PixItCore.vectorStartX[ii] + i, PixItCore.vectorStartY[ii], color);
                             }
 
                             if (x < 0) {
-                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii] - i, PixItCore.vectorStartY[ii], color);
+                                BitCopy.SetPixel(PixItCore.vectorStartX[ii] - i, PixItCore.vectorStartY[ii], color);
                             }
                         }
                     }
@@ -301,68 +314,91 @@ namespace PixIt_0._3 {
                     if (y != 0) {
                         for (int i = 0; i <= Math.Abs(y); i++) {
                             if (y > 0) {
-                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii], PixItCore.vectorStartY[ii] + i, color);
+                                BitCopy.SetPixel(PixItCore.vectorStartX[ii], PixItCore.vectorStartY[ii] + i, color);
                             }
 
                             if (y < 0) {
-                                ShowBitmap.SetPixel(PixItCore.vectorStartX[ii], PixItCore.vectorStartY[ii] - i, color);
+                                BitCopy.SetPixel(PixItCore.vectorStartX[ii], PixItCore.vectorStartY[ii] - i, color);
                             }
                         }
                     }
 
+                    ShowBitmap = BitCopy;
+                    ReloadPictureBox();
                 }
-
-                ReloadPictureBox();
             }
         }
 
         private void buttonPrint_Click(object sender, EventArgs e) {
-            if (isPictureDrawed == true && !PrinterQuery.IsInUse()) {
+            if (isPictureDrawed) {
                 if (Serial.IsOpen() || Tcp.IsConnected()) {
-                    //Zobrazení progress formu
-                    new formPrintProgress().Show();
+                    if(!PrinterQuery.IsInUse()) {
+                        //Tisk cest
+                        PixItCore.AnalizeRoutes();
+                        //Tisk pájecích ploch
+                        if(PixItCore.drawSolderingAreas) { PixItCore.PrintSolderingAreas(); }
+                        //Návrat na začžtek
+                        PrinterControl.SetDefaultPosPen();
 
-                    //Tisk cest
-                    PixItCore.AnalizeRoutes();
-                    //Tisk pájecích ploch
-                    if(PixItCore.drawSolderingAreas) { PixItCore.PrintSolderingAreas(); }
-                    //Návrat na začžtek
-                    PrinterControl.SetDefaultPosPen();
-
-                    //Zahájení tisku
-                    PrinterControl.StartPrinting();
+                        //Zahájení tisku
+                        PrinterControl.StartPrinting();
+                    } else {
+                        new formMessage("Chyba", "Tiskárna je zaneprázdněna!").Show();
+                    }
+                } else {
+                    new formMessage("Chyba", "Tiskárna není připojena nebo nebyla navázána komunikace!").Show();
                 }
+            } else {
+                new formMessage("Chyba", "Není načten obrázek!").Show();
             }
         }
 
         private void buttonDrill_Click(object sender, EventArgs e) {
-            if(isPictureDrawed == true && !PrinterQuery.IsInUse()) {
+            if(isPictureDrawed == true) {
                 if(Serial.IsOpen() || Tcp.IsConnected()) {
-                    //Tisk vrtacích bodů
-                    PixItCore.PrintDrillPoints();
+                    if(!PrinterQuery.IsInUse()) {
+                        //Tisk vrtacích bodů
+                        PixItCore.PrintDrillPoints();
 
-                    //Zahájení tisku
-                    PrinterControl.StartPrinting();
+                        //Zahájení tisku
+                        PrinterControl.StartPrinting();
+                    } else {
+                        new formMessage("Chyba", "Tiskárna je zaneprázdněna!").Show();
+                    }
+                } else {
+                    new formMessage("Chyba", "Tiskárna není připojena nebo nebyla navázána komunikace!").Show();
                 }
+            } else {
+                new formMessage("Chyba", "Není načten obrázek!").Show();
             }
         }
 
         private void buttonPrintAndDraw_Click(object sender, EventArgs e) {
-            if(isPictureDrawed == true && !PrinterQuery.IsInUse()) {
-                if(Serial.IsOpen() || Tcp.IsConnected()) {
-                    //Kliknutí na tlačítko tisk cest
-                    buttonPrint.PerformClick();
-                    Thread.Sleep(5);
-                    Application.DoEvents();
+            if (isPictureDrawed) {
+                if (Serial.IsOpen() || Tcp.IsConnected()) {
+                    if(!PrinterQuery.IsInUse()) {
+                        //Tisk cest
+                        PixItCore.AnalizeRoutes();
+                        //Tisk pájecích ploch
+                        if(PixItCore.drawSolderingAreas) { PixItCore.PrintSolderingAreas(); }
+                        //Návrat na začátek
+                        PrinterControl.SetDefaultPosPen();
 
-                    //Kliknutí na tlačítko tisk vrtacích bodů
-                    buttonDrill.PerformClick();
-                    Thread.Sleep(5);
-                    Application.DoEvents();
+                        //Tisk vrtacích bodů
+                        PixItCore.PrintDrillPoints();
+                        //Návrat na začátek
+                        PrinterControl.SetDefaultPosDrill();
 
-                    //Návrat na začítek
-                    PrinterControl.SetDefaultPosDrill();
+                        //Zahájení tisku
+                        PrinterControl.StartPrinting();
+                    } else {
+                        new formMessage("Chyba", "Tiskárna je zaneprázdněna!").Show();
+                    }
+                } else {
+                    new formMessage("Chyba", "Tiskárna není připojena nebo nebyla navázána komunikace!").Show();
                 }
+            } else {
+                new formMessage("Chyba", "Není načten obrázek!").Show();
             }
         }
 

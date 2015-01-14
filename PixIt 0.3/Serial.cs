@@ -33,7 +33,7 @@ namespace PixIt_0._3 {
                 if(data.Contains("A")) {
                     PrinterQuery.TriggerCommandCompleteEvent();
                     string command = PrinterQuery.GetCommand();
-                    if(command != ""){
+                    if(command != "") {
                         Thread.Sleep(5);
                         Send(command);
                     }

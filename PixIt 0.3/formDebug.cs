@@ -14,15 +14,17 @@ namespace PixIt_0._3 {
     public partial class formDebug : Form {
 
         public void AddLine(string _text) {
-            if (listBoxDebug.InvokeRequired) {
-                listBoxDebug.Invoke((MethodInvoker) delegate {
+            try {
+                if(listBoxDebug.InvokeRequired) {
+                    listBoxDebug.Invoke((MethodInvoker)delegate {
+                        listBoxDebug.Items.Add(_text);
+                        listBoxDebug.SelectedIndex = listBoxDebug.Items.Count - 1;
+                    });
+                } else {
                     listBoxDebug.Items.Add(_text);
                     listBoxDebug.SelectedIndex = listBoxDebug.Items.Count - 1;
-                });
-            } else {
-                listBoxDebug.Items.Add(_text);
-                listBoxDebug.SelectedIndex = listBoxDebug.Items.Count - 1;
-            }
+                }
+            } catch { }
         }
 
         public formDebug() {

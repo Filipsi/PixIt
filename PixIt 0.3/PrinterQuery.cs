@@ -8,11 +8,15 @@ namespace PixIt_0._3 {
 
     class CommandEventArgs : EventArgs {
 
-        public CommandEventArgs(string _command) {
-            command = _command;
-        }
-
         public string command { get; private set; }
+        public int commandCount { get; private set; }
+        public int commandCountTotal { get; private set; }
+
+        public CommandEventArgs(string _command, int _commandCount, int _commandCountTotal) {
+            command = _command;
+            commandCount = _commandCount;
+            commandCountTotal = _commandCountTotal;
+        }
 
     }
 
@@ -33,10 +37,6 @@ namespace PixIt_0._3 {
             OnCommandCompleted(null, new EventArgs());
         }
 
-        public static int GetCompleteProcentage() {
-            return 100 - (int)Math.Round((double)(CommandCount * ListCommands.Count) / 100);
-        }
-
         public static void StopQuery() {
             StopExecution = true;
         }
@@ -51,10 +51,10 @@ namespace PixIt_0._3 {
 
                 ListCommands.RemoveAt(0);
                 Program.DebugAddLine("Příkaz pro tiskárnu: " + command);
-                OnCommandExecuted(null, new CommandEventArgs(command));
 
                 if(PrinterControl.PrinterDebugMode) { Thread.Sleep(1000); }
                 if(StopExecution) { StopExecution = false; return ""; }
+                OnCommandExecuted(null, new CommandEventArgs(command, ListCommands.Count, CommandCount));
 
                 return command;
             } else {
@@ -66,6 +66,7 @@ namespace PixIt_0._3 {
         public static void ClearQuery() {
             ListCommands.Clear();
             CommandCount = ListCommands.Count;
+            InUse = false;
         }
 
         public static bool IsInUse() {

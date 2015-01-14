@@ -40,6 +40,35 @@ namespace PixIt_0._3 {
         public static Color colorTranslation = Color.White;
         public static bool drawSolderingAreas = false;
 
+        public static void ClearMemeory() {
+            Program.Form.listBoxPoints.Items.Clear();
+            Program.Form.listBoxPointsDrill.Items.Clear();
+            Program.Form.listBoxVectors.Items.Clear();
+            BitmapPixelPointer.DisposeAll();
+
+            point = new string[1000, 1000, 20];
+            pointX = new int[10000];
+            pointY = new int[10000];
+            directionPoint = new string[10000];
+            pointCount = 0;
+            drillPointX = new int[10000];
+            drillPointY = new int[10000];
+            drillPointCount = 0;
+            vectorStartX = new int[10000];
+            vectorStartY = new int[10000];
+            vectorEndX = new int[10000];
+            vectorEndY = new int[10000];
+            vectorDirection = new string[10000];
+            vectorRouteI = new int[10000];
+            vectorLength = new int[10000];
+            vectorCount = 0;
+            vectorRoutesCount = 1;
+            x = 0;
+            y = 0;
+
+            if(LoadedImage != null) { LoadedImage.Dispose(); }
+        }
+
         //Vrátí startovní I trasy
         private static int GetRouteIStart(int routeI) {
             int retVal = -1;

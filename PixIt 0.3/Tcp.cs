@@ -52,7 +52,7 @@ namespace PixIt_0._3 {
                 client.Client.EndReceive(ar);
 
                 string decodedData = Encoding.ASCII.GetString(byteBuffer);
-                Program.Form.Invoke((MethodInvoker)delegate {
+                Program.Form.Invoke((MethodInvoker) delegate {
                     Program.DebugAddLine(decodedData);
                 });
 

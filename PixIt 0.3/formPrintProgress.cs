@@ -15,12 +15,22 @@ namespace PixIt_0._3 {
         }
 
         private void formPrintProgress_Load(object sender, EventArgs e) {
+            this.TopMost = true;
+            this.Focus();
+            this.BringToFront();
+
             PrinterQuery.OnCommandExecuted += (obj, args) => {
-                if(this.InvokeRequired) {
-                    this.Invoke((MethodInvoker)delegate {
-                        AddCommandLabel(args.command);
-                    });
-                }
+                try {
+                    if(this.InvokeRequired) {
+                        this.Invoke((MethodInvoker)delegate {
+                            AddCommandLabel(args.command);
+
+                            ProgressBarPrint.Maximum = args.commandCountTotal;
+                            ProgressBarPrint.Value = args.commandCountTotal - args.commandCount;
+                            if(ProgressBarPrint.Value == ProgressBarPrint.Maximum) { Close(); }
+                        });
+                    }
+                } catch { }
             };
         }
 
@@ -32,17 +42,9 @@ namespace PixIt_0._3 {
             PrinterQuery.ClearQuery();
         }
 
-        private void TimerUpdate_Tick(object sender, EventArgs e) {
-            int procentage = PrinterQuery.GetCompleteProcentage();
-            LabelInfo.Text = procentage + "%";
-            if(procentage <= 100 && procentage >= 0) { ProgressBarPrint.Value = procentage; }
-            if(procentage == 100) { Close(); }
-        }
-
         private void ButtonPause_Click(object sender, EventArgs e) {
             if(ButtonPause.Text == "Pozastavit") {
                 PrinterQuery.StopQuery();
-                ButtonPause.BackColor = Color.PaleVioletRed;
                 ButtonPause.Text = "Pokračovat";
             } else {
                 if(Serial.IsOpen()) {
@@ -50,7 +52,6 @@ namespace PixIt_0._3 {
                 } else if(Tcp.IsConnected()) {
                     Tcp.Send(LabelCommand.Text);
                 }
-                ButtonPause.BackColor = Color.LightGray;
                 ButtonPause.Text = "Pozastavit";
             }
         }
