@@ -11,6 +11,10 @@ namespace PixIt_0._3 {
         
         private static SerialPort MainSerialPort = new SerialPort();
 
+        public static string[] GetComPorts() {
+            return SerialPort.GetPortNames();
+        }
+
         public static void Init(string _PortName, int _BoundRate) {
             MainSerialPort.PortName = _PortName;
             MainSerialPort.BaudRate = _BoundRate;

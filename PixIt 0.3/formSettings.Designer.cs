@@ -37,25 +37,27 @@
             this.btnTransition = new System.Windows.Forms.Button();
             this.picTranslationColor = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.numPort = new System.Windows.Forms.NumericUpDown();
+            this.ComboBoxPort = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkBoxDrawSolderingAreas = new System.Windows.Forms.CheckBox();
             this.checkBoxDebugModePrint = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numericDpi = new System.Windows.Forms.NumericUpDown();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.TextBoxIP = new System.Windows.Forms.TextBox();
-            this.checkBoxDrawSolderingAreas = new System.Windows.Forms.CheckBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.CheckBoxShowFileInfo = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picCursorColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDrillColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPathColor)).BeginInit();
             this.groupSetColor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTranslationColor)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericDpi)).BeginInit();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnRoute
@@ -155,7 +157,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.numPort);
+            this.groupBox1.Controls.Add(this.ComboBoxPort);
             this.groupBox1.Location = new System.Drawing.Point(221, 16);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
@@ -165,15 +167,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nastavení COM portu";
             // 
-            // numPort
+            // ComboBoxPort
             // 
-            this.numPort.Location = new System.Drawing.Point(8, 26);
-            this.numPort.Margin = new System.Windows.Forms.Padding(4);
-            this.numPort.Name = "numPort";
-            this.numPort.Size = new System.Drawing.Size(214, 22);
-            this.numPort.TabIndex = 0;
-            this.numPort.ValueChanged += new System.EventHandler(this.numPort_ValueChanged);
-            this.numPort.Click += new System.EventHandler(this.numPort_Click);
+            this.ComboBoxPort.FormattingEnabled = true;
+            this.ComboBoxPort.Location = new System.Drawing.Point(11, 25);
+            this.ComboBoxPort.MaxLength = 3;
+            this.ComboBoxPort.Name = "ComboBoxPort";
+            this.ComboBoxPort.Size = new System.Drawing.Size(208, 24);
+            this.ComboBoxPort.TabIndex = 1;
+            this.ComboBoxPort.DropDown += new System.EventHandler(this.ComboBoxPort_DropDown);
+            this.ComboBoxPort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxPort_SelectedIndexChanged);
+            this.ComboBoxPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ComboBoxPort_KeyPress);
             // 
             // groupBox2
             // 
@@ -189,6 +193,17 @@
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Nastavení tisku a vrtání";
+            // 
+            // checkBoxDrawSolderingAreas
+            // 
+            this.checkBoxDrawSolderingAreas.AutoSize = true;
+            this.checkBoxDrawSolderingAreas.Location = new System.Drawing.Point(11, 82);
+            this.checkBoxDrawSolderingAreas.Name = "checkBoxDrawSolderingAreas";
+            this.checkBoxDrawSolderingAreas.Size = new System.Drawing.Size(189, 21);
+            this.checkBoxDrawSolderingAreas.TabIndex = 3;
+            this.checkBoxDrawSolderingAreas.Text = "Vykreslovat pájeci plochy";
+            this.checkBoxDrawSolderingAreas.UseVisualStyleBackColor = true;
+            this.checkBoxDrawSolderingAreas.CheckedChanged += new System.EventHandler(this.checkBoxDrawSolderingAreas_CheckedChanged);
             // 
             // checkBoxDebugModePrint
             // 
@@ -254,29 +269,44 @@
             this.TextBoxIP.TabIndex = 0;
             this.TextBoxIP.TextChanged += new System.EventHandler(this.TextBoxIP_TextChanged);
             // 
-            // checkBoxDrawSolderingAreas
+            // groupBox4
             // 
-            this.checkBoxDrawSolderingAreas.AutoSize = true;
-            this.checkBoxDrawSolderingAreas.Location = new System.Drawing.Point(11, 82);
-            this.checkBoxDrawSolderingAreas.Name = "checkBoxDrawSolderingAreas";
-            this.checkBoxDrawSolderingAreas.Size = new System.Drawing.Size(189, 21);
-            this.checkBoxDrawSolderingAreas.TabIndex = 3;
-            this.checkBoxDrawSolderingAreas.Text = "Vykreslovat pájeci plochy";
-            this.checkBoxDrawSolderingAreas.UseVisualStyleBackColor = true;
-            this.checkBoxDrawSolderingAreas.CheckedChanged += new System.EventHandler(this.checkBoxDrawSolderingAreas_CheckedChanged);
+            this.groupBox4.Controls.Add(this.CheckBoxShowFileInfo);
+            this.groupBox4.Location = new System.Drawing.Point(16, 296);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox4.Size = new System.Drawing.Size(434, 53);
+            this.groupBox4.TabIndex = 11;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Obecná nastavení";
+            // 
+            // CheckBoxShowFileInfo
+            // 
+            this.CheckBoxShowFileInfo.AutoSize = true;
+            this.CheckBoxShowFileInfo.Location = new System.Drawing.Point(8, 22);
+            this.CheckBoxShowFileInfo.Name = "CheckBoxShowFileInfo";
+            this.CheckBoxShowFileInfo.Size = new System.Drawing.Size(254, 21);
+            this.CheckBoxShowFileInfo.TabIndex = 4;
+            this.CheckBoxShowFileInfo.Text = "Zobrazovat info při načtení obrázku";
+            this.CheckBoxShowFileInfo.UseVisualStyleBackColor = true;
+            this.CheckBoxShowFileInfo.CheckedChanged += new System.EventHandler(this.CheckBoxShowFileInfo_CheckedChanged);
             // 
             // formSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 290);
+            this.ClientSize = new System.Drawing.Size(463, 358);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupSetColor);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "formSettings";
             this.Text = "Nastavení";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formSettings_FormClosing);
             this.Load += new System.EventHandler(this.Settings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picCursorColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDrillColor)).EndInit();
@@ -284,12 +314,13 @@
             this.groupSetColor.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picTranslationColor)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericDpi)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -304,7 +335,6 @@
         private System.Windows.Forms.Button btnTransition;
         private System.Windows.Forms.PictureBox picTranslationColor;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.NumericUpDown numPort;
         public System.Windows.Forms.PictureBox picCursorColor;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
@@ -314,5 +344,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox TextBoxIP;
         private System.Windows.Forms.CheckBox checkBoxDrawSolderingAreas;
+        private System.Windows.Forms.ComboBox ComboBoxPort;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.CheckBox CheckBoxShowFileInfo;
     }
 }

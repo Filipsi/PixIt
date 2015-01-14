@@ -35,24 +35,25 @@
             this.PictureBoxMesssage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.PictureBoxMesssage.Location = new System.Drawing.Point(9, 9);
             this.PictureBoxMesssage.Name = "PictureBoxMesssage";
-            this.PictureBoxMesssage.Size = new System.Drawing.Size(128, 128);
+            this.PictureBoxMesssage.Size = new System.Drawing.Size(113, 128);
             this.PictureBoxMesssage.TabIndex = 0;
             this.PictureBoxMesssage.TabStop = false;
             // 
             // LabelTitle
             // 
-            this.LabelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.LabelTitle.Location = new System.Drawing.Point(147, 12);
+            this.LabelTitle.Font = new System.Drawing.Font("Trebuchet MS", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelTitle.ForeColor = System.Drawing.Color.Maroon;
+            this.LabelTitle.Location = new System.Drawing.Point(128, 12);
             this.LabelTitle.Name = "LabelTitle";
-            this.LabelTitle.Size = new System.Drawing.Size(306, 30);
+            this.LabelTitle.Size = new System.Drawing.Size(325, 30);
             this.LabelTitle.TabIndex = 1;
             this.LabelTitle.Text = "Title";
             // 
             // LabelText
             // 
-            this.LabelText.Location = new System.Drawing.Point(152, 42);
+            this.LabelText.Location = new System.Drawing.Point(130, 42);
             this.LabelText.Name = "LabelText";
-            this.LabelText.Size = new System.Drawing.Size(297, 95);
+            this.LabelText.Size = new System.Drawing.Size(323, 95);
             this.LabelText.TabIndex = 2;
             this.LabelText.Text = "Text";
             // 
@@ -60,6 +61,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(230)))), ((int)(((byte)(169)))));
             this.ClientSize = new System.Drawing.Size(465, 146);
             this.Controls.Add(this.LabelText);
             this.Controls.Add(this.LabelTitle);

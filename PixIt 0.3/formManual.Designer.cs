@@ -213,6 +213,7 @@
             this.Controls.Add(this.buttonDOWN);
             this.Controls.Add(this.buttonUP);
             this.Controls.Add(this.buttonRIGHT);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "formManual";
             this.Text = "Manuální ovládání";

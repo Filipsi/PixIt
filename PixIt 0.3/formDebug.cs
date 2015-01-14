@@ -13,7 +13,7 @@ namespace PixIt_0._3 {
 
     public partial class formDebug : Form {
 
-        public void AddLine(string _text){
+        public void AddLine(string _text) {
             if (listBoxDebug.InvokeRequired) {
                 listBoxDebug.Invoke((MethodInvoker) delegate {
                     listBoxDebug.Items.Add(_text);
@@ -25,10 +25,9 @@ namespace PixIt_0._3 {
             }
         }
 
-        public formDebug()
-        {
+        public formDebug() {
             InitializeComponent();
-            listBoxDebug.Items.Add("Debug byl úspěšně načten");
+            AddLine("Debug byl úspěšně načten");
             this.TopMost = true;
             this.Focus();
             this.BringToFront();

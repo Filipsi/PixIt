@@ -77,6 +77,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapPixelPointer.cs" />
+    <Compile Include="formImageInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formImageInfo.Designer.cs">
+      <DependentUpon>formImageInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="formMessage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,9 @@
     <Compile Include="Tcp.cs" />
     <EmbeddedResource Include="formDebug.resx">
       <DependentUpon>formDebug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formImageInfo.resx">
+      <DependentUpon>formImageInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="formMain.resx">
       <DependentUpon>formMain.cs</DependentUpon>
@@ -174,8 +183,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <None Include="Resources\error.png" />
+    <None Include="Resources\file_info.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

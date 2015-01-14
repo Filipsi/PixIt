@@ -41,6 +41,7 @@ namespace PixIt_0._3 {
         public static string settingColor = "";
         public static int numPort = 3;
         public static string EthernetIP = "";
+        public static bool ShowFileInfo = true;
 
         public formMain() {
             InitializeComponent();
@@ -62,7 +63,9 @@ namespace PixIt_0._3 {
 
         // Obnovení Originálního obrázku
         public void ReloadPictureBox() {
-            picOriginal.Image = (Image)ShowBitmap;
+            try {
+                picOriginal.Image = (Image)ShowBitmap;
+            } catch { }
         }
 
         // Funkce pro načtení nastavení
@@ -78,9 +81,12 @@ namespace PixIt_0._3 {
                 numPort = Convert.ToInt32(IniReadValue("settings.ini", "COM", "port"));
                 PrinterControl.Dpi = Convert.ToInt32(IniReadValue("settings.ini", "PrintSettings", "dpi"));
                 EthernetIP = IniReadValue("settings.ini", "PrintSettings", "EthernetIP");
-
+                
                 string soldering = IniReadValue("settings.ini", "PrintSettings", "SolderingAreas");
                 if(soldering != "") { PixItCore.drawSolderingAreas = Convert.ToBoolean(soldering); }
+
+                string fileInfo = IniReadValue("settings.ini", "GlobalSettings", "ShowFileInfo");
+                if(fileInfo != "") { ShowFileInfo = Convert.ToBoolean(fileInfo); }
             }
         }
 
@@ -105,6 +111,7 @@ namespace PixIt_0._3 {
             IniWriteValue("settings.ini", "PrintSettings", "dpi", PrinterControl.Dpi.ToString());
             IniWriteValue("settings.ini", "PrintSettings", "EthernetIP", EthernetIP);
             IniWriteValue("settings.ini", "PrintSettings", "SolderingAreas", PixItCore.drawSolderingAreas.ToString());
+            IniWriteValue("settings.ini", "GlobalSettings", "ShowFileInfo", ShowFileInfo.ToString());
             Program.DebugAddLine("Okno nastavení bylo uzavřeno");
         }
 
@@ -120,6 +127,10 @@ namespace PixIt_0._3 {
 
                     Program.DebugAddLine("Byl načten obrázek - " + "Šířka obrázku: " + PixItCore.LoadedImage.Width.ToString() + "    Výška obrázku: " + PixItCore.LoadedImage.Height.ToString());
                     PixItCore.DrawPicture();
+
+                    if(ShowFileInfo) {
+                        new formImageInfo(dialogOpenFile.FileName.Substring(dialogOpenFile.FileName.LastIndexOf(@"\") + 1), PixItCore.LoadedImage.Width, PixItCore.LoadedImage.Height, listBoxPoints.Items.Count, listBoxPointsDrill.Items.Count, listBoxVectors.Items.Count).Show();
+                    }
                 }
             }
         }
@@ -232,8 +243,8 @@ namespace PixIt_0._3 {
             if (listBoxPoints.SelectedIndex >= 0) {
                 ShowBitmap = new Bitmap(PixItCore.LoadedImage);
 
-                BitmapPixelPointerControler.DisposeAll();
-                new BitmapPixelPointer(Program.Form, "ShowBitmap", pointX_duplicate[listBoxPoints.SelectedIndex], pointY_duplicate[listBoxPoints.SelectedIndex], Color.Blue);
+                BitmapPixelPointer.DisposeAll();
+                new BitmapPixelPointer.Pointer(Program.Form, "ShowBitmap", pointX_duplicate[listBoxPoints.SelectedIndex], pointY_duplicate[listBoxPoints.SelectedIndex], Color.Blue);
                 
                 listBoxPointsDrill.SelectedIndex = -1;
                 listBoxVectors.SelectedIndex = -1;
@@ -244,8 +255,8 @@ namespace PixIt_0._3 {
             if (listBoxPointsDrill.SelectedIndex >= 0) {
                 ShowBitmap = new Bitmap(PixItCore.LoadedImage);
 
-                BitmapPixelPointerControler.DisposeAll();
-                new BitmapPixelPointer(Program.Form, "ShowBitmap", PixItCore.drillPointX[listBoxPointsDrill.SelectedIndex], PixItCore.drillPointY[listBoxPointsDrill.SelectedIndex], Color.DarkGreen);
+                BitmapPixelPointer.DisposeAll();
+                new BitmapPixelPointer.Pointer(Program.Form, "ShowBitmap", PixItCore.drillPointX[listBoxPointsDrill.SelectedIndex], PixItCore.drillPointY[listBoxPointsDrill.SelectedIndex], Color.DarkGreen);
 
                 listBoxPoints.SelectedIndex = -1;
                 listBoxVectors.SelectedIndex = -1;
@@ -256,9 +267,9 @@ namespace PixIt_0._3 {
             if (listBoxVectors.SelectedIndex >= 0) {
                 ShowBitmap = new Bitmap(PixItCore.LoadedImage);
 
-                BitmapPixelPointerControler.DisposeAll();
-                new BitmapPixelPointer(Program.Form, "ShowBitmap", PixItCore.vectorStartX[listBoxVectors.SelectedIndex], PixItCore.vectorStartY[listBoxVectors.SelectedIndex], Color.Blue);
-                new BitmapPixelPointer(Program.Form, "ShowBitmap", PixItCore.vectorEndX[listBoxVectors.SelectedIndex], PixItCore.vectorEndY[listBoxVectors.SelectedIndex], Color.DarkBlue);
+                BitmapPixelPointer.DisposeAll();
+                new BitmapPixelPointer.Pointer(Program.Form, "ShowBitmap", PixItCore.vectorStartX[listBoxVectors.SelectedIndex], PixItCore.vectorStartY[listBoxVectors.SelectedIndex], Color.Blue);
+                new BitmapPixelPointer.Pointer(Program.Form, "ShowBitmap", PixItCore.vectorEndX[listBoxVectors.SelectedIndex], PixItCore.vectorEndY[listBoxVectors.SelectedIndex], Color.DarkBlue);
 
                 listBoxPoints.SelectedIndex = -1;
                 listBoxPointsDrill.SelectedIndex = -1;
@@ -267,7 +278,7 @@ namespace PixIt_0._3 {
 
         private void buttonDrawVectors_Click(object sender, EventArgs e) {
             if (isPictureLoaded == true) {
-                BitmapPixelPointerControler.DisposeAll();
+                BitmapPixelPointer.DisposeAll();
                 ShowBitmap = new Bitmap(PixItCore.LoadedImage);
 
                 Color color = Color.Red;
@@ -314,7 +325,7 @@ namespace PixIt_0._3 {
                     //Tisk cest
                     PixItCore.AnalizeRoutes();
                     //Tisk pájecích ploch
-                    if(PixItCore.drawSolderingAreas) { PixItCore.AnalizeSolderingAreas(); }
+                    if(PixItCore.drawSolderingAreas) { PixItCore.PrintSolderingAreas(); }
                     //Návrat na začžtek
                     PrinterControl.SetDefaultPosPen();
 
@@ -328,7 +339,7 @@ namespace PixIt_0._3 {
             if(isPictureDrawed == true && !PrinterQuery.IsInUse()) {
                 if(Serial.IsOpen() || Tcp.IsConnected()) {
                     //Tisk vrtacích bodů
-                    PixItCore.AnalizeDrillPoints();
+                    PixItCore.PrintDrillPoints();
 
                     //Zahájení tisku
                     PrinterControl.StartPrinting();

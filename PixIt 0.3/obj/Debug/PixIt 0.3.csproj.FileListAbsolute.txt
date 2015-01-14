@@ -59,3 +59,4 @@ C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.exe.manifes
 C:\Users\MichHorak\Desktop\PixIt\PixIt\PixIt 0.3\obj\Debug\PixIt 0.3.application
 C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formMessage.resources
 C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formPrintProgress.resources
+C:\Users\Filipsi\Documents\GitHub\PixIt\PixIt 0.3\obj\Debug\PixIt_0._3.formImageInfo.resources

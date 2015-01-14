@@ -4,14 +4,14 @@
   <description asmv2:publisher="PixIt 0.3" asmv2:product="PixIt 0.3" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <deployment install="true" mapFileExtensions="true" />
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="PixIt 0.3.exe.manifest" size="4648">
+    <dependentAssembly dependencyType="install" codebase="PixIt 0.3.exe.manifest" size="4649">
       <assemblyIdentity name="PixIt 0.3.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>EyoUxjqpX6ZCECxwe0PF7dAGiqU=</dsig:DigestValue>
+        <dsig:DigestValue>yY0WiW/3fr26uaupv9WDQoqnkZQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

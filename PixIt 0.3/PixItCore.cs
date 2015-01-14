@@ -826,7 +826,7 @@ namespace PixIt_0._3 {
             }
         }
 
-        public static void AnalizeSolderingAreas() {
+        public static void PrintSolderingAreas() {
             decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
             decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
 
@@ -874,7 +874,7 @@ namespace PixIt_0._3 {
             }
         }
 
-        public static void AnalizeDrillPoints() {
+        public static void PrintDrillPoints() {
             decimal DpiXRadio = (decimal)(PrinterControl.xRadio * 25.4F / PrinterControl.Dpi);
             decimal DpiYRadio = (decimal)(PrinterControl.yRadio * 25.4F / PrinterControl.Dpi);
 

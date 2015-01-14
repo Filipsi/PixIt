@@ -83,6 +83,7 @@
             this.Controls.Add(this.TextBoxCommandLine);
             this.Controls.Add(this.labelDebug);
             this.Controls.Add(this.listBoxDebug);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "formDebug";
             this.Text = "Debug okno";
