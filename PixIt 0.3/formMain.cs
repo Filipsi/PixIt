@@ -9,6 +9,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
+using System.Diagnostics;
 
 namespace PixIt_0._3 {
 
@@ -411,6 +412,10 @@ namespace PixIt_0._3 {
                 if(!Tcp.IsConnected()) { picEthernet.BackColor = Color.Maroon; btnPort.Enabled = true; }
             }
 
+        }
+
+        private void LinkGitHubRepo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Process.Start("https://github.com/Filipsi/PixIt");
         }
 
     }

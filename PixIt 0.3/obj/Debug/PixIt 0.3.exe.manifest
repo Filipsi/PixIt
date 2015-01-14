@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PixIt 0.3.exe" size="687024">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PixIt 0.3.exe" size="713136">
       <assemblyIdentity name="PixIt 0.3" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>qbMGa3KSNZ8ybet+sKQO8ZsLXtA=</dsig:DigestValue>
+        <dsig:DigestValue>mNC9cSz9WZuRPtl6y9sVUhYNP1Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -47,13 +47,16 @@
             this.listBoxPoints = new System.Windows.Forms.ListBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.GroupPixit = new System.Windows.Forms.GroupBox();
+            this.ButtonPixtureInfo = new System.Windows.Forms.Button();
             this.GroupPrinter = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.GroupPoints = new System.Windows.Forms.GroupBox();
             this.picEthernet = new System.Windows.Forms.PictureBox();
             this.picOpenPort = new System.Windows.Forms.PictureBox();
             this.picOriginal = new System.Windows.Forms.PictureBox();
-            this.ButtonPixtureInfo = new System.Windows.Forms.Button();
+            this.Strip = new System.Windows.Forms.StatusStrip();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.LinkGitHubRepo = new System.Windows.Forms.LinkLabel();
             this.tabVectors.SuspendLayout();
             this.tabDrill.SuspendLayout();
             this.tabRoutes.SuspendLayout();
@@ -65,11 +68,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.picEthernet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOriginal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnLoad
             // 
-            this.btnLoad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.btnLoad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoad.Location = new System.Drawing.Point(7, 93);
             this.btnLoad.Margin = new System.Windows.Forms.Padding(4);
@@ -206,7 +210,7 @@
             this.tabVectors.Margin = new System.Windows.Forms.Padding(4);
             this.tabVectors.Name = "tabVectors";
             this.tabVectors.Padding = new System.Windows.Forms.Padding(4);
-            this.tabVectors.Size = new System.Drawing.Size(289, 175);
+            this.tabVectors.Size = new System.Drawing.Size(289, 193);
             this.tabVectors.TabIndex = 2;
             this.tabVectors.Text = "Vektory";
             // 
@@ -216,7 +220,7 @@
             this.listBoxVectors.Location = new System.Drawing.Point(4, 4);
             this.listBoxVectors.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxVectors.Name = "listBoxVectors";
-            this.listBoxVectors.Size = new System.Drawing.Size(280, 160);
+            this.listBoxVectors.Size = new System.Drawing.Size(280, 186);
             this.listBoxVectors.TabIndex = 25;
             this.listBoxVectors.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged_1);
             // 
@@ -224,11 +228,11 @@
             // 
             this.buttonDrawVectors.BackColor = System.Drawing.Color.Silver;
             this.buttonDrawVectors.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDrawVectors.Font = new System.Drawing.Font("Microsoft Sans Serif", 4.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonDrawVectors.Location = new System.Drawing.Point(11, 222);
+            this.buttonDrawVectors.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonDrawVectors.Location = new System.Drawing.Point(11, 248);
             this.buttonDrawVectors.Margin = new System.Windows.Forms.Padding(0);
             this.buttonDrawVectors.Name = "buttonDrawVectors";
-            this.buttonDrawVectors.Size = new System.Drawing.Size(289, 22);
+            this.buttonDrawVectors.Size = new System.Drawing.Size(289, 23);
             this.buttonDrawVectors.TabIndex = 23;
             this.buttonDrawVectors.Text = "Zobraz všechny vektory";
             this.buttonDrawVectors.UseVisualStyleBackColor = false;
@@ -241,7 +245,7 @@
             this.tabDrill.Margin = new System.Windows.Forms.Padding(4);
             this.tabDrill.Name = "tabDrill";
             this.tabDrill.Padding = new System.Windows.Forms.Padding(4);
-            this.tabDrill.Size = new System.Drawing.Size(289, 167);
+            this.tabDrill.Size = new System.Drawing.Size(289, 193);
             this.tabDrill.TabIndex = 1;
             this.tabDrill.Text = "Body vrtání";
             this.tabDrill.UseVisualStyleBackColor = true;
@@ -252,7 +256,7 @@
             this.listBoxPointsDrill.Location = new System.Drawing.Point(4, 4);
             this.listBoxPointsDrill.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxPointsDrill.Name = "listBoxPointsDrill";
-            this.listBoxPointsDrill.Size = new System.Drawing.Size(280, 160);
+            this.listBoxPointsDrill.Size = new System.Drawing.Size(280, 186);
             this.listBoxPointsDrill.TabIndex = 34;
             this.listBoxPointsDrill.SelectedIndexChanged += new System.EventHandler(this.listBoxPointsDrill_SelectedIndexChanged);
             // 
@@ -263,7 +267,7 @@
             this.tabRoutes.Margin = new System.Windows.Forms.Padding(4);
             this.tabRoutes.Name = "tabRoutes";
             this.tabRoutes.Padding = new System.Windows.Forms.Padding(4);
-            this.tabRoutes.Size = new System.Drawing.Size(289, 175);
+            this.tabRoutes.Size = new System.Drawing.Size(289, 193);
             this.tabRoutes.TabIndex = 0;
             this.tabRoutes.Text = "Body cest";
             this.tabRoutes.UseVisualStyleBackColor = true;
@@ -274,7 +278,7 @@
             this.listBoxPoints.Location = new System.Drawing.Point(4, 4);
             this.listBoxPoints.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxPoints.Name = "listBoxPoints";
-            this.listBoxPoints.Size = new System.Drawing.Size(280, 160);
+            this.listBoxPoints.Size = new System.Drawing.Size(280, 186);
             this.listBoxPoints.TabIndex = 7;
             this.listBoxPoints.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged);
             // 
@@ -290,7 +294,7 @@
             this.tabControl.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(297, 196);
+            this.tabControl.Size = new System.Drawing.Size(297, 222);
             this.tabControl.TabIndex = 38;
             // 
             // GroupPixit
@@ -305,6 +309,20 @@
             this.GroupPixit.TabIndex = 42;
             this.GroupPixit.TabStop = false;
             this.GroupPixit.Text = "PixIt";
+            // 
+            // ButtonPixtureInfo
+            // 
+            this.ButtonPixtureInfo.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.ButtonPixtureInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonPixtureInfo.Font = new System.Drawing.Font("Arial Rounded MT Bold", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonPixtureInfo.Location = new System.Drawing.Point(138, 93);
+            this.ButtonPixtureInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonPixtureInfo.Name = "ButtonPixtureInfo";
+            this.ButtonPixtureInfo.Size = new System.Drawing.Size(26, 28);
+            this.ButtonPixtureInfo.TabIndex = 46;
+            this.ButtonPixtureInfo.Text = "?";
+            this.ButtonPixtureInfo.UseVisualStyleBackColor = false;
+            this.ButtonPixtureInfo.Click += new System.EventHandler(this.ButtonPixtureInfo_Click);
             // 
             // GroupPrinter
             // 
@@ -338,7 +356,7 @@
             this.GroupPoints.Controls.Add(this.buttonDrawVectors);
             this.GroupPoints.Location = new System.Drawing.Point(12, 241);
             this.GroupPoints.Name = "GroupPoints";
-            this.GroupPoints.Size = new System.Drawing.Size(313, 253);
+            this.GroupPoints.Size = new System.Drawing.Size(313, 282);
             this.GroupPoints.TabIndex = 45;
             this.GroupPoints.TabStop = false;
             this.GroupPoints.Text = "Data Bitmapy";
@@ -371,34 +389,55 @@
             // 
             this.picOriginal.BackColor = System.Drawing.SystemColors.ControlLight;
             this.picOriginal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picOriginal.Location = new System.Drawing.Point(334, 17);
+            this.picOriginal.Location = new System.Drawing.Point(334, 18);
             this.picOriginal.Margin = new System.Windows.Forms.Padding(4);
             this.picOriginal.Name = "picOriginal";
-            this.picOriginal.Size = new System.Drawing.Size(500, 477);
+            this.picOriginal.Size = new System.Drawing.Size(500, 505);
             this.picOriginal.TabIndex = 5;
             this.picOriginal.TabStop = false;
             this.picOriginal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picOriginal_MouseClick);
             this.picOriginal.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picOriginal_MouseMove);
             // 
-            // ButtonPixtureInfo
+            // Strip
             // 
-            this.ButtonPixtureInfo.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.ButtonPixtureInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonPixtureInfo.Font = new System.Drawing.Font("Arial Rounded MT Bold", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ButtonPixtureInfo.Location = new System.Drawing.Point(138, 93);
-            this.ButtonPixtureInfo.Margin = new System.Windows.Forms.Padding(4);
-            this.ButtonPixtureInfo.Name = "ButtonPixtureInfo";
-            this.ButtonPixtureInfo.Size = new System.Drawing.Size(26, 28);
-            this.ButtonPixtureInfo.TabIndex = 46;
-            this.ButtonPixtureInfo.Text = "?";
-            this.ButtonPixtureInfo.UseVisualStyleBackColor = false;
-            this.ButtonPixtureInfo.Click += new System.EventHandler(this.ButtonPixtureInfo_Click);
+            this.Strip.AutoSize = false;
+            this.Strip.Enabled = false;
+            this.Strip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.Strip.Location = new System.Drawing.Point(0, 528);
+            this.Strip.Name = "Strip";
+            this.Strip.Size = new System.Drawing.Size(847, 32);
+            this.Strip.TabIndex = 48;
+            this.Strip.Text = "statusStrip1";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::PixIt_0._3.Properties.Resources.github;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 529);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(31, 31);
+            this.pictureBox1.TabIndex = 49;
+            this.pictureBox1.TabStop = false;
+            // 
+            // LinkGitHubRepo
+            // 
+            this.LinkGitHubRepo.Location = new System.Drawing.Point(30, 529);
+            this.LinkGitHubRepo.Name = "LinkGitHubRepo";
+            this.LinkGitHubRepo.Size = new System.Drawing.Size(105, 32);
+            this.LinkGitHubRepo.TabIndex = 50;
+            this.LinkGitHubRepo.TabStop = true;
+            this.LinkGitHubRepo.Text = "PixIt Repositary";
+            this.LinkGitHubRepo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LinkGitHubRepo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkGitHubRepo_LinkClicked);
             // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(847, 502);
+            this.ClientSize = new System.Drawing.Size(847, 560);
+            this.Controls.Add(this.LinkGitHubRepo);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.Strip);
             this.Controls.Add(this.GroupPoints);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.GroupPrinter);
@@ -420,6 +459,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picEthernet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOriginal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -452,6 +492,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox GroupPoints;
         private System.Windows.Forms.Button ButtonPixtureInfo;
+        private System.Windows.Forms.StatusStrip Strip;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.LinkLabel LinkGitHubRepo;
     }
 }
 
