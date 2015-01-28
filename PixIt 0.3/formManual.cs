@@ -18,7 +18,7 @@ namespace PixIt_0._3 {
         }
 
         private void SendCommand(string _command) {
-            if(!PrinterQuery.IsInUse()) {
+            if(!PrinterQuery.IsRunning()) {
                 if(Serial.IsOpen()) {
                     Serial.Send(_command);
                 } else if(Tcp.IsConnected()) {
@@ -28,7 +28,7 @@ namespace PixIt_0._3 {
         }
 
         private void StartCommand() {
-            if(!PrinterQuery.IsInUse()) {
+            if(!PrinterQuery.IsRunning()) {
                 if(Serial.IsOpen()) {
                     PrinterQuery.StartSerial();
                 } else if(Tcp.IsConnected()) {

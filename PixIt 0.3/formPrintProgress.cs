@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace PixIt_0._3 {
@@ -21,21 +22,33 @@ namespace PixIt_0._3 {
 
             PrinterQuery.OnCommandExecuted += (obj, args) => {
                 try {
-                    if(this.InvokeRequired) {
-                        this.Invoke((MethodInvoker)delegate {
-                            AddCommandLabel(args.command);
+                    this.Invoke((MethodInvoker) delegate {
+                        byte procentage = Convert.ToByte(((float)args.commandCountTotal - args.commandCount) / args.commandCountTotal * 100);
+                        SetInfo(procentage, args.command);
 
-                            ProgressBarPrint.Maximum = args.commandCountTotal;
-                            ProgressBarPrint.Value = args.commandCountTotal - args.commandCount;
-                            if(ProgressBarPrint.Value == ProgressBarPrint.Maximum) { Close(); }
-                        });
-                    }
+                        ProgressBarPrint.Maximum = args.commandCountTotal;
+                        ProgressBarPrint.Value = args.commandCountTotal - args.commandCount;
+
+                        if(ProgressBarPrint.Value == ProgressBarPrint.Maximum) {
+                            PrinterQuery.ClearQuery();
+                            Close(); 
+                        }
+                    });
                 } catch { }
+            };
+
+            PrinterQuery.OnCommandCompleted += (obj, args) => {
+                if(Serial.IsOpen()) {
+                    Serial.Send("DP(" + (args.commandCountTotal - args.commandCount) + "," + args.commandCountTotal + ")");
+                } else if(Tcp.IsConnected()) {
+                    Tcp.Send("DP(" + (args.commandCountTotal - args.commandCount) + "," + args.commandCountTotal + ")");
+                }  
             };
         }
 
-        public void AddCommandLabel(string _command) {
-            LabelCommand.Text = _command;
+        public void SetInfo(int _procentage, string _command) {
+            LabelProgress.Text = _procentage + "%";
+            labelCommand.Text = _command;
         }
 
         private void formPrintProgress_FormClosed(object sender, FormClosedEventArgs e) {
@@ -44,13 +57,13 @@ namespace PixIt_0._3 {
 
         private void ButtonPause_Click(object sender, EventArgs e) {
             if(ButtonPause.Text == "Pozastavit") {
-                PrinterQuery.StopQuery();
                 ButtonPause.Text = "Pokračovat";
+                PrinterQuery.StopQuery();
             } else {
                 if(Serial.IsOpen()) {
-                    Serial.Send(LabelCommand.Text);
+                    Serial.Send(PrinterQuery.GetCommand());
                 } else if(Tcp.IsConnected()) {
-                    Tcp.Send(LabelCommand.Text);
+                    Tcp.Send(PrinterQuery.GetCommand());
                 }
                 ButtonPause.Text = "Pozastavit";
             }

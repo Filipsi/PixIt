@@ -192,6 +192,7 @@ namespace PixIt_0._3 {
                     picOpenPort.BackColor = Color.Green;
                     Program.DebugAddLine("Port byl otevřen");
                     ButtonEthernet.Enabled = false;
+                    Serial.Send("Hello World!");
                 }
             }else{
                 try {
@@ -333,7 +334,7 @@ namespace PixIt_0._3 {
         private void buttonPrint_Click(object sender, EventArgs e) {
             if (isPictureDrawed) {
                 if (Serial.IsOpen() || Tcp.IsConnected()) {
-                    if(!PrinterQuery.IsInUse()) {
+                    if(!PrinterQuery.IsRunning()) {
                         //Tisk cest
                         PixItCore.AnalizeRoutes();
                         //Tisk pájecích ploch
@@ -357,7 +358,7 @@ namespace PixIt_0._3 {
         private void buttonDrill_Click(object sender, EventArgs e) {
             if(isPictureDrawed == true) {
                 if(Serial.IsOpen() || Tcp.IsConnected()) {
-                    if(!PrinterQuery.IsInUse()) {
+                    if(!PrinterQuery.IsRunning()) {
                         //Tisk vrtacích bodů
                         PixItCore.PrintDrillPoints();
 
@@ -377,7 +378,7 @@ namespace PixIt_0._3 {
         private void buttonPrintAndDraw_Click(object sender, EventArgs e) {
             if (isPictureDrawed) {
                 if (Serial.IsOpen() || Tcp.IsConnected()) {
-                    if(!PrinterQuery.IsInUse()) {
+                    if(!PrinterQuery.IsRunning()) {
                         //Tisk cest
                         PixItCore.AnalizeRoutes();
                         //Tisk pájecích ploch
@@ -411,11 +412,14 @@ namespace PixIt_0._3 {
                 Tcp.Disconnect();
                 if(!Tcp.IsConnected()) { picEthernet.BackColor = Color.Maroon; btnPort.Enabled = true; }
             }
-
         }
 
         private void LinkGitHubRepo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            Process.Start("https://github.com/Filipsi/PixIt");
+            Process.Start("https://github.com/HeBaSoft/PixIt");
+        }
+
+        private void LinkPixItArduinoGitHubRepo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Process.Start("https://github.com/HeBaSoft/PixIt-Control-Arduino");
         }
 
     }

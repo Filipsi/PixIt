@@ -7,9 +7,21 @@ using System.Windows.Forms;
 
 namespace PixIt_0._3 {
 
+    class MessageReceived : EventArgs {
+
+        public string data { get; private set; }
+
+        public MessageReceived(string _data) {
+            data = _data;
+        }
+
+    }
+
     static class Serial{
         
         private static SerialPort MainSerialPort = new SerialPort();
+
+        public static event EventHandler<MessageReceived> OnSerialReceived = delegate { };
 
         public static string[] GetComPorts() {
             return SerialPort.GetPortNames();
@@ -28,14 +40,16 @@ namespace PixIt_0._3 {
 
             MainSerialPort.DataReceived += (sender, e) => {
                 string data = MainSerialPort.ReadLine();
-                Program.DebugAddLine("Přijatá data: " + data);
+                OnSerialReceived(null, new MessageReceived(data));
 
                 if(data.Contains("A")) {
+                    Program.DebugAddLine("Příkaz dokončen!");
                     PrinterQuery.TriggerCommandCompleteEvent();
+
                     string command = PrinterQuery.GetCommand();
                     if(command != "") {
                         Thread.Sleep(5);
-                        Send(command);
+                        Send(command); 
                     }
                 }
             };
@@ -46,6 +60,11 @@ namespace PixIt_0._3 {
                 Program.ShowMessageForm("Chyba při otevření portu", ex.Message.ToString());
                 Program.DebugAddLine("Chyba při otevření portu: " + ex.Message.ToString());
             }
+        }
+
+        public static void ClearBuffers() {
+            MainSerialPort.DiscardInBuffer();
+            MainSerialPort.DiscardOutBuffer();
         }
 
         public static void Send(string _data) {

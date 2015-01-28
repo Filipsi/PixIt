@@ -15,6 +15,8 @@ namespace PixIt_0._3 {
         private static TcpClient client;
         private static byte[] byteBuffer = new byte[5120];
 
+        public static event EventHandler<MessageReceived> OnTcpReceived = delegate { };
+
         public static void Connect(string _ip, int _port){
             try{
                 client = new TcpClient();
@@ -52,10 +54,8 @@ namespace PixIt_0._3 {
                 client.Client.EndReceive(ar);
 
                 string decodedData = Encoding.ASCII.GetString(byteBuffer);
-                Program.Form.Invoke((MethodInvoker) delegate {
-                    Program.DebugAddLine(decodedData);
-                });
 
+                OnTcpReceived(null, new MessageReceived(decodedData));
                 ProcessData(decodedData);
 
                 byteBuffer = new byte[5120];
@@ -77,6 +77,10 @@ namespace PixIt_0._3 {
 
         private static void ProcessData(string _data) {
             if(_data.Contains("A")) {
+                Program.Form.Invoke((MethodInvoker)delegate {
+                    Program.DebugAddLine("Příkaz dokončen!");
+                });
+
                 PrinterQuery.TriggerCommandCompleteEvent();
                 string command = PrinterQuery.GetCommand();
                 if(command != "") {

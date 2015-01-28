@@ -50,13 +50,13 @@
             this.ButtonPixtureInfo = new System.Windows.Forms.Button();
             this.GroupPrinter = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.GroupPoints = new System.Windows.Forms.GroupBox();
             this.picEthernet = new System.Windows.Forms.PictureBox();
             this.picOpenPort = new System.Windows.Forms.PictureBox();
+            this.GroupPoints = new System.Windows.Forms.GroupBox();
             this.picOriginal = new System.Windows.Forms.PictureBox();
-            this.Strip = new System.Windows.Forms.StatusStrip();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.LinkGitHubRepo = new System.Windows.Forms.LinkLabel();
+            this.LinkPixItGitHubRepo = new System.Windows.Forms.LinkLabel();
+            this.LinkPixItArduinoGitHubRepo = new System.Windows.Forms.LinkLabel();
             this.tabVectors.SuspendLayout();
             this.tabDrill.SuspendLayout();
             this.tabRoutes.SuspendLayout();
@@ -64,9 +64,9 @@
             this.GroupPixit.SuspendLayout();
             this.GroupPrinter.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.GroupPoints.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picEthernet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).BeginInit();
+            this.GroupPoints.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOriginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -75,10 +75,9 @@
             // 
             this.btnLoad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoad.Location = new System.Drawing.Point(7, 93);
-            this.btnLoad.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLoad.Location = new System.Drawing.Point(5, 76);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(132, 28);
+            this.btnLoad.Size = new System.Drawing.Size(99, 23);
             this.btnLoad.TabIndex = 0;
             this.btnLoad.Text = "Načíst obrázek";
             this.btnLoad.UseVisualStyleBackColor = false;
@@ -88,10 +87,9 @@
             // 
             this.btnSetttings.BackColor = System.Drawing.Color.White;
             this.btnSetttings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSetttings.Location = new System.Drawing.Point(7, 22);
-            this.btnSetttings.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSetttings.Location = new System.Drawing.Point(5, 18);
             this.btnSetttings.Name = "btnSetttings";
-            this.btnSetttings.Size = new System.Drawing.Size(157, 28);
+            this.btnSetttings.Size = new System.Drawing.Size(118, 23);
             this.btnSetttings.TabIndex = 1;
             this.btnSetttings.Text = "Nastavení";
             this.btnSetttings.UseVisualStyleBackColor = false;
@@ -103,10 +101,9 @@
             this.btnPort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnPort.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnPort.Location = new System.Drawing.Point(25, 56);
-            this.btnPort.Margin = new System.Windows.Forms.Padding(4);
+            this.btnPort.Location = new System.Drawing.Point(19, 46);
             this.btnPort.Name = "btnPort";
-            this.btnPort.Size = new System.Drawing.Size(138, 29);
+            this.btnPort.Size = new System.Drawing.Size(104, 24);
             this.btnPort.TabIndex = 2;
             this.btnPort.Text = "Sériový port";
             this.btnPort.UseVisualStyleBackColor = false;
@@ -116,10 +113,9 @@
             // 
             this.btnManual.BackColor = System.Drawing.Color.White;
             this.btnManual.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnManual.Location = new System.Drawing.Point(7, 22);
-            this.btnManual.Margin = new System.Windows.Forms.Padding(4);
+            this.btnManual.Location = new System.Drawing.Point(5, 18);
             this.btnManual.Name = "btnManual";
-            this.btnManual.Size = new System.Drawing.Size(121, 61);
+            this.btnManual.Size = new System.Drawing.Size(91, 50);
             this.btnManual.TabIndex = 3;
             this.btnManual.Text = "Manuální ovládání";
             this.btnManual.UseVisualStyleBackColor = false;
@@ -133,10 +129,9 @@
             // 
             this.buttonDebug.BackColor = System.Drawing.Color.White;
             this.buttonDebug.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDebug.Location = new System.Drawing.Point(7, 58);
-            this.buttonDebug.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonDebug.Location = new System.Drawing.Point(5, 47);
             this.buttonDebug.Name = "buttonDebug";
-            this.buttonDebug.Size = new System.Drawing.Size(157, 28);
+            this.buttonDebug.Size = new System.Drawing.Size(118, 23);
             this.buttonDebug.TabIndex = 21;
             this.buttonDebug.Text = "Debug";
             this.buttonDebug.UseVisualStyleBackColor = false;
@@ -148,10 +143,9 @@
             this.buttonPrint.Cursor = System.Windows.Forms.Cursors.Default;
             this.buttonPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonPrint.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonPrint.Location = new System.Drawing.Point(7, 90);
-            this.buttonPrint.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonPrint.Location = new System.Drawing.Point(5, 73);
             this.buttonPrint.Name = "buttonPrint";
-            this.buttonPrint.Size = new System.Drawing.Size(121, 28);
+            this.buttonPrint.Size = new System.Drawing.Size(91, 23);
             this.buttonPrint.TabIndex = 30;
             this.buttonPrint.Text = "Tisk cest";
             this.buttonPrint.UseVisualStyleBackColor = false;
@@ -163,10 +157,9 @@
             this.buttonDrill.Cursor = System.Windows.Forms.Cursors.Default;
             this.buttonDrill.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDrill.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonDrill.Location = new System.Drawing.Point(7, 126);
-            this.buttonDrill.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonDrill.Location = new System.Drawing.Point(5, 102);
             this.buttonDrill.Name = "buttonDrill";
-            this.buttonDrill.Size = new System.Drawing.Size(121, 28);
+            this.buttonDrill.Size = new System.Drawing.Size(91, 23);
             this.buttonDrill.TabIndex = 37;
             this.buttonDrill.Text = "Vrtatání děr";
             this.buttonDrill.UseVisualStyleBackColor = false;
@@ -178,10 +171,9 @@
             this.buttonPrintAndDraw.Cursor = System.Windows.Forms.Cursors.Default;
             this.buttonPrintAndDraw.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonPrintAndDraw.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonPrintAndDraw.Location = new System.Drawing.Point(7, 161);
-            this.buttonPrintAndDraw.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonPrintAndDraw.Location = new System.Drawing.Point(5, 131);
             this.buttonPrintAndDraw.Name = "buttonPrintAndDraw";
-            this.buttonPrintAndDraw.Size = new System.Drawing.Size(121, 55);
+            this.buttonPrintAndDraw.Size = new System.Drawing.Size(91, 45);
             this.buttonPrintAndDraw.TabIndex = 39;
             this.buttonPrintAndDraw.Text = "Vytiskout a vyvrtat";
             this.buttonPrintAndDraw.UseVisualStyleBackColor = false;
@@ -193,10 +185,9 @@
             this.ButtonEthernet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonEthernet.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ButtonEthernet.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ButtonEthernet.Location = new System.Drawing.Point(25, 22);
-            this.ButtonEthernet.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonEthernet.Location = new System.Drawing.Point(19, 18);
             this.ButtonEthernet.Name = "ButtonEthernet";
-            this.ButtonEthernet.Size = new System.Drawing.Size(138, 29);
+            this.ButtonEthernet.Size = new System.Drawing.Size(104, 24);
             this.ButtonEthernet.TabIndex = 40;
             this.ButtonEthernet.Text = "Ethernet";
             this.ButtonEthernet.UseVisualStyleBackColor = false;
@@ -206,21 +197,20 @@
             // 
             this.tabVectors.BackColor = System.Drawing.SystemColors.Control;
             this.tabVectors.Controls.Add(this.listBoxVectors);
-            this.tabVectors.Location = new System.Drawing.Point(4, 25);
-            this.tabVectors.Margin = new System.Windows.Forms.Padding(4);
+            this.tabVectors.Location = new System.Drawing.Point(4, 24);
             this.tabVectors.Name = "tabVectors";
-            this.tabVectors.Padding = new System.Windows.Forms.Padding(4);
-            this.tabVectors.Size = new System.Drawing.Size(289, 193);
+            this.tabVectors.Padding = new System.Windows.Forms.Padding(3);
+            this.tabVectors.Size = new System.Drawing.Size(215, 148);
             this.tabVectors.TabIndex = 2;
             this.tabVectors.Text = "Vektory";
             // 
             // listBoxVectors
             // 
             this.listBoxVectors.FormattingEnabled = true;
-            this.listBoxVectors.Location = new System.Drawing.Point(4, 4);
-            this.listBoxVectors.Margin = new System.Windows.Forms.Padding(4);
+            this.listBoxVectors.ItemHeight = 12;
+            this.listBoxVectors.Location = new System.Drawing.Point(3, 3);
             this.listBoxVectors.Name = "listBoxVectors";
-            this.listBoxVectors.Size = new System.Drawing.Size(280, 186);
+            this.listBoxVectors.Size = new System.Drawing.Size(211, 136);
             this.listBoxVectors.TabIndex = 25;
             this.listBoxVectors.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged_1);
             // 
@@ -228,11 +218,11 @@
             // 
             this.buttonDrawVectors.BackColor = System.Drawing.Color.Silver;
             this.buttonDrawVectors.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDrawVectors.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonDrawVectors.Location = new System.Drawing.Point(11, 248);
+            this.buttonDrawVectors.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonDrawVectors.Location = new System.Drawing.Point(9, 18);
             this.buttonDrawVectors.Margin = new System.Windows.Forms.Padding(0);
             this.buttonDrawVectors.Name = "buttonDrawVectors";
-            this.buttonDrawVectors.Size = new System.Drawing.Size(289, 23);
+            this.buttonDrawVectors.Size = new System.Drawing.Size(217, 22);
             this.buttonDrawVectors.TabIndex = 23;
             this.buttonDrawVectors.Text = "Zobraz všechny vektory";
             this.buttonDrawVectors.UseVisualStyleBackColor = false;
@@ -241,11 +231,10 @@
             // tabDrill
             // 
             this.tabDrill.Controls.Add(this.listBoxPointsDrill);
-            this.tabDrill.Location = new System.Drawing.Point(4, 25);
-            this.tabDrill.Margin = new System.Windows.Forms.Padding(4);
+            this.tabDrill.Location = new System.Drawing.Point(4, 24);
             this.tabDrill.Name = "tabDrill";
-            this.tabDrill.Padding = new System.Windows.Forms.Padding(4);
-            this.tabDrill.Size = new System.Drawing.Size(289, 193);
+            this.tabDrill.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDrill.Size = new System.Drawing.Size(215, 148);
             this.tabDrill.TabIndex = 1;
             this.tabDrill.Text = "Body vrtání";
             this.tabDrill.UseVisualStyleBackColor = true;
@@ -253,21 +242,20 @@
             // listBoxPointsDrill
             // 
             this.listBoxPointsDrill.FormattingEnabled = true;
-            this.listBoxPointsDrill.Location = new System.Drawing.Point(4, 4);
-            this.listBoxPointsDrill.Margin = new System.Windows.Forms.Padding(4);
+            this.listBoxPointsDrill.ItemHeight = 12;
+            this.listBoxPointsDrill.Location = new System.Drawing.Point(3, 3);
             this.listBoxPointsDrill.Name = "listBoxPointsDrill";
-            this.listBoxPointsDrill.Size = new System.Drawing.Size(280, 186);
+            this.listBoxPointsDrill.Size = new System.Drawing.Size(211, 136);
             this.listBoxPointsDrill.TabIndex = 34;
             this.listBoxPointsDrill.SelectedIndexChanged += new System.EventHandler(this.listBoxPointsDrill_SelectedIndexChanged);
             // 
             // tabRoutes
             // 
             this.tabRoutes.Controls.Add(this.listBoxPoints);
-            this.tabRoutes.Location = new System.Drawing.Point(4, 25);
-            this.tabRoutes.Margin = new System.Windows.Forms.Padding(4);
+            this.tabRoutes.Location = new System.Drawing.Point(4, 24);
             this.tabRoutes.Name = "tabRoutes";
-            this.tabRoutes.Padding = new System.Windows.Forms.Padding(4);
-            this.tabRoutes.Size = new System.Drawing.Size(289, 193);
+            this.tabRoutes.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRoutes.Size = new System.Drawing.Size(215, 148);
             this.tabRoutes.TabIndex = 0;
             this.tabRoutes.Text = "Body cest";
             this.tabRoutes.UseVisualStyleBackColor = true;
@@ -275,10 +263,10 @@
             // listBoxPoints
             // 
             this.listBoxPoints.FormattingEnabled = true;
-            this.listBoxPoints.Location = new System.Drawing.Point(4, 4);
-            this.listBoxPoints.Margin = new System.Windows.Forms.Padding(4);
+            this.listBoxPoints.ItemHeight = 12;
+            this.listBoxPoints.Location = new System.Drawing.Point(3, 3);
             this.listBoxPoints.Name = "listBoxPoints";
-            this.listBoxPoints.Size = new System.Drawing.Size(280, 186);
+            this.listBoxPoints.Size = new System.Drawing.Size(211, 136);
             this.listBoxPoints.TabIndex = 7;
             this.listBoxPoints.SelectedIndexChanged += new System.EventHandler(this.listBoxVectors_SelectedIndexChanged);
             // 
@@ -288,13 +276,12 @@
             this.tabControl.Controls.Add(this.tabRoutes);
             this.tabControl.Controls.Add(this.tabDrill);
             this.tabControl.Controls.Add(this.tabVectors);
-            this.tabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.tabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.tabControl.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.tabControl.Location = new System.Drawing.Point(7, 22);
-            this.tabControl.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl.Location = new System.Drawing.Point(5, 48);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(297, 222);
+            this.tabControl.Size = new System.Drawing.Size(223, 176);
             this.tabControl.TabIndex = 38;
             // 
             // GroupPixit
@@ -303,9 +290,11 @@
             this.GroupPixit.Controls.Add(this.btnSetttings);
             this.GroupPixit.Controls.Add(this.buttonDebug);
             this.GroupPixit.Controls.Add(this.btnLoad);
-            this.GroupPixit.Location = new System.Drawing.Point(13, 9);
+            this.GroupPixit.Location = new System.Drawing.Point(10, 7);
+            this.GroupPixit.Margin = new System.Windows.Forms.Padding(2);
             this.GroupPixit.Name = "GroupPixit";
-            this.GroupPixit.Size = new System.Drawing.Size(171, 129);
+            this.GroupPixit.Padding = new System.Windows.Forms.Padding(2);
+            this.GroupPixit.Size = new System.Drawing.Size(128, 105);
             this.GroupPixit.TabIndex = 42;
             this.GroupPixit.TabStop = false;
             this.GroupPixit.Text = "PixIt";
@@ -315,10 +304,9 @@
             this.ButtonPixtureInfo.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.ButtonPixtureInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonPixtureInfo.Font = new System.Drawing.Font("Arial Rounded MT Bold", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ButtonPixtureInfo.Location = new System.Drawing.Point(138, 93);
-            this.ButtonPixtureInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonPixtureInfo.Location = new System.Drawing.Point(104, 76);
             this.ButtonPixtureInfo.Name = "ButtonPixtureInfo";
-            this.ButtonPixtureInfo.Size = new System.Drawing.Size(26, 28);
+            this.ButtonPixtureInfo.Size = new System.Drawing.Size(20, 23);
             this.ButtonPixtureInfo.TabIndex = 46;
             this.ButtonPixtureInfo.Text = "?";
             this.ButtonPixtureInfo.UseVisualStyleBackColor = false;
@@ -330,9 +318,11 @@
             this.GroupPrinter.Controls.Add(this.buttonPrint);
             this.GroupPrinter.Controls.Add(this.buttonDrill);
             this.GroupPrinter.Controls.Add(this.buttonPrintAndDraw);
-            this.GroupPrinter.Location = new System.Drawing.Point(190, 12);
+            this.GroupPrinter.Location = new System.Drawing.Point(142, 10);
+            this.GroupPrinter.Margin = new System.Windows.Forms.Padding(2);
             this.GroupPrinter.Name = "GroupPrinter";
-            this.GroupPrinter.Size = new System.Drawing.Size(135, 224);
+            this.GroupPrinter.Padding = new System.Windows.Forms.Padding(2);
+            this.GroupPrinter.Size = new System.Drawing.Size(101, 182);
             this.GroupPrinter.TabIndex = 43;
             this.GroupPrinter.TabStop = false;
             this.GroupPrinter.Text = "Tiskárna";
@@ -343,33 +333,23 @@
             this.groupBox1.Controls.Add(this.picEthernet);
             this.groupBox1.Controls.Add(this.btnPort);
             this.groupBox1.Controls.Add(this.picOpenPort);
-            this.groupBox1.Location = new System.Drawing.Point(14, 143);
+            this.groupBox1.Location = new System.Drawing.Point(10, 116);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(170, 92);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(128, 75);
             this.groupBox1.TabIndex = 44;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Připojení";
-            // 
-            // GroupPoints
-            // 
-            this.GroupPoints.Controls.Add(this.tabControl);
-            this.GroupPoints.Controls.Add(this.buttonDrawVectors);
-            this.GroupPoints.Location = new System.Drawing.Point(12, 241);
-            this.GroupPoints.Name = "GroupPoints";
-            this.GroupPoints.Size = new System.Drawing.Size(313, 282);
-            this.GroupPoints.TabIndex = 45;
-            this.GroupPoints.TabStop = false;
-            this.GroupPoints.Text = "Data Bitmapy";
             // 
             // picEthernet
             // 
             this.picEthernet.BackColor = System.Drawing.Color.Maroon;
             this.picEthernet.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.picEthernet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picEthernet.Location = new System.Drawing.Point(7, 22);
-            this.picEthernet.Margin = new System.Windows.Forms.Padding(4);
+            this.picEthernet.Location = new System.Drawing.Point(5, 18);
             this.picEthernet.Name = "picEthernet";
-            this.picEthernet.Size = new System.Drawing.Size(14, 29);
+            this.picEthernet.Size = new System.Drawing.Size(11, 24);
             this.picEthernet.TabIndex = 41;
             this.picEthernet.TabStop = false;
             // 
@@ -378,73 +358,86 @@
             this.picOpenPort.BackColor = System.Drawing.Color.Maroon;
             this.picOpenPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.picOpenPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picOpenPort.Location = new System.Drawing.Point(6, 56);
-            this.picOpenPort.Margin = new System.Windows.Forms.Padding(4);
+            this.picOpenPort.Location = new System.Drawing.Point(4, 46);
             this.picOpenPort.Name = "picOpenPort";
-            this.picOpenPort.Size = new System.Drawing.Size(15, 29);
+            this.picOpenPort.Size = new System.Drawing.Size(12, 24);
             this.picOpenPort.TabIndex = 14;
             this.picOpenPort.TabStop = false;
+            // 
+            // GroupPoints
+            // 
+            this.GroupPoints.Controls.Add(this.tabControl);
+            this.GroupPoints.Controls.Add(this.buttonDrawVectors);
+            this.GroupPoints.Location = new System.Drawing.Point(9, 196);
+            this.GroupPoints.Margin = new System.Windows.Forms.Padding(2);
+            this.GroupPoints.Name = "GroupPoints";
+            this.GroupPoints.Padding = new System.Windows.Forms.Padding(2);
+            this.GroupPoints.Size = new System.Drawing.Size(235, 229);
+            this.GroupPoints.TabIndex = 45;
+            this.GroupPoints.TabStop = false;
+            this.GroupPoints.Text = "Data Bitmapy";
             // 
             // picOriginal
             // 
             this.picOriginal.BackColor = System.Drawing.SystemColors.ControlLight;
             this.picOriginal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picOriginal.Location = new System.Drawing.Point(334, 18);
-            this.picOriginal.Margin = new System.Windows.Forms.Padding(4);
+            this.picOriginal.Location = new System.Drawing.Point(250, 15);
             this.picOriginal.Name = "picOriginal";
-            this.picOriginal.Size = new System.Drawing.Size(500, 505);
+            this.picOriginal.Size = new System.Drawing.Size(376, 411);
             this.picOriginal.TabIndex = 5;
             this.picOriginal.TabStop = false;
             this.picOriginal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picOriginal_MouseClick);
             this.picOriginal.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picOriginal_MouseMove);
             // 
-            // Strip
-            // 
-            this.Strip.AutoSize = false;
-            this.Strip.Enabled = false;
-            this.Strip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.Strip.Location = new System.Drawing.Point(0, 528);
-            this.Strip.Name = "Strip";
-            this.Strip.Size = new System.Drawing.Size(847, 32);
-            this.Strip.TabIndex = 48;
-            this.Strip.Text = "statusStrip1";
-            // 
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImage = global::PixIt_0._3.Properties.Resources.github;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 529);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 430);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(31, 31);
+            this.pictureBox1.Size = new System.Drawing.Size(23, 25);
             this.pictureBox1.TabIndex = 49;
             this.pictureBox1.TabStop = false;
             // 
-            // LinkGitHubRepo
+            // LinkPixItGitHubRepo
             // 
-            this.LinkGitHubRepo.Location = new System.Drawing.Point(30, 529);
-            this.LinkGitHubRepo.Name = "LinkGitHubRepo";
-            this.LinkGitHubRepo.Size = new System.Drawing.Size(105, 32);
-            this.LinkGitHubRepo.TabIndex = 50;
-            this.LinkGitHubRepo.TabStop = true;
-            this.LinkGitHubRepo.Text = "PixIt Repositary";
-            this.LinkGitHubRepo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.LinkGitHubRepo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkGitHubRepo_LinkClicked);
+            this.LinkPixItGitHubRepo.Location = new System.Drawing.Point(23, 429);
+            this.LinkPixItGitHubRepo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LinkPixItGitHubRepo.Name = "LinkPixItGitHubRepo";
+            this.LinkPixItGitHubRepo.Size = new System.Drawing.Size(91, 26);
+            this.LinkPixItGitHubRepo.TabIndex = 50;
+            this.LinkPixItGitHubRepo.TabStop = true;
+            this.LinkPixItGitHubRepo.Text = "PixIt Repository";
+            this.LinkPixItGitHubRepo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LinkPixItGitHubRepo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkGitHubRepo_LinkClicked);
+            // 
+            // LinkPixItArduinoGitHubRepo
+            // 
+            this.LinkPixItArduinoGitHubRepo.Location = new System.Drawing.Point(111, 429);
+            this.LinkPixItArduinoGitHubRepo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LinkPixItArduinoGitHubRepo.Name = "LinkPixItArduinoGitHubRepo";
+            this.LinkPixItArduinoGitHubRepo.Size = new System.Drawing.Size(133, 26);
+            this.LinkPixItArduinoGitHubRepo.TabIndex = 51;
+            this.LinkPixItArduinoGitHubRepo.TabStop = true;
+            this.LinkPixItArduinoGitHubRepo.Text = "PixIt-Arduino Repository";
+            this.LinkPixItArduinoGitHubRepo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LinkPixItArduinoGitHubRepo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkPixItArduinoGitHubRepo_LinkClicked);
             // 
             // formMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(847, 560);
-            this.Controls.Add(this.LinkGitHubRepo);
+            this.ClientSize = new System.Drawing.Size(635, 455);
+            this.Controls.Add(this.LinkPixItArduinoGitHubRepo);
+            this.Controls.Add(this.LinkPixItGitHubRepo);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.Strip);
             this.Controls.Add(this.GroupPoints);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.GroupPrinter);
             this.Controls.Add(this.GroupPixit);
             this.Controls.Add(this.picOriginal);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "formMain";
             this.Text = "PixIt";
             this.Load += new System.EventHandler(this.Main_Load);
@@ -455,9 +448,9 @@
             this.GroupPixit.ResumeLayout(false);
             this.GroupPrinter.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.GroupPoints.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picEthernet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenPort)).EndInit();
+            this.GroupPoints.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picOriginal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -492,9 +485,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox GroupPoints;
         private System.Windows.Forms.Button ButtonPixtureInfo;
-        private System.Windows.Forms.StatusStrip Strip;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.LinkLabel LinkGitHubRepo;
+        private System.Windows.Forms.LinkLabel LinkPixItGitHubRepo;
+        private System.Windows.Forms.LinkLabel LinkPixItArduinoGitHubRepo;
     }
 }
 

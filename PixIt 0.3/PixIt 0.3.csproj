@@ -53,10 +53,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>30D32B5A75F8ADBDCC7D397E8FFB49137F94ED0A</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>78351F65DFC08FE1D9D793D22989EF28892A28D6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>PixIt 0.3_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>PixIt 0.3_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>

@@ -23,10 +23,10 @@ namespace PixIt_0._3 {
     static class PrinterQuery {
         
         private static List<string> ListCommands = new List<string>();
-        public static event EventHandler OnCommandCompleted = delegate { };
+        public static event EventHandler<CommandEventArgs> OnCommandCompleted = delegate { };
         public static event EventHandler<CommandEventArgs> OnCommandExecuted = delegate { };
         private static int CommandCount = 0;
-        private static bool InUse = false;
+        private static bool IsInUse = false;
         private static bool StopExecution = false;
 
         public static void AddCommand(string _command) {
@@ -34,7 +34,7 @@ namespace PixIt_0._3 {
         }
 
         public static void TriggerCommandCompleteEvent() {
-            OnCommandCompleted(null, new EventArgs());
+            OnCommandCompleted(null, new CommandEventArgs("", ListCommands.Count, CommandCount));
         }
 
         public static void StopQuery() {
@@ -58,7 +58,7 @@ namespace PixIt_0._3 {
 
                 return command;
             } else {
-                InUse = false;
+                IsInUse = false;
                 return ""; 
             }
         }
@@ -66,25 +66,25 @@ namespace PixIt_0._3 {
         public static void ClearQuery() {
             ListCommands.Clear();
             CommandCount = ListCommands.Count;
-            InUse = false;
+            IsInUse = false;
         }
 
-        public static bool IsInUse() {
-            return InUse;
+        public static bool IsRunning() {
+            return IsInUse;
         }
 
         public static void StartSerial() {
-            if(!InUse) {
+            if(!IsInUse) {
                 CommandCount = ListCommands.Count;
-                InUse = true;
+                IsInUse = true;
                 Serial.Send(GetCommand());
             }
         }
 
         public static void StartTcp() {
-            if(!InUse) {
+            if(!IsInUse) {
                 CommandCount = ListCommands.Count;
-                InUse = true;
+                IsInUse = true;
                 Tcp.Send(GetCommand());
             }
         }
